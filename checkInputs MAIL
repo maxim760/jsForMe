@@ -1,0 +1,34 @@
+const checkTextInputs = (selector) => {
+    const inputs = document.querySelectorAll(selector)
+    inputs.forEach (input => {
+        input.addEventListener("input", ()=> {
+            input.value = input.value.replace(/[^а-яА-ЯёЁ\p{P} 0-9]/gu, "")
+        })
+    })
+}
+
+checkMailInputs() {
+    const inputsTxt = document.querySelectorAll("[type='email']")
+    inputsTxt.forEach (input => {
+        input.addEventListener("input", function() {
+            input.value = input.value.replace(/[^\w @\.-]/g, "");
+
+            if(/^[\w-\.]+@\w+\.[a-zA-Z]+$/.test(input.value)) {
+                this.style.border = "2px solid green"
+                this.closest("form").querySelector("button").removeAttribute("disabled")
+                this.closest("form").querySelector("button").style.opacity = "1"
+                this.closest("form").querySelector("button").style.cursor = "pointer"
+            } else if (input.value == "") {
+                this.style.border = ""
+                this.closest("form").querySelector("button").setAttribute("disabled", "")
+                this.closest("form").querySelector("button").style.opacity = "0.3"
+                this.closest("form").querySelector("button").style.cursor = "not-allowed"
+            } else {
+                this.style.border = "2px solid red"
+                this.closest("form").querySelector("button").setAttribute("disabled", "")
+                this.closest("form").querySelector("button").style.opacity = "0.3"
+                this.closest("form").querySelector("button").style.cursor = "not-allowed"
+            }
+        })
+    })
+}

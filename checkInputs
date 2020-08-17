@@ -1,8 +1,0 @@
-const checkTextInputs = (selector) => {
-    const inputs = document.querySelectorAll(selector)
-    inputs.forEach (input => {
-        input.addEventListener("input", ()=> {
-            input.value = input.value.replace(/[^а-яА-ЯёЁ\p{P} 0-9]/gu, "")
-        })
-    })
-}
