@@ -1,0 +1,134 @@
+import {postData} from "../services/requests"
+
+//import checkNumInputs from "./checkNumInputs"
+const forms = () => {
+    const form = document.querySelectorAll("form")
+    const input = document.querySelectorAll("input")
+    const textarea = document.querySelectorAll("textarea")
+    const upload = document.querySelectorAll("[name='upload']")
+
+//    checkNumInputs("input[name*='user_phone']")
+
+    const message = {
+        loading: "Загрузка...",
+        success: "Спасибо! Скоро мы с вами свяжемся",
+        failure: "Что-то пошло не так...",
+        spinner: "assets/img/spinner.gif",
+        ok: "assets/img/ok.png",
+        fail: "assets/img/fail.png"
+    }
+
+    const path = {
+        designer: "assets/server.php",
+        question: "assets/question.php"
+    }
+
+    const clearInputs = (input) => {
+        input.forEach(item => {
+            if(item.getAttribute("type") == "checkbox") {
+                item.checked = false
+            } else {
+                item.value = ""
+            }
+        })
+        upload.forEach(item => {
+            item.previousElementSibling.textContent = "Файл не выбран"
+            item.previousElementSibling.previousElementSibling.textContent = "Загрузить фотографию"
+        })
+    }
+    const clearTextArea = (textarea) => {
+        textarea.forEach(item => {
+            item.value = ""
+        })
+    }
+
+    upload.forEach(item=>{
+        item.addEventListener("input", ()=> {
+            let dots
+            if(item.files[0]) {
+                item.previousElementSibling.previousElementSibling.textContent
+                 = "Фото загружено"
+            } else {
+                 item.previousElementSibling.previousElementSibling.textContent = "Загрузить фотографию"
+            }
+
+            const arr = item.files[0].name.split(".")
+            arr[0].length > 6 ? dots = "..." : dots = "."
+            const name = arr[0].substring(0,6) + dots + arr[1]
+            item.previousElementSibling.textContent = name
+        })
+    })
+
+    form.forEach((item) => {
+        item.addEventListener("submit", (event) => {
+            event.preventDefault()
+            let statusMessage = document.createElement("div")
+            statusMessage.classList.add("status")
+            item.parentNode.appendChild(statusMessage)
+            item.classList.remove("fadeInUp")
+            item.classList.add("animated", "fadeOutUp")
+            setTimeout(() => {
+                item.style.display = "none"
+            },400)
+
+            let statusImg = document.createElement("img")
+            statusImg.setAttribute("src", message.spinner)
+            statusImg.classList.add("animated", "fadeInUp")
+            statusMessage.appendChild(statusImg)
+
+            let textMessage = document.createElement("p")
+            textMessage.textContent = message.loading
+            statusMessage.appendChild(textMessage)
+
+            const formData = new FormData(item)
+            if(item.classList.contains("calc-form")){
+                let price = item.querySelector(".calc-price").textContent
+                if(/\d/g.test(price)) {
+                    price = price.replace(/\D/g,"")
+                }
+                formData.append("price",price)
+            }
+//            let object = {}
+//
+//            formData.forEach((value, key) => {
+//                object[key] = value
+//             })
+//            let json = JSON.stringify(object)
+
+            let api
+            item.closest(".popup-design") || item.classList.contains("calc-form") ? api = path.designer : api = path.question
+            // или свитч кейс или ифы
+            postData(api, formData)
+                .then((res) => {
+                    console.log(res)
+                    statusImg.setAttribute("src",message.ok)
+                    textMessage.textContent = message.success
+                })
+                .catch(() => {
+                    statusImg.setAttribute("src",message.fail)
+                    textMessage.textContent = message.failure
+                })
+                .finally( () => {
+                    clearInputs(input)
+                    clearTextArea(textarea)
+
+                    setTimeout(() => {
+                        statusMessage.remove()
+                        item.style.display = "block"
+                        item.classList.remove("fadeOutUp")
+                        item.classList.add("fadeInUp")
+//                        setTimeout(()=> {
+//                            document.body.style.overflow = ""
+//                            document.body.style.marginRight = `0`
+//                        },1000)
+                    },5000)
+
+            })
+
+
+        })
+    })
+
+}
+
+export default forms
