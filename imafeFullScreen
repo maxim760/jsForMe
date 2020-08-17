@@ -1,0 +1,49 @@
+import calcScroll from "./calcScroll"
+
+const images = () => {
+    const imgPopup = document.createElement("div")
+    const imgPhoto = document.createElement("img")
+    const allPhotos = document.querySelector(".works")
+    imgPopup.classList.add("popup")
+    imgPopup.appendChild(imgPhoto)
+    allPhotos.appendChild(imgPopup)
+
+    imgPopup.style.display = "flex"
+    imgPopup.style.visibility = "hidden"
+    imgPopup.style.opacity = "0"
+    imgPopup.style.justifyContent = "center"
+    imgPopup.style.alignItems = "center"
+
+    imgPhoto.style.display = "block"
+    imgPhoto.style.marginBottom = "0"
+
+
+    allPhotos.addEventListener("click", (event) => {
+        let scrollW = calcScroll()
+        if(event.target && event.target.classList.contains("preview")) {
+            event.preventDefault()
+            imgPhoto.setAttribute("src",event.target.parentNode.getAttribute("href"))
+            imgPhoto.style.maxHeight = "90%"
+            imgPhoto.style.maxWidth = "90%"
+            console.log(event.target)
+
+            imgPopup.style.visibility = "visible"
+            imgPopup.style.opacity = "1"
+
+
+            document.body.style.overflow = "hidden"
+            document.body.style.marginRight = `${scrollW}px`
+
+        } else if ( event.target && event.target.classList.contains("popup")) {
+                imgPopup.style.opacity = "0"
+                imgPopup.style.visibility = "hidden"
+                setTimeout(()=>{
+                    document.body.style.overflow = ""
+                    document.body.style.marginRight = `0`
+                },400)
+        }
+
+    })
+}
+
+export default images
