@@ -1,0 +1,120 @@
+import calcScroll from "./calcScroll"
+const modals = () => {
+    let btnPressed = false
+    function bindModal(triggerSelector, modalSelector, closeSelector,timeDelay, killTrigger = false) {
+
+
+        const trigger = document.querySelectorAll(triggerSelector),
+              modal = document.querySelector(modalSelector),
+              close = document.querySelector(closeSelector),
+              windows = document.querySelectorAll("[data-modal]"),
+              fixedEls = document.querySelectorAll(".fixedRight"),
+              scrollW = calcScroll()
+
+
+        trigger.forEach( (item) => {
+            item.addEventListener("click", (event) => {
+                if(event.target) {
+                    event.preventDefault()
+                }
+
+                btnPressed = true
+
+                if(killTrigger) {
+                    item.remove()
+                }
+
+                windows.forEach((item) => {
+                    item.classList.remove("showThis")
+                })
+                modal.classList.add("showThis")
+                document.body.style.overflow = "hidden"
+                document.body.style.marginRight = `${scrollW}px`
+                if(fixedEls) {
+                    fixedEls.forEach(item => item.style.marginRight = `${scrollW}px`)
+                }
+
+
+            })
+        })
+
+        close.addEventListener("click", (event) => {
+
+                modal.classList.remove("showThis")
+                setTimeout(()=>{
+                    document.body.style.overflow = ""
+                    document.body.style.marginRight = '0'
+                    if(fixedEls) {
+                        fixedEls.forEach(item => item.style.marginRight = `0`)
+                    }
+
+                },timeDelay)
+
+
+            windows.forEach((item) => {
+                item.classList.remove("showThis")
+            })
+
+        })
+        modal.addEventListener("click", function(event) {
+            if(event.target == modal) {
+                modal.classList.remove("showThis")
+                setTimeout(()=>{
+                    document.body.style.overflow = ""
+                    document.body.style.marginRight = `0`
+                    if(fixedEls) {
+                        fixedEls.forEach(item => item.style.marginRight = `0`)
+                    }
+
+                },timeDelay)
+
+                windows.forEach((item) => {
+                    item.classList.remove("showThis")
+                })
+            }
+        })
+    }
+
+    function showThisModalByTime(selector, time) {
+        let scrollW = calcScroll()
+        let fixedEls = document.querySelectorAll(".fixedRight")
+        setTimeout(() => {
+            let countMod = 0
+            document.querySelectorAll("[data-modal]").forEach((item) => {
+                if (window.getComputedStyle(item).visibility == "hidden" || window.getComputedStyle(item).display == "none") {
+                    countMod += 1
+                }
+            })
+            if(countMod == document.querySelectorAll("[data-modal]").length) {
+                document.querySelector(selector).classList.add("showThis")
+                document.body.style.overflow = "hidden"
+                document.body.style.marginRight = `${scrollW}px`
+                if(fixedEls) {
+                    fixedEls.forEach(item => item.style.marginRight = `${scrollW}px`)
+                }
+            }
+        }, time * 1000)
+    }
+
+    function openByScroll(selector) {
+        window.addEventListener("scroll", ()=> {
+            let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
+            // document.documentElement.scrollHeight не во всех бразуерах работает
+            if(!btnPressed && (window.pageYOffset + document.documentElement.clientHeight >= scrollHeight)) {
+                document.querySelector(selector).click() // имитирует клик по этому
+//                лементу и делает все привязаные к этому клику события
+            }
+        })
+    }
+
+
+    bindModal(".button-design",".popup-design",".popup-design .popup-close",500)
+    bindModal(".button-consultation",".popup-consultation",".popup-consultation .popup-close",500)
+    bindModal(".fixed-gift",".popup-gift",".popup-gift .popup-close",500,true)
+    openByScroll(".fixed-gift")
+    showThisModalByTime(".popup-consultation",60)
+
+
+}
+// timeDelay - оэто время transition
+export default modals
