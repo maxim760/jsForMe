@@ -1,0 +1,51 @@
+const timer = (id,deadline) => {
+    const getTimeRemaining = (endtime) => {
+        const t = Date.parse(endtime) - Date.parse(new Date())
+        const seconds = Math.floor((t/1000) % 60)
+        const minutes = Math.floor((t/(1000*60)) % 60)
+        const hours = Math.floor((t/(1000*60*60)) % 24)
+        const days = Math.floor(t/(1000*60*60*24))
+        return {
+            "total":t,
+            "seconds":seconds,
+            "minutes":minutes,
+            "hours":hours,
+            "days":days
+        }
+    }
+    const setClock = (selector, endtime) => {
+        const timer = document.querySelector(selector)
+        const forMinutes = timer.querySelector("#minutes")
+        const forHours = timer.querySelector("#hours")
+        const forDays = timer.querySelector("#days")
+        const forSeconds = timer.querySelector("#seconds")
+        const timeInterval = setInterval(updateClock,1000)
+        updateClock()
+        function updateClock() {
+            const t = getTimeRemaining(endtime)
+            function double(num) {
+                if(+num <= 9) {
+                    num = `0${num}`
+                }
+                return num
+            }
+            if(t.total <= 0) {
+                clearInterval(timeInterval)
+                forDays.textContent = "00"
+                forHours.textContent = "00"
+                forMinutes.textContent = "00"
+                forSeconds.textContent = "00"
+            } else {
+                forDays.textContent = double(t.days)
+                forHours.textContent = double(t.hours)
+                forMinutes.textContent = double(t.minutes)
+                forSeconds.textContent = double(t.seconds)
+            }
+        }
+
+
+    }
+    setClock(id,deadline)
+}
+
+export default timer
