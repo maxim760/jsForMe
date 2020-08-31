@@ -8,3 +8,6 @@ npm install node-sass —save
 import "bootstrap/dist/css/bootstrap.css"
 
 документация и примеры на сайте reactstrap
+
+подключил стайлед компонент
+npm install --save styled-components
