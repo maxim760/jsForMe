@@ -1,0 +1,10 @@
+подключаем бутстрап в реакте
+npm install reactstrap bootstrap@4 —save
+ 
+подключаем сасс или с си эсэс в реакте
+npm install node-sass —save
+
+подлкючаем бутстрап
+import "bootstrap/dist/css/bootstrap.css"
+
+документация и примеры на сайте reactstrap
