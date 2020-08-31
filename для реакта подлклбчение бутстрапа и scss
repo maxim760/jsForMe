@@ -11,3 +11,22 @@ import "bootstrap/dist/css/bootstrap.css"
 
 подключил стайлед компонент
 npm install --save styled-components
+import styled from "styled-components"
+
+Пример использования  styled-components
+
+const AppBlock = styled.div`
+    margin: 0 auto;
+    max-width: 800px;
+`
+
+const App = () => {
+
+    return (
+        <AppBlock>
+            ... блоки ...
+        </AppBlock>    
+    )
+}
+
+(после точки назвпание тэна, в бэктиках - стили)
