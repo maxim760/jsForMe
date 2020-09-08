@@ -31,3 +31,9 @@ const App = () => {
 
 (после точки назвпание тэна, в бэктиках - стили)
 очистка кэша npm cache clean --force
+
+Чтобы обратиться к PUBLIC  в реакте в коде !!!
+<img className="errorimg" src={process.env.PUBLIC_URL + "/img/close (1).png"} alt="error" />
+process.env.PUBLIC_URL + (дальше сам адрес начиная со слэша!!!)
+
+
