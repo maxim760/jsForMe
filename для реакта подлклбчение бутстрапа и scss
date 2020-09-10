@@ -36,4 +36,24 @@ const App = () => {
 <img className="errorimg" src={process.env.PUBLIC_URL + "/img/close (1).png"} alt="error" />
 process.env.PUBLIC_URL + (дальше сам адрес начиная со слэша!!!)
 
+// использование children
+это в app.js которая создает детей 
+       const charDetails = (
+                <CharDetails charId={this.state.selectedChar} > 
+                    <Field field="gender" label="Gender" />
+                    <Field field="born" label="Born" />
+                </CharDetails>
 
+            )
+      это в charDetails, у которых ребенок Field
+      
+      {this.props.children} - внутри return'a или если мы хотим их изманеить что то доабвить то так:
+      
+       {
+          React.Children.map(this.props.children, (child) => {
+               return React.cloneElement(child, {char}) // {char:char}
+          })
+       }
+      в реакте нельяз напрямую менять элемент поэтому сощхздаем клона через React.cloneElement(child, ...) с добавлением обьекта через запятую, т.е. будет тот же самый чайлд +
+      + нужный нам обьект
+            
