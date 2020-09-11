@@ -107,3 +107,7 @@ this.props.history.push(`/books/${itemId}`) // переход по этой сс
  static defaultProps = {
         interval: 15000
  } // пишем внури класса созданного, который используем
+ или так уже после класса 
+ RandomChar.defaultProps = {
+    interval: 15000
+}
