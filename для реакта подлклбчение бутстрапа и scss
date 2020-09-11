@@ -92,3 +92,11 @@ import {Link} from "react-router-dom"
         
    <Route path="/" exact component = {() => <h1>Welcome to GOT DB</h1>} />
 // exact чтобы компонент подгружался только именно по этой ссылке(начальаная страница в этом примере, иначе он будет всегда грузиться)
+// для динамичных ссылко и тд
+Route path="/books/:id" render={
+    ({match,location,history}) => {
+    return <BooksItem />}
+} />
+// в матч информация о ссылке и об айди(она в параметрах)
+//в хистори разные фугкции
+// в локатион юрл
