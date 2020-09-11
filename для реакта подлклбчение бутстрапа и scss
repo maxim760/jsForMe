@@ -111,3 +111,12 @@ this.props.history.push(`/books/${itemId}`) // переход по этой сс
  RandomChar.defaultProps = {
     interval: 15000
 }
+
+Динамическая типизация проврека типа 
+RandomChar.propTypes = {
+    interval: PropTypes.number
+    getDate: PropTypes.arrayOf(PropTypes.object)
+}
+или через статик задать внутри класса
+import PropTypes from "prop-types"
+npm install prop-types - вроде так
