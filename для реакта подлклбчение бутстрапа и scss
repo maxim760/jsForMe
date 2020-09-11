@@ -102,3 +102,8 @@ Route path="/books/:id" render={
 // в локатион юрл
 history
 this.props.history.push(`/books/${itemId}`) // переход по этой ссылке
+
+обьявление дефолтных пропсов
+ static defaultProps = {
+        interval: 15000
+ } // пишем внури класса созданного, который используем
