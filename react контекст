@@ -1,0 +1,30 @@
+import Context from "./context"
+
+<Context.Provider value={{ removeTodo }}> 
+      <div className="wrapper">
+        <h1>React tutorial</h1>
+        <Modal />
+        <React.Suspense fallback={<Loader/>}>
+          <AddTodo onCreate={createTodo} />
+        </React.Suspense>
+        {loading && <Loader />}
+        {todos.length !== 0 ? <Todolist todos={todos} onToggle={toggleToDo} /> : (
+          loading ? null : <h2>Нет ToDo :(</h2>
+        )}
+      </div>
+    </Context.Provider> 
+    
+    
+    ------------
+    // более глубокий элемент
+    import Context from "../context"
+    const {removeTodo} = useContext(Context)
+    
+    <button className="rm" onClick={removeTodo.bind(null,id)}>&times;</button>
+    -----------
+    сам контекст
+    import React from 'react';
+
+const Context = React.createContext()
+
+export default Context
