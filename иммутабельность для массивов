@@ -3,6 +3,6 @@
     return {
         ...state,
         items: [
-            ...state.items.slice(0,itemIndex),...state.items.slice(itemIndex,-1)
+            ...state.items.slice(0,itemIndex),...state.items.slice(itemIndex + 1)
         ]
     }
