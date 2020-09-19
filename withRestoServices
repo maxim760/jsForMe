@@ -21,3 +21,4 @@ export default WithRestoService;
 ...
 export default WithRestoService()(connect(mapStateToProps,mapDispatchToProps)(CartTable))
 // оболочка которая оборачивает RestoService и помещает его в оборачеваемый элемент
+// это RestoService - находится в пропсах передоваемого элеметна
