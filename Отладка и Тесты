@@ -1,0 +1,165 @@
+пакеты для тестов:
+npm install enzyme enzyme-adapter-react-16 react-test-renderer
+или yarn enzyme enzyme-adapter-react-16 react-test-renderer
+и еще yarn add jest-extended --save-dev - для расширений воможностей джеста
+принцип тестировки- от простого к сложнному
+работа с фркеймворком jest - изначально встроен в крейт реакт эпп
+
+  
+import React from "react"
+import RandomChar from "./randomChar"
+import renderer from "react-test-renderer"
+
+// expect - проверяет на соответстиве
+// toMatchSnapshot() - делает снимок и будет всегда сравниватис  с тем что был иначально
+// если не совпало тест выдаст ошибку
+describe('Testing <random char />', () => {
+    it('RandomChar have render successfully', () => {
+        const char = renderer.create(<RandomChar />).toJSON()
+        expect(char).toMatchSnapshot()
+    })
+})
+
+// в консоли npm run test - для тестировки
+
+// также само для другого компонента
+import React from "react"
+import Header from "./header"
+import renderer from "react-test-renderer"
+
+
+describe('Testing <header />', () => {
+    it('Header have render successfully', () => {
+        const header = renderer.create(<Header />).toJSON()
+        expect(header).toMatchSnapshot()
+    })
+})
+
+// настрйока enzyme
+// в фалйе под src
+import {configure} from "enzyme"
+import Adapter from "enzyme-adapter-react-16"
+require("jest-extended")
+
+configure({adapter: new Adapter()})
+const config = {
+    "jest": {
+        "setupTestFrameworkScriptFile": "jest-extended"
+    }
+}
+
+export default config
+
+// изменили хеадер
+import React from "react"
+import Header from "./header"
+import {shallow} from "enzyme"
+
+
+describe('Testing <header />', () => {
+    it('Header have render successfully', () => {
+        const header = shallow(<Header />)
+        expect(header).toMatchSnapshot()
+    })
+})
+ // короче shallow - для копий
+ toMatchSnapshot // для снимков
+ 
+ // СНИМКИ НЕ САМОЕ ЭФФЕКТИВНОЕ
+   
+   
+   // рэндом чар проверка на обьект
+describe('Testing <random char />', () => {
+    it('RandomChar have render successfully', () => {
+        const char = shallow(<RandomChar />)
+        expect(char).toMatchSnapshot()
+    })
+    it("randomChar state 'char' is emptyObject(у стэйта который проверяем имя char) ", () => {
+        const char = shallow(<RandomChar />)
+        expect(char.state().char).toBeObject()
+    })
+})
+
+// чтобы изюбежать копий выносим вверх char
+describe('Testing <random char />', () => {
+    const char = shallow(<RandomChar />)
+    it('RandomChar have render successfully', () => {
+        expect(char).toMatchSnapshot()
+    })
+    it("randomChar state 'char' is emptyObject(у стэйта который проверяем имя char) ", () => {
+        expect(char.state().char).toBeObject()
+    })
+})
+
+// дополнили проверку на стэйт
+describe('Testing <random char />', () => {
+    const char = shallow(<RandomChar />)
+    it('RandomChar have render successfully', () => {
+        expect(char).toMatchSnapshot()
+    })
+    it("randomChar state 'char' is emptyObject(у стэйта который проверяем имя char) ", () => {
+        expect(char.state().char).toBeObject()
+    })
+    it("randomChar state 'loading' is true ", () => {
+        expect(char.state().loading).toBeTruthy()
+    })
+    it("randomChar state 'error' is false ", () => {
+        expect(char.state().error).toBeFalsy()
+    })
+})
+
+// дополнили проверкой событий
+describe('Testing <random char />', () => {
+    const char = shallow(<RandomChar />)
+    describe("Testing snap & state", () => {
+        it('RandomChar have render successfully', () => {
+            expect(char).toMatchSnapshot()
+        })
+        it("randomChar state 'char' is emptyObject(у стэйта который проверяем имя char) ", () => {
+            expect(char.state().char).toBeObject()
+        })
+        it("randomChar state 'loading' is true ", () => {
+            expect(char.state().loading).toBeTruthy()
+        })
+        it("randomChar state 'error' is false ", () => {
+            expect(char.state().error).toBeFalsy()
+        })
+    })
+    describe("Handler Test", () => {
+        it("testing onCHarLoaded", () => {
+            char.instance().onCharLoaded()
+            expect(char.state().loading).toBeFalsy() // ожидаем что функция onCharLoaded - перевет стэйт.лоадинг в фолс
+        })
+        it("testing onError", () => {
+            char.instance().onError()
+            expect(char.state().loading).toBeFalsy() // ожидаем что функция onCharLoaded - перевет стэйт.лоадинг в фолс
+            expect(char.state().error).toBeTruthy() // ожидаем что функция onCharLoaded - перевет стэйт.ерор в тру
+        })
+        it("testing updateChar", () => {
+            char.instance().updateChar()
+            expect(char.state().loading).toBeFalsy() // ожидаем что функция onCharLoaded - перевет стэйт.лоадинг в фолс
+        })
+    })
+
+})
+// char.instance() - вызвали чар
+
+// проверка собтий   
+
+// использование mount - проверка клика
+import React from "react"
+import ItemList from "./itemList"
+import {mount} from "enzyme"
+import gotService from "../../services/gotService"
+// mount в отличие от shallow - копирует не поврхностно а создает полную квложеенную копию
+describe("Testing snap & state", () => {
+    const service = new gotService()
+    const list = mount(<ItemList getDate={service.getAllHouses} renderItem={({name}) => name} />) // заглшука чтобы компонент не ломалсч при рендеринге
+    it("Click on itemList must rerender all list in 1 instance", () => {
+        list.setState({itemList: [{name: "www", id: 1},{name: "wwsdfs", id: 2} ]})
+        list.find(".list-group-item:first-child").simulate("click") // установили стэйт нашли новый лист айтем из симитировали клик по нему
+        expect(list.find("ul")).toHaveLength(1) // проверяем что при клике итем лист перерендеривается и создается ul (1)
+    })
+})
+
+
