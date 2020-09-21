@@ -1,0 +1,12 @@
+радиум расширение - для работы со стилями внутри js
+пример styles= {
+  border: "1px solid black";
+  ":hover": {
+    border: "1px solid blue";
+  }
+}
+
+return (
+  <div style={styles}>...</div>
+)
+// благодаря радиум можно юзать псевдоселекторы : ховер фокус и тд
