@@ -1,0 +1,9 @@
+const withClasses = (Component, className) => {
+  return props => {
+    return (
+      <div className={className}>
+        <Component {...props} />  
+      </div>
+    )
+  }
+}
