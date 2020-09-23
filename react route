@@ -5,7 +5,7 @@
 } />
 // 
 
-все приложение оборачиваем в BrowserRouter
+все приложение оборачиваем в BrowserRouter // ВАЖНО
 
 // для создания компонентов по определенным путям (* все приложение оборачиваем в BrowserRouter)
 // <Route path="..." component={Component} exact /> //exact если только по конкретно такой ссылке открывать
@@ -14,7 +14,7 @@
 
 // для повышения оптимизации оборачиваем все роуты в <Switch> и тогла будет показываться первый найденый и соответствующий ссылке и вроде оптимизация все дела
 // 
-// пример ссылок в Header'e ,лучше юзать NavLink, чем Link
+// пример ссылок в Header'e ,лучше юзать NavLink, чем Link // ВАЖНО
 <NavLink to="/" exact className="header__link" activeStyle={{opacity: "1"} activeClassName={"Название активного класса (например rout-active)"} > // тогда к нижнему линку тоже его добавляем этот же эктив класс
     Menu
 </NavLink> // смысл от exact такой же как и в Route
@@ -40,7 +40,7 @@ to= {
  
  ---------------------------
  ДИНАМИЧЕСКИЙ РОУТ
-  <Route path="/cars/:name" сomponent={CarDetail} />  // двоеточие отвечает за динамику
+  <Route path="/cars/:name" сomponent={CarDetail} />  // двоеточие отвечает за динамику// и то что после двоеточия сохраняется в match.params
   // в CarDetail
   // обернули в визРоутер (для функции матч)
   // передаю пропсы
@@ -54,3 +54,53 @@ to= {
     // например  <Route path="/cars/:name" сomponent={CarDetail} /> надо передавать перед <Route path="/cars" сomponent={CarDetail} /> 
     // иначе первым всегда будет появляться то что по пути "/cars"
   )
+
+//-------------- РЕДИРЕКТ ------------\\
+// роут отвечающий за редирект идет последним в свитче // если совпадений нет то он всегда будет рендериться в таком случае
+// 1 пример
+<Switch>
+    <Route path="/" component={имя компонента} />
+    <Route path="/aboute" component={имя компонента} />
+    <Route path="/cars/:name" component={имя компонента} />
+    <Route path="/cars" component={имя компонента} />
+    // далее последний роут // тут нужен свитч
+    <Route render={() => <h1 style={{color:"red",text-align: "center"}}>404 not  found</h1>} />    
+</Switch>
+
+// 2 пример (import {Redirect} from "react-router-dom")
+    <Route path="/" component={имя компонента} />
+    <Route path="/aboute" component={имя компонента} />
+    <Route path="/cars/:name" component={имя компонента} />
+    <Route path="/cars" component={имя компонента} />
+    // далее редирект
+    <Redirect from={"/about"} to={"/cars"} />   // редирект без свитча (такого типа) // если попадет на about - то сразу перекинет на cars 
+    
+// 3 пример (редирект если не нашлось страницицы)
+<Switch>
+    <Route path="/" component={имя компонента} />
+    <Route path="/aboute" component={имя компонента} />
+    <Route path="/cars/:name" component={имя компонента} />
+    <Route path="/cars" component={имя компонента} />
+    // далее последний роут // тут нужен свитч
+    <Redirect to={"/cars"}/>    // или to={"error"} // или to={"/"} - чтобы вернуться на главную страницу // смотря что передали 
+    // вроде самый лучшимй способ именно так обрабатывать неправильные юрл запросы!!!
+</Switch>
+
+
+------------------------------------------ ЗАЩИТА РОУТОВ ----------------------
+создаем стэйт 
+const [isAbout, setIsAbout] = useState(false)
+(дальше при клике кудa-нибудь стэйт может меняться на тру, и от этого зависит доступ к компоненту About по адресу /about)
+<Switch>
+    <Route path="/" component={имя компонента} />
+    
+    { isAbout ?  <Route path="/about" component={имя компонента} /> : null } // также в принципе место нулла можно возвращать редирект from={"/about"} to={"/любаяСтраница"}
+    
+    <Route path="/cars/:name" component={имя компонента} />
+    <Route path="/cars" component={имя компонента} />
+    <Redirect to={"/"} />
+</Switch>
+
+
+
+вот и все пока что
