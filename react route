@@ -15,10 +15,17 @@
 // для повышения оптимизации оборачиваем все роуты в <Switch> и тогла будет показываться первый найденый и соответствующий ссылке и вроде оптимизация все дела
 // 
 // пример ссылок в Header'e ,лучше юзать NavLink, чем Link
-<NavLink to="/" exact className="header__link" activeStyle={{opacity: "1"}} href="#">
-                Menu
-            </NavLink>
-            <NavLink to="/total" className="header__link" activeStyle={{opacity: "1"}} href="#">
-                <img className="header__cart" src={cartIcon} alt="cart"></img>
-                Total: {total} $
-            </NavLink>
+<NavLink to="/" exact className="header__link" activeStyle={{opacity: "1"} activeClassName={"Название активного класса (например rout-active)"} > // тогда к нижнему линку тоже его добавляем этот же эктив класс
+    Menu
+</NavLink> // смысл от exact такой же как и в Route
+<NavLink to="/total" className="header__link" activeStyle={{opacity: "1"}} >
+    <img className="header__cart" src={cartIcon} alt="cart"></img>
+    Total: {total} $
+</NavLink>
+
+// в NavLink в to можно передвать обьект :
+to= {
+    pathname: "/total",
+    search: "?a=1&b=2", // будет в юрл типа гет запросы
+    hash: "wfm-hash" // будет в юрл через решетку
+}
