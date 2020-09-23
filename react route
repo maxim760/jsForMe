@@ -3,3 +3,22 @@
         const {id} = match.params
     return <BooksItem bookId={id} />}
 } />
+// 
+
+все приложение оборачиваем в BrowserRouter
+
+// для создания компонентов по определенным путям (* все приложение оборачиваем в BrowserRouter)
+// <Route path="..." component={Component} exact /> //exact если только по конкретно такой ссылке открывать
+или 
+// <Route path="..." render={() => <Component />} exact /> //exact если только по конкретно такой ссылке открывать
+
+// для повышения оптимизации оборачиваем все роуты в <Switch> и тогла будет показываться первый найденый и соответствующий ссылке и вроде оптимизация все дела
+// 
+// пример ссылок в Header'e ,лучше юзать NavLink, чем Link
+<NavLink to="/" exact className="header__link" activeStyle={{opacity: "1"}} href="#">
+                Menu
+            </NavLink>
+            <NavLink to="/total" className="header__link" activeStyle={{opacity: "1"}} href="#">
+                <img className="header__cart" src={cartIcon} alt="cart"></img>
+                Total: {total} $
+            </NavLink>
