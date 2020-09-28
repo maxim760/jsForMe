@@ -1,0 +1,28 @@
+const loginHandler = async () => {
+        const authData = {
+            email: formControls.email.value,
+            password: formControls.password.value,
+            returnSecureToken: true
+        }
+        try {
+            const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBYyKHK9y2wiUeWQMHpjEEDizgmDCLymWw", authData)
+              console.log(response.data)
+        } catch (e) {console.log(e)}
+
+}
+const registerHandler = async() => {
+    const authData = {
+        email: formControls.email.value,
+        password: formControls.password.value,
+        returnSecureToken: true
+    }
+    try {
+        const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBYyKHK9y2wiUeWQMHpjEEDizgmDCLymWw", authData)
+        console.log(response.data)
+    } catch (e) {console.log(e)}
+}
+// функция входа и регистрации
+// key берем в настроках веб приложения , сначала вроде создаем веб приложения
+// докуметация по функциям тут https://firebase.google.com/docs/reference/rest/auth?hl=ru#section-sign-in-email-password
+// в проекте в authentification есть информация обо все пользрвателях
+// и надо обятаельно в настроках входа добавить вход по mail и пароль
