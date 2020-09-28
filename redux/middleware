@@ -1,0 +1,44 @@
+пример миддл вэера , подходит для ассинхронности в редусере
+import {createStore, applyMiddleware, compose} from "redux"
+import thunk from 'redux-thunk';
+import logger from "redux-logger"
+импортируем стор
+// можно передать и свои миддлвэеры:
+// function loggerMiddleware(store) {
+//    return function(next) {
+//        return function(action) {
+//            const result = next(action)
+//            console.log("Middleware", store.getState())
+//            return result
+//        }
+//    }
+//} // получаем весь стэйт приложения
+
+// через es6
+const loggerMiddleware = store => next => action => {
+    const result = next(action)
+    console.log("Middleware", store.getState())
+    return result
+} // получаем весь стэйт приложения
+
+
+const store = createStore(
+    rootReducer,
+    compose (
+        applyMiddleware(thunk, logger,loggerMiddleware),  // loggerMiddleware сами создали // по идее логгер должен быть 1 либо свой сделанный либо из redux-logger 
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+)
+// для поддержки асинхронн мидл ваер, то что дальше - для дев тулс(не нужно особо)
+
+export function async_increment() {
+    return function(dispatch) {
+        dispatch(disable_btn())
+        setTimeout(() => {
+            dispatch(increment())
+            dispatch(enable_btn())
+        }, 1500)
+    }
+}
+// благодря тхунку здесь внутри можно передать диспатч который выпонлятся после сет таймаута // асинхронность
+// логгер выводит в консоль изменения в редусере
