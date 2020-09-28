@@ -1,0 +1,55 @@
+структура
+
+=====================
+== файл actions.js ==
+=====================
+import {ADD,REMOVE,ADD_NUMBER} from "../actionTypes/actionTypes"
+
+const onAdd = (newMenu) => {return {type: ADD}}
+const onRemove = () => {return {type: REMOVE}}
+const onAddNumber = (num) => {return {type: ADD_NUMBER, payload: num}}
+
+export {onAdd,onRemove, onAddNumber}
+
+
+
+
+=====================
+== файл actionTypes.js ==
+=====================
+const ADD = "ADD"
+const REMOVE = "REMOVE"
+const ADD_NUMBER = "ADD_NUMBER"
+export {ADD, REMOVE, ADD_NUMBER}
+
+
+
+=====================
+== файл reducer.js ==
+=====================
+import {ADD, REMOVE, ADD_NUMBER} from "../actionTypes/actionTypes"
+const initialState = {
+    counter: 0
+}
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ADD:
+            return {
+               counter: state.counter + 1
+            }
+        case REMOVE:
+            return {
+               counter: state.counter - 1
+            }
+        case ADD_NUMBER:
+            return {
+               counter: state.counter + action.payload
+            }  
+        default: 
+            return state    
+    }
+}
+export default reducer
+---------------------------------------------
+// такая структура повышает безопасность, уменьшает вероятность опечатки, так как название хранится в одном месте и оно же экспортируется и в action и в reducer!!!
