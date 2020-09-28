@@ -44,3 +44,18 @@ export function async_increment() {
 // в диспатчах функции из action.js
 // благодря тхунку здесь внутри можно передать диспатч который выпонлятся после сет таймаута // асинхронность
 // логгер выводит в консоль изменения в редусере
+
+
+// для thunk
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    }) : compose;
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk)
+  )
+);
