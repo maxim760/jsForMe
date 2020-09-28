@@ -1,9 +1,8 @@
+// 3 компонента : Store, Actions, Reducer // лучше раскидать по разным файлам
 const redux = require("redux")
 
-3 компонента : Store, Actions, Reducer // лучше раскидать по разным файлам
-
 const initialState = {
-  counter: 0
+    counter: 0
 }
 
 // Reducer // action - Обязателньое поле type, всеьданные контект через параметр payload
@@ -11,30 +10,41 @@ const initialState = {
 
 const reducer = (state = initialState, action = {type:null}) => {
     switch(action.type) {
-      case "ADD":
-          return {
-            ...state,
-            counter: state.counter + 1
-          }
-      default:
-          return state
+        case "ADD":
+            return {
+                ...state,
+                counter: state.counter + 1
+            }
+        case "REMOVE":
+            return {
+                ...state,
+                counter: state.counter - 1
+            }
+        case "ADD_NUMBER":
+            return {
+                ...state,
+                counter: state.counter + action.payload
+            }
+        default:
+            return state
     }
 }
-
 // Store
 const store = redux.createStore(reducer)
+//подписываемся на изменения
+store.subscribe(() => {
+    console.log("Subscribe", store.getState())
+})
 
 // Actions // для изменения стора
 const addCounter = () => {return {type: "ADD"}}
+const removeCounter = () => {return {type: "REMOVE"}}
+const addNumber = (num) => {return {type: "ADD_NUMBER", payload: num}}
 
 
 
 // изменяем стор
 store.dispatch(addCounter())
-
-
-
-
-
-
-
+store.dispatch(removeCounter())
+store.dispatch(addNumber(7))
+// при изменениях применяется функция из subscribe
