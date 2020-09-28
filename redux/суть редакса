@@ -1,0 +1,40 @@
+const redux = require("redux")
+
+3 компонента : Store, Actions, Reducer // лучше раскидать по разным файлам
+
+const initialState = {
+  counter: 0
+}
+
+// Reducer // action - Обязателньое поле type, всеьданные контект через параметр payload
+// reducer возвращает стйэт всегда (обычный или измененный), реализация через свитч кейс
+
+const reducer = (state = initialState, action = {type:null}) => {
+    switch(action.type) {
+      case "ADD":
+          return {
+            ...state,
+            counter: state.counter + 1
+          }
+      default:
+          return state
+    }
+}
+
+// Store
+const store = redux.createStore(reducer)
+
+// Actions // для изменения стора
+const addCounter = () => {return {type: "ADD"}}
+
+
+
+// изменяем стор
+store.dispatch(addCounter())
+
+
+
+
+
+
+
