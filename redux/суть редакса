@@ -1,5 +1,6 @@
 // 3 компонента : Store, Actions, Reducer // лучше раскидать по разным файлам
-const redux = require("redux")
+const redux = require("redux") // для нод джс
+import redux from "redux" // для фронтенд приложения
 
 const initialState = {
     counter: 0
