@@ -31,6 +31,7 @@ const store = createStore(
 )
 // для поддержки асинхронн мидл ваер, то что дальше - для дев тулс(не нужно особо)
 
+// action.js
 export function async_increment() {
     return function(dispatch) {
         dispatch(disable_btn())
