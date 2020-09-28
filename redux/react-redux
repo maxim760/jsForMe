@@ -1,0 +1,16 @@
+yarn add react-redux // обьединение реакта и редакса
+// подключение к проекту
+import {Provider} from "react-redux" // оборачиваем в провайдер все приложение чтобы реакт понимал что работаем с редаксом
+
+import {createStore} from "redux"
+import Reducer from "./redux/reducer"
+
+const store = createStore(Reducer)
+
+const app = (
+  <Provider store = {store}> // все реакт приложение имеет доступ к стору, так как приложение обернули провайдером  с параметром стор
+    <App />
+  </Provider>
+)
+
+ReactDOM.render(app, document.getElementById("root"))
