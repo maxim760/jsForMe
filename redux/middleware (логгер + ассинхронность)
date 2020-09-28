@@ -1,6 +1,6 @@
 пример миддл вэера , подходит для ассинхронности в редусере
 import {createStore, applyMiddleware, compose} from "redux"
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'; // или reduxThunk
 import logger from "redux-logger"
 импортируем стор
 // можно передать и свои миддлвэеры:
