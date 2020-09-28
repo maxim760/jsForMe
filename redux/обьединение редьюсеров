@@ -1,0 +1,94 @@
+
+// файл counter1.js
+const initialState = {
+    counter: 0
+}
+const counter1 = (state = initialState, action) => {
+    switch (action.type) {
+        case "ADD":
+            return {
+               counter: state.counter + 1
+            }
+        case "REMOVE":
+            return {
+                counter: state.counter - 1
+            }
+        case "ADD_NUMBER":
+            return {
+                counter: state.counter + action.payload
+            }    
+        default: 
+            return state    
+    }
+}
+export default counter1
+
+---------------------
+
+// файл counter2.js
+const initialState = {
+    counter: 200
+}
+const counter2 = (state = initialState, action) => {
+    switch (action.type) {
+        case "ADD2":
+            return {
+               counter: state.counter + 1
+            }
+        case "REMOVE2":
+            return {
+                counter: state.counter - 1
+            }
+        case "ADD_NUMBER2":
+            return {
+                counter: state.counter + action.payload
+            }    
+        default: 
+            return state    
+    }
+}
+export default counter2
+
+// нужно обьединить в 1 редусер counter1 и counter2 (так как в стор передаем 1 только редусер)
+
+// файл reducer.js (он обьединяет)
+
+import {combineReducers} from "redux"
+import counter1 from "./reducers/counter1"
+import counter2 from "./reducers/counter2"
+
+// combineReducers - для обьединения редьюсеров
+
+export default combineReducers({
+    counter1,
+    counter2
+})
+
+// Возвращаемся к компоненту использующему редусеры
+const App = () => {
+  ... 
+  return (
+    ...
+  )
+}
+
+const mapStateToProps = () => {
+    // самое интересное: как теперь обращаться к нужной части обьединенного стэйта
+    // теперь стэйт содержит 2 обьекта counter1 и counter2, а дальше как обычно
+    return {
+      counter: state.counter1.counter // будем следить за 1 коунтером // чтобы не было конфликтов и ошибок названия action.type в 1 коунтере и 2 коунтере ДОЛЖНЫ ОТЛИЧАТЬСЯ
+      // так как эти коунтеры независимы друг от друга
+    }
+}
+
+export default connect(mapStateToProps)(App)
+
+
+
+
+
+
+
+
+
+
