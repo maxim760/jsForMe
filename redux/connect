@@ -1,0 +1,63 @@
+import {connect} from "react-redux"
+connect нужен чтобы иметь доступ к стору, который лежит в провайдере - connect - компонент высшего порядка
+const App = () => {
+  ...
+  return (
+  ...
+  )
+}
+// mapStateToProps - принимает state и дальше добалвяет его в пропсы
+function mapStateToProps(state) {
+    return {
+        counter: state.counter
+    }
+}
+
+// mapDispatchToProps - принимает dispatch и дальше добалвяет его в пропсы
+function mapDispatchToProps(dispatch) {
+    return {
+        onAdd: () => dispatch({type:"ADD"})
+        onRemove: () => dispatch({type:"REMOVE"})
+        // в редьюсере должны быть кейсы action.type = "ADD" и "REMOVE"
+    }
+}
+
+или имеем в проекте папку actions с нужными воздействиями на стор:
+это папка actions
+const onAdd = () => {return {type: "ADD"}}
+const onRemove = () => {return {type: "REMOVE"}}
+const onAddNumber = (num) => {return {type: "ADD_NUMBER",payload: num}}
+// так выглядит редусер
+--------------------
+const initialState = {
+    counter: 0
+}
+
+const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case "ADD":
+            return {
+                counter: state.counter + 1
+            }  
+        case "REMOVE":
+             return {
+                counter: state.counter - 1
+            }  
+        case "ADD_NUMBER":
+            return {
+                counter: state.counter + action.payload
+            }     
+        default: 
+            return state    
+    }
+}
+export default reducer
+--------------------
+тогда так выглядит mapDispatchToProps
+const mapDispatchToProps = {
+    onAdd,
+    onRemove,
+    onAddNumber // понятно что эти функции надо в начале импортировать из actions
+}
+// редакс сам понимает что нужен диспатч и все делает за нас в таком методе
+export default connect(mapStateToProps, mapDispatchToProps)(App) // оборачиваем в коннект и добавляем в пропсы state и dispatch чтобы взаимодействовать с store 
