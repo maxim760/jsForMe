@@ -11,6 +11,15 @@ const onAddNumber = (num) => {return {type: ADD_NUMBER, payload: num}}
 
 export {onAdd,onRemove, onAddNumber}
 
+// эти фцнкции добавляем в mapDispatchToProps:
+так - const mapDispatchToProps = {
+    onAddNumber
+}
+либо - function mapDispatchToProps(dispatch){
+    return {
+        onAddNumber: number => dispatch(onAddNumber(number))
+    }
+}
 
 
 
