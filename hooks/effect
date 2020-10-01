@@ -1,0 +1,45 @@
+import React, {useState, useEffect} from 'react';
+import './App.css';
+
+function App() {
+  const [type, setType] = useState("users")
+  const [device, setDevice] = useState("laptop")
+  const [pos, setPos] = useState({
+    x: 0,
+    y: 0
+  })
+  useEffect(() => {
+    console.log("type: " + type)
+    return () => console.log("clean type")
+  }, [type])
+  
+  const mouseMoveHandler = (event) => {
+    setPos({
+      x:event.offsetX,
+      y:event.offsetY,
+    })
+  }
+  useEffect(() => {
+    console.log("component did mount")
+    window.addEventListener("mousemove", mouseMoveHandler)
+    return () => window.removeEventListener("mousemove", mouseMoveHandler)
+  }, [])
+  // если меняю девайс, то useEffect не обновлятеся, всё ок)
+  return (
+    <div>
+      <h1>Ресурс: {type}<br />Девайс: {device}</h1>
+      <button className="btn btn-outline-info mr" onClick={() => {setType("users")}}>Пользователи</button>
+      <button className="btn btn-outline-info mr" onClick={() => {setType("todo")}}>Todo</button>
+      <button className="btn btn-outline-info mr" onClick={() => {setType("posts")}}>Посты</button>
+      <br />
+      <br />
+      <button className="btn btn-outline-info mr" onClick={() => {setDevice("laptop")}}>Ноутбук</button>
+      <button className="btn btn-outline-info mr" onClick={() => {setDevice("mobile")}}>Телефон</button>
+      <button className="btn btn-outline-info mr" onClick={() => {setDevice("desktop")}}>Компьютер</button>
+      <br/>
+      <pre>{JSON.stringify(pos,null,4)}</pre>
+    </div>
+  );
+}
+
+export default App;
