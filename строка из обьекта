@@ -2,3 +2,15 @@
 Object.entries(data[3]).flat().join(" ")
 получение только значений кроме тех полей которые не нужны
 console.log(Object.keys(data[3]).filter(item => item != "count").map(item => data[3][item]).join(" "))
+применение при поиске 
+search(value, callback) {
+    this.get(data => {
+      const result = data.filter(item => {
+        return Object.keys(item).filter(elem => elem != "count").map(elem => item[elem]).join(" ").toLowerCase().includes(value.toLowerCase())
+      })
+      // среди массива обьектов дата фильтруем те, которые дадут тру при условии: возвращаются все ключи обьекта кроме каунт ,получаются их значения которые
+      // соединяются в 1 строку черзе пробелы, приводятся к нижнему регистру(чтобы корректно работало совпадение) и в этой строке ищется то что мы ввели в вэлью (тоже в
+      нижем регистре)
+       callback(result)
+    })
+  },
