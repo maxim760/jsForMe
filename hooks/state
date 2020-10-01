@@ -1,0 +1,42 @@
+import React, {useState} from 'react';
+import './App.css';
+
+function App() {
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState({
+    title: "Счетчик",
+    date: new Date().getFullYear()
+  })
+  function changeCount(num,operation) { 
+    switch(operation) {
+      case "plus" : setCount(count + num)
+      break 
+    }
+    switch(operation) {
+      case "multi" : setCount(count * num)
+      break 
+    }
+  }
+  function updateTitle() {
+    setState( prev => {
+      return {...prev,title: "Новое название"}
+    })
+  }
+  return (
+    <div>
+      <h1>Счётчик: {count}</h1>
+      <button style={{marginRight:"4px"}} className="btn btn-success" onClick={changeCount.bind(null,1,"plus")}>Добавить</button>
+      <button style={{marginRight:"4px"}} className="btn btn-danger" onClick={changeCount.bind(null,-1,"plus")}>Убрать</button>
+      <button className="btn btn-info" onClick={changeCount.bind(null,2, "multi")}>Удвоить</button>
+      <br />
+      <br />
+      <button className="btn btn-secondary" onClick={updateTitle}>Изменить название</button>
+      <br />      
+      <br />      
+
+      <pre>{JSON.stringify(state,null, 4)}</pre>
+    </div>
+  );
+}
+
+export default App;
