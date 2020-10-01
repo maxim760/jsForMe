@@ -1,0 +1,40 @@
+import React, {useState, useEffect, useRef, useMemo} from 'react';
+import './App.css';
+
+function complexCompute(num) {
+  let i = 0
+  while (i < 1e9) {i++}
+  return num*2
+}
+
+function App() {
+  const [number, setNumber] = useState(42)
+  const [colored, setColored] = useState(false)
+
+  const styles = useMemo(() => {
+    return {
+      color: colored ? "darkred" : "black"
+  }}, [colored])
+  // обернули в мемо и за счет этого юз эффектс работает корректоно,( до этого он вызывался всегда так как 2 разных обьекта
+    // с одинаковысм значением не равны и оно обновлялось , - производителеьостт,теперь styles закэшировано и всё норм!!!))))
+    //теперь новый стайлс при рендере не создатся он будетв кэше благодаря юз мемо!!!
+  const computed = useMemo(() => {
+    return complexCompute(number)
+  }, [number]) // вычисления зависят только от намбера, если он менятеся- вычислять, если меняется допустим колорел, то не трогаем
+
+  useEffect(() => {
+    console.log("styles changed")
+  }, [styles])
+
+  return (
+    < >
+      <h1 style={styles}>Вычисляемое свойство: {computed}</h1>
+      <button className="btn btn-success mr" onClick={() => setNumber(prev => prev + 1)} >Добавить</button>
+      <button className="btn btn-danger mr" onClick={() => setNumber(prev => prev - 1)} >Убрать</button>
+      <button className="btn btn-info mr" onClick={() => setNumber(prev => prev * 2)} >Удвоить</button>
+      <button className="btn btn-warning" onClick={() => setColored(prev => !prev)} >Изменить</button>
+    </>
+  );
+}
+
+export default App;
