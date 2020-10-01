@@ -14,3 +14,10 @@ search(value, callback) {
        callback(result)
     })
   },
+или
+this.get(data => {
+      const result = data.filter(item => {
+        return Object.keys(item).filter(elem => ["category","subcategory","name","description"].includes(elem)).map(elem => item[elem]).join(" ").toLowerCase().includes(value.toLowerCase())
+      })
+      callback(result)
+    })
