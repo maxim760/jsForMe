@@ -1,0 +1,6 @@
+currRef - какая-то ссылка
+
+1) в этой вкладке
+document.location.href = currRef 
+2) на другую вкладку
+window.open(currRef, "_blank")
