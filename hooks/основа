@@ -1,0 +1,97 @@
+
+  
+import React, {useState, useEffect} from 'react';
+import './App.css';
+// хуки только в функциях работают!!! // вызываем хуки только в верхнем уровне 
+// хуки нельзя помещать во внутрь условия , условия должны быть внутри хука useEffect
+function App() {
+  const [count, setCount] = useState(0)
+  const [data, refreshData] = useState([{
+    name: "Maxim",
+    gender: "Male"
+  }])
+  const updateChar = () => {
+    // setCount(~~(20*Math.random()))
+  } // для проверки
+  // useEffect(() => {
+  //   console.log(~~(Math.random()*100))
+  //   console.log(data)
+  // })
+  //эффект совмещаетв в себе компонентДидМаунт, виллАпдейд и виллАнмоут - это называется эффекатми
+  useEffect(() => {
+    let timerId = setInterval(updateChar, 3000)
+    return () => {
+      clearInterval(timerId)
+    } // ретурн для имитации componentWillUnmount
+  })
+  let  id = 0
+
+  return (
+    <div className="App">
+      <p>Вы кликнули {count} раз</p>
+      <button onClick={() => setCount(count + 1)}>Кликни по мне</button>
+      {data.map(item => {
+        return (
+          <div key={id++}>Name: {item.name}, gender: {item .gender}</div>
+        )
+      })}
+      <button onClick={() => refreshData(data => ([...data,{name:"Evgen", gender: "Male"}]))}>Добавить данные</button>
+    </div>
+  );
+}
+
+export default App;
+
+// на примере приложения got
+переделали под функцию
+import React, {useEffect, useState} from 'react';
+import './itemList.css';
+import Spinner from "../spinner"
+import CheckData from "../checkData"
+// import PropTypes from "prop-types"
+
+function ItemList({getDate,onItemSelected,renderItem}) {
+
+    const [itemList, setItemList] = useState([])
+
+    useEffect(() => {
+        getDate()
+            .then((data) => {   
+                setItemList(data)
+            })
+    }, [])
+    // если передаем пустой массив - это значит выполнять эффект только при появлении или исчезновении компонента
+    // можно передвать и само зачение если оно примтив- строка число или булевое значениеy
+
+    renderItems = (arr) => {
+        return arr.map((item) => {
+            const label = renderItem(item)
+            const id = item.url.replace(/\D/g,"");
+            return (
+                <li key={id} className="list-group-item" onClick={() => onItemSelected(id)}>
+                    {CheckData(label)}
+                </li>
+            )
+        })
+    }
+
+    if(!itemList) {
+        return <Spinner />
+    }
+    const items = renderItems(itemList)
+    return (
+        <ul className="item-list list-group">
+            {items}
+        </ul>
+    );
+}
+// можно установить пропсы если вдруг не переданы
+// ItemList.defaultProps = {
+//     onItemSelected: () => {}
+// } // пустая функция , но зато чтобы не было ошибок если не передано
+// ItemList.propTypes = {
+//     onItemSelected: PropTypes.func
+// }
+
+export default ItemList
+
