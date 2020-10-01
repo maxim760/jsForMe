@@ -1,0 +1,4 @@
+получание стреки из обьекта!
+Object.entries(data[3]).flat().join(" ")
+получение только значений кроме тех полей которые не нужны
+console.log(Object.keys(data[3]).filter(item => item != "count").map(item => data[3][item]).join(" "))
