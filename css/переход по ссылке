@@ -8,5 +8,7 @@ window.open(currRef, "_blank")
 //
 у location есть метод
 location.search - показывает текущий запрос в адресной строке, типа коглда товары по разным категориям то удобно
+для того чтобы декодировать:
+search = decodeURI(location.search)
 location.hash - айдишник адресно строки, то что после #
 location.pathname - путь
