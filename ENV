@@ -6,6 +6,6 @@ REACT_APP_CLIENT_SECRET = 11bf2070d03e15f68a5199eb3ee1de95c41c6429
 // ОБРАЩЕНИЕ К ПЕРЕМЕННОЙ
 console.log(process.env.REACT_APP_CLIENT_SECRET)
 
-
+// только при разрпботке, дальше берем их из ноде джс проекта что тоже удобно для защиты данных
 
 
