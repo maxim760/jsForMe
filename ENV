@@ -1,8 +1,12 @@
 в src - создаем файл .env.local
 записывает туда нужные константы
 // обязателньо начало с REACT_APP
-REACT_APP_CLIEND_ID = 1aae2f79ca6577608f8e
-REACT_APP_CLIEND_SECRET = 11bf2070d03e15f68a5199eb3ee1de95c41c6429 
-
+REACT_APP_CLIENT_ID=1aae2f79ca6577608f8e
+REACT_APP_CLIENT_SECRET=11bf2070d03e15f68a5199eb3ee1de95c41c6429 
+// обязателньо без пробелов
 // ОБРАЩЕНИЕ К ПЕРЕМЕННОЙ
 console.log(process.env.REACT_APP_CLIENT_SECRET)
+
+
+
+
