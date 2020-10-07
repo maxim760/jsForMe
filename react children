@@ -1,0 +1,59 @@
+import React, {Component} from 'react';
+import './itemDetails.css';
+import CheckData from "../checkData"
+
+const Field = ({item, field, label}) => { // item назначаю через children // изначально его нет
+    return (
+        <li className="list-group-item d-flex justify-content-between">
+            <span className="term">{label}</span>
+            <span>{CheckData(item[field])}</span>
+        </li>
+    )
+}
+
+export {Field}
+
+export default class ItemDetails extends Component {
+    componentDidUpdate(prevProps) {
+        if(this.props.itemId !== prevProps.itemId) {
+            this.updateItem()
+        }
+    }
+    state = {
+        item: null
+    }
+    componentDidMount() {
+        this.updateItem()
+    }
+    updateItem = () => {
+        const {itemId, getDate} = this.props
+        if(!itemId) {
+            return;
+        }
+        if(itemId) {
+            getDate(itemId) 
+                .then((item) => {   
+                    this.setState({item})
+                })
+        }
+    }
+    render() {
+        if(!this.state.item) {
+            return <span className="select-error">Please select a {this.props.itemName}</span>
+        }
+        const {item} = this.state
+        const {name} = item
+        return (
+            <div className="item-details rounded">
+                <h4>{CheckData(name)}</h4>
+                <ul className="list-group list-group-flush">
+                    {
+                        React.Children.map(this.props.children, (child) => {
+                            return React.cloneElement(child, {item}) // {item:item}
+                        })
+                    }
+                </ul>
+            </div>
+        );
+    }
+}
