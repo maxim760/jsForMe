@@ -41,8 +41,9 @@ yarn add enzyme enzyme-adapter-react-16 react-test-renderer
 
 // ТЕСТ
 
-import {configure} from 'enzyme'
+import {configure, shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import App from "./App.js
 
 configure({
   adapter: new Adapter()
@@ -51,7 +52,7 @@ configure({
 describe('<App />', () => {
 
   it('Should render 3 characters in light side', () => {
-
+      const wrapper = shallow()
   })
 
 })
