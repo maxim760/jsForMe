@@ -1,0 +1,34 @@
+// == ПРИЛОЖЕНИЕ == \\
+
+import React, {useState} from 'react';
+
+function App({side}) {
+  if(!side) {
+    side = "light"
+  }
+  const characters = [
+    {name:"Люк Скайвокер", side:"light"},
+    {name:"Йода", side:"light"},
+    {name:"Обиван Кеноби", side:"light"},
+    {name:"Палпатин", side:"dark"},
+    {name:"Дарт Вэйдер", side:"dark"},
+  ]
+  const filteredChars = characters.filter(char => char.side === side)
+  return (
+    <ul>
+      {filteredChars.map((char,i) => {
+        return (
+          <Character key={char.name + i} side={char.side} name={char.name} />
+        )
+      })}
+    </ul>
+  )
+}
+export default App;
+
+// Character
+export default Character({name,side}) {
+  return (
+    <li>{name} - <b>{side}</b></li>
+  )
+}
