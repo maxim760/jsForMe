@@ -32,3 +32,26 @@ export default Character({name,side}) {
     <li>{name} - <b>{side}</b></li>
   )
 }
+
+// ПАКЕТЫ
+yarn add enzyme enzyme-adapter-react-16 react-test-renderer
+
+// СОЗДАЕМ ФАЙЛ App.test.js рядом с App.js
+
+
+// ТЕСТ
+
+import {configure} from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+configure({
+  adapter: new Adapter()
+})
+
+describe('<App />', () => {
+
+  it('Should render 3 characters in light side', () => {
+
+  })
+
+})
