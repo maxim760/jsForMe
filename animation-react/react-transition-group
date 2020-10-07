@@ -3,3 +3,83 @@ yarn add react-transition-group
 
 import {Transition} from "react-transition-group"
 // Компоненты: Transition, CSSTransition, SwitchTransition, TransitionGroup
+
+//оборачиваем в transition анимируемый элемент
+ return (
+    <div className="container">
+      <button onClick={() => setToggle(prev => !prev)}>Toggle</button>
+      <hr />
+      <div className="blocks">
+        <Transition>
+          <div className="square square--blue" >{toggle.toString()}</div>
+        </Transition> 
+      </div>
+    </div>
+
+// CSS ЧАСТЬ
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+
+  &--blue {
+    background-color: cornflowerblue;
+  }
+  &--orange {
+    background-color: coral;
+  }
+
+  &.entering { // ДЛЯ STATE
+    animation: square 1000ms ease-out forwards ;
+  }
+  
+  &.exiting { // ДЛЯ STATE
+    animation: square 500ms ease-in reverse forwards;
+  }
+
+  &.exited { // ДЛЯ STATE
+    opacity: 0;
+  }
+
+}
+@keyframes square {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px)
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(30px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0)
+
+  }
+}
+// JS
+
+<div className="blocks">
+  <Transition
+  
+    in={toggle} // true/false - показывать или нет //
+    // 4 состония entered entering exited exiting   // можем определить 4 класса в css и использоваться они будут во время нужного стэйта
+    // timeout={1000} // duration
+    timeout={{ // или как обьект
+      enter: 1000,
+      exit: 500
+    }}
+    mountOnEnter // добавлят в дом дерево при enter
+    unmountOnExit // удаляет из дом дерева  при exit
+    onEnter = {() => console.log("onEnter")}
+    onEntering = {() => console.log("onEntering")}
+    onEntered = {() => console.log("onEntered")}
+    onExit = {() => console.log("onExit")}
+    onExiting = {() => console.log("onExiting")}
+    onExited = {() => console.log("onExited")}
+  >
+    { state => <div className={`square square--blue ${state}`} >{state}</div>} // именно такая структура записи!!! как фукнция!!!
+  </Transition> 
+</div>
