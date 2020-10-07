@@ -1,0 +1,8 @@
+import PropTypes from "prop-types"
+//можно установить пропсы если вдруг не переданы
+ItemList.defaultProps = {
+    onItemSelected: () => {}
+} // пустая функция , но зато чтобы не было ошибок если не передано
+ItemList.propTypes = {
+    onItemSelected: PropTypes.func
+}
