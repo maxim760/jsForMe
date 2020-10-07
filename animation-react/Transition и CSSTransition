@@ -1,0 +1,100 @@
+Transition через стэйт с зафиксированными для state классами
+CSSTransition - названия классво можно идентифицировать, но часть после идентификации сохраняется всегда
+// и стэйт не нужен для создания элемента // более удобно
+
+//  == Transition == \\
+
+<Transition
+  in={toggle} // true/false - показывать или нет //
+  // 4 состония entered entering exited exiting   // можем определить 4 класса в css и использоваться они будут во время нужного стэйта
+  // timeout={1000} // duration
+  timeout={{ // или как обьект
+    enter: 1000,
+    exit: 500
+  }}
+  mountOnEnter // добавлят в дом дерево при enter
+  unmountOnExit // удаляет из дом дерева  при exit
+  onEnter = {() => console.log("onEnter")}
+  onEntering = {() => console.log("onEntering")}
+  onEntered = {() => console.log("onEntered")}
+  onExit = {() => console.log("onExit")}
+  onExiting = {() => console.log("onExiting")}
+  onExited = {() => console.log("onExited")}
+>
+  { state => <div ref={ref} className={`square square--blue ${state}`}  >{state}</div>} 
+</Transition> 
+
+// CSS
+.square {
+  ...
+  &.entered {}
+  &.entering {
+    animation: square 1000ms ease-out forwards ;
+  }
+  &.exiting {
+    animation: square 500ms ease-in reverse forwards;
+  }
+  &.exited {
+    opacity: 0;
+  }
+}  
+@keyframes square {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px)
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(30px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0)
+  }
+}  
+
+
+//  == CSSTransition == \\
+
+<CSSTransition
+  in={toggle2}
+  timeout={{
+    enter:1000,
+    exit:500
+  }}
+  mountOnEnter            
+  unmountOnExit
+  classNames="os" // для более точечного / конретного названия класса
+>
+  <div className="square square--orange">
+    {toggle2.toString()} 
+  </div>
+</CSSTransition>
+
+//css
+os - так как такое задали в classNames
+.os-enter { // начало анимации
+  opacity: 0;
+}
+
+.os-enter-active { // процесс анимации
+  opacity: 1;
+  transition: opacity 1s;
+}
+// .os-enter-done { // анимация закончена
+//   transform: translateX(0);
+// }
+
+.os-exit { // начало анимации выхода
+  opacity: 1;
+}
+
+.os-exit-active { // процесс анимации выхода
+  opacity: 0;
+  transition: opacity 1s;
+}
+.os-exit-done { // анимация выхода закончена
+  opacity: 0;
+}
+
+
