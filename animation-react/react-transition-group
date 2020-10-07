@@ -1,1 +1,5 @@
 yarn add react-transition-group
+
+
+import {Transition} from "react-transition-group"
+// Компоненты: Transition, CSSTransition, SwitchTransition, TransitionGroup
