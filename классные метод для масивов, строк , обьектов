@@ -1,0 +1,23 @@
+foreach
+filter
+map
+reduce
+find
+findIndex
+some
+
+let obj1 = {a:1}
+let obj2 = {b:2}
+Object.assign(obj1,obj2)
+obj1 дополонился обжем 2
+obj2 не изм.
+
+let obj3 = Object.assign({},obj1,obj2)
+создали новый обьекто обьединив обж1 и обж2
+
+для строк 
+let str="pleaseRepeat"
+console.log(str.repeat(3)) // pleaseRepeatpleaseRepeatpleaseRepeat
+
+str.startsWith("что-то", index (с которой начинать))
+str.includes("text", index)
