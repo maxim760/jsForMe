@@ -1,0 +1,53 @@
+import styled from "styled-components"
+
+const AppBlock = styled.div`
+    margin: 0 auto;
+    max-width: 800px;
+`
+
+const StyledAppBlock = styled(AppBlock)`
+    background-color: rgba(80,80,222,0.25);
+    padding:15px;
+    border-radius:15px;
+`
+
+// c помощью такой конструкции можно дополнять существующий элемент styled
+
+export default class App extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                {label: "Going to Learn React", important: true,like: false, id: 1},
+                {label: "That is so good", important: false,like: false, id: 2},
+                {label: "I need a break...", important: false,like: false, id: 3}
+            ],
+            term: "",
+            filter: "all"
+        }
+        this.maxId = 4
+    }
+
+    render() {
+        const {data,term, filter} = this.state
+        const liked = data.filter(el => el.like).length
+        const allPosts = data.length
+        const visiblePosts = this.filterPost(this.searchPost(data, term), filter)
+        return (
+            <StyledAppBlock>
+                <AppHeader liked={liked} allPosts={allPosts}/>
+                <div className="search-panel d-flex">
+                    <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+                    <PostStatusFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
+                </div>
+                <PostList
+                 posts={visiblePosts}
+                 onDelete={(id) => this.deleteItem(id)}
+                 onToggleLiked={this.onToggle}   
+                 onToggleImportant={this.onToggle}   
+                 />
+                <PostAddForm  onAdd={this.addItem}/>
+            </StyledAppBlock>    
+        )
+    }
+}
