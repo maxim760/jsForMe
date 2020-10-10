@@ -1,3 +1,5 @@
+// ЕЩЕ можно стилизовать за счет использования reactstrap
+
 import styled from "styled-components"
 
 const AppBlock = styled.div`
