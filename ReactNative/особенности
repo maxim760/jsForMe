@@ -6,3 +6,5 @@ fontSize: 30
 
 <Button title="Добавить" /> - так текст в кнопке пишется
 <TextInput /> - для инпута
+
+onPress - вместо onClick
