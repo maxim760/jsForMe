@@ -1,0 +1,13 @@
+Для скролла оборачеваем весь проект в <ScrollView>
+<ScrollView>
+  <Navbar title="Todo App" />
+  <View style={styles.container}>
+    <AddTodo onSumbit={addTodo} />
+    <View>
+      {todos.map((todo) => (
+        <Todo key={todo.id} todo={todo} />
+      ))}
+    </View>
+  </View>
+</ScrollView>
+// если обернуть не всё а какую-то часть, где нужен скролл,то скоролл может быть не полным
