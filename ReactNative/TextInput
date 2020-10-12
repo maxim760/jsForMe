@@ -1,0 +1,8 @@
+<TextInput
+          value={value} 
+          onChangeText={ text => changeHandler(text)} // если нужен только текст, лучше юзать onChangeText
+          style={styles.input} 
+          placeholder="Введите название дела"
+          autoCorrect={false} // изначально автокоррекция - тру
+          autoFocus={true}
+      />
