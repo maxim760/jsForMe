@@ -1,2 +1,18 @@
 import {Alert} from "react-native"
 Alert.alert("Строка не должна быть пустой!") // покзаывает собщению пользователю
+более полно
+Alert.alert('Alert Title', // title
+      'My Alert Msg', // text
+      [
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed')
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { text: 'OK', onPress: () => console.log('OK Pressed') }
+      ], // buttons
+      { cancelable: false }) // options
