@@ -31,3 +31,107 @@
 
 // РЕШЕНИЕ ПРОБЕЛЫ СО СКРОЛЛОМ 
 // В РОДИТЕЛЬСКИХ ЭЛЕМЕНТАХ ПИШЕМ flex:1 в стилях!!! и возможно в самом проскроливаемом элементе (не всегда, но знать надо)
+
+// ИТОГО РЕАЛИЗАЦИЯ НА ScrollView :
+============================================================================================================
+import React, {useState} from 'react';
+import { StyleSheet, View, ScrollView, FlatList } from 'react-native';
+import {Navbar} from "./src/navbar"
+import { AddTodo } from './src/addTodo';
+import { Todo } from './src/todo';
+
+export default function App() {
+  const [todos, setTodos] = useState([])
+
+  const addTodo = (title) => {
+    const newTodo = {
+      id: Date.now().toString(),
+      title
+    }
+    setTodos(prev => [...prev,newTodo])
+  }
+
+  return (
+    <View style={{flex:1}}>
+      <Navbar title="Todo App" />
+      <View style={styles.container}>
+        <AddTodo onSumbit={addTodo} />
+        <ScrollView>
+          {todos.map((todo) => (
+            <Todo key={todo.id} todo={todo} />
+          ))}
+        </ScrollView>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    flex: 1
+  }
+});
+============================================================================================================
+// на FlatList
+============================================================================================================
+import React, {useState} from 'react';
+import { StyleSheet, View, ScrollView, FlatList } from 'react-native';
+import {Navbar} from "./src/navbar"
+import { AddTodo } from './src/addTodo';
+import { Todo } from './src/todo';
+
+export default function App() {
+  const [todos, setTodos] = useState([])
+
+  const addTodo = (title) => {
+    const newTodo = {
+      id: Date.now().toString(),
+      title
+    }
+    setTodos(prev => [...prev,newTodo])
+  }
+
+  return (
+    <View style={{flex:1}}>
+      <Navbar title="Todo App" />
+      <View style={styles.container}>
+        <AddTodo onSumbit={addTodo} />
+        <FlatList
+          keyExtractor={item => item.id}
+          data={todos}
+          renderItem={({item}) => (
+            <Todo todo={item} />
+          )}
+        />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    flex: 1
+  }
+});
+
+============================================================================================================
+
+САМО СРАВНЕНИЕ VS
+
+<FlatList
+  keyExtractor={item => item.id}
+  data={todos}
+  renderItem={({item}) => (
+    <Todo todo={item} />
+  )}
+/>
+
+<ScrollView>
+  {todos.map((todo) => (
+    <Todo key={todo.id} todo={todo} />
+  ))}
+</ScrollView>
