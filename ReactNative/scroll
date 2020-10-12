@@ -137,3 +137,5 @@ const styles = StyleSheet.create({
     <Todo key={todo.id} todo={todo} />
   ))}
 </ScrollView>
+
+// в FlatList'e keyExtractor должен быть строкой!!
