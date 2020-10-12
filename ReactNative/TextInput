@@ -6,5 +6,6 @@
           autoCorrect={false} // изначально автокоррекция - тру
           autoFocus={true}
           autoCapitalize="words" // при каждом новом слове по умолчанию клавиатура переводится на верхний регистр 
+          keyboardType="phone-pad"
       />
 keyboardType -  параметр для выбора типа показываемой клавиатуры
