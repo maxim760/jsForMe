@@ -1,0 +1,2 @@
+import {Alert} from "react-native"
+Alert.alert("Строка не должна быть пустой!") // покзаывает собщению пользователю
