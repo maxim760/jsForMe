@@ -2,6 +2,7 @@ Installation
 Install it via npm:
 
 npm i -S react-native-loader
+yarn add @react-native-community/art
 Android
 For Android, it works out of the box.
 
