@@ -3,6 +3,14 @@ Install it via npm:
 
 npm i -S react-native-loader
 yarn add @react-native-community/art
+в node-modules/react-native-loader/src добавить выборочно useNativeDriver: true // если добавить полностью то анимации не будет пожтому потыкать разобраться
+const animateIn = () => {
+  Animated.timing(animatePress, {
+    toValue: 0.5,
+    duration: 500,
+    useNativeDriver: true // Add This line !!!!!!!
+  }).start();
+
 Android
 For Android, it works out of the box.
 
