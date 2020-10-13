@@ -18,3 +18,17 @@ import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
   <Pulse size={10} color="#52AB42" />
   <DoubleBounce size={10} color="#1CAFF6" />
 </View>
+
+ИЛИ
+
+import React from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+
+const App = () => (
+  <View style={[styles.container, styles.horizontal]}>
+    <ActivityIndicator />
+    <ActivityIndicator size="large" />
+    <ActivityIndicator size="small" color="#0000ff" />
+    <ActivityIndicator size="large" color="#00ff00" />
+  </View>
+);
