@@ -14,3 +14,5 @@ import LOGOSVG from "assets/svg/logo.svg"
     height="70%"
   />
 </View>
+
+или react-native-svg
