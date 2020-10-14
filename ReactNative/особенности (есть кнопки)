@@ -23,6 +23,18 @@ onPress - вместо onClick
 onLongPress - длинное нажатие
 reactNative - требует уникальный ключ key в качестве строки
 
+// IMAGE
+<Image
+  style={styles.tinyLogo}
+  source={require('@expo/snack-static/react-native-logo.png')} // внутри require - путь
+/> // ЛОКАЛЬНАЯ
+<Image
+  style={styles.tinyLogo}
+  source={{
+    uri: 'https://reactnative.dev/img/tiny_logo.png',
+  }}
+/>  // ИЗ ИНЕТА
+
 работа с инпутом
 ===============================================================
 import React, {useState} from 'react';
