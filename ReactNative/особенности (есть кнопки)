@@ -27,7 +27,7 @@ reactNative - требует уникальный ключ key в качеств
 <Image
   style={styles.tinyLogo}
   source={require('@expo/snack-static/react-native-logo.png')} // внутри require - путь
-/> // ЛОКАЛЬНАЯ
+/> // ЛОКАЛЬНАЯ // предпочтительнее
 <Image
   style={styles.tinyLogo}
   source={{
