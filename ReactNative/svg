@@ -1,0 +1,16 @@
+
+Установите react-native-svg-transformer
+
+npm i react-native-svg-transformer --save-dev
+
+Я использую SVG следующим образом, и он отлично работает
+
+import LOGOSVG from "assets/svg/logo.svg"
+в рендере
+
+<View>
+  <LOGOSVG 
+    width="100%"
+    height="70%"
+  />
+</View>
