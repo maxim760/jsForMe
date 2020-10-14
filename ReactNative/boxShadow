@@ -1,0 +1,18 @@
+
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent: "space-between",
+    backgroundColor: "#fff", // ОБЯЗАТЕЛЬНО УКАЗЫВАТЬ
+    borderRadius: 10,
+    padding: 20,
+    
+    // IOS
+    shadowColor: "#000",
+    shadowRadius: 2,
+    shadowOpacity: 0.7,
+    shadowOffset: {width:2,height:2},
+    
+    // ANDROID
+    elevation: 8, 
+    
+    // для более гибкой настройки теней на анроид импортировать библиотек, например react-native-simple-shadow-view или react-native-shadow
