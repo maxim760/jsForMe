@@ -1,0 +1,17 @@
+
+
+Use this for padding:
+
+function padding(a, b, c, d) {
+  return {
+    paddingTop: a,
+    paddingRight: b ? b : a,
+    paddingBottom: c ? c : a,
+    paddingLeft: d ? d : (b ? b : a)
+  }
+}
+
+
+In practice
+
+<Text style={{[...], color: "black", ...padding(10, 20, 10, 5)}}>Some text</Text>
