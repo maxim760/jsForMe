@@ -10,6 +10,13 @@ transparent <=> "rgba(0,0,0,0)"
 К Button нельзя применить style, настроить кнопку только через атрибуты(там есть color еще )
 чтобы применить стили: надо создать TouchableOpacity , его настроить и  кнему стили
 ИЛИ кнопку обернуть во View
+Border-radius из View:
+width: "40%",
+borderRadius: 25,
+overflow: "hidden",
+// без overflow - не сработает
+
+--------
 <TextInput /> - для инпута
 
 onPress - вместо onClick
