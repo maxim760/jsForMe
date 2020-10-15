@@ -10,7 +10,7 @@ import {FontAwesome,AntDesign} from "@expo/vector-icons"
 <AppButton 
     onPress={() => setIsModal(true)}
 >
-    <FontAwesome name="edit" size={20}/>
+    <FontAwesome name="edit" size={20} color="#fff"/>
 </AppButton> , также внутрь апп баттон можно обычный текст добалвять
 
 , где AppButton:
