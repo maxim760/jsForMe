@@ -1,0 +1,5 @@
+import {AntDesign} from "@expo/vector-icons"
+
+<AntDesign.Button onPress={pressHandler} name="pluscircleo">
+        Добавить 
+</AntDesign.Button>
