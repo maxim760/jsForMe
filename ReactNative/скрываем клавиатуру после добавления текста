@@ -1,0 +1,12 @@
+import {View,TextInput,Button, StyleSheet, Alert, Keyboard} from "react-native"
+
+const pressHandler = () => {
+    if(value.trim()) {
+      onSumbit(value)
+      setValue("")
+      Keyboard.dismiss()
+    } else {
+      Alert.alert("Строка не может быть пустой!")
+      setValue("")
+    }
+  }
