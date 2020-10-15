@@ -1,0 +1,90 @@
+npm install expo-font
+
+в App.js
+import * as Font from "expo-font"
+import {AppLoading} from "expo"
+
+async функция для шрифтов 
+------------------------------------------------
+export default function App() {
+  const [isReady, setIsReady] = useState(false)
+  const [todoId, setTodoId] = useState(null)
+  const [todos, setTodos] = useState([])
+
+  async function loadApplication() {
+    await Font.loadAsync({
+      "roboto-regular": require("./assets/fonts/Roboto-Regular.ttf"), // ссылки на шрифты который скачал с гугл фонт и добавил по этому пути
+      "roboto-bold": require("./assets/fonts/Roboto-Bold.ttf")
+    })
+  }
+
+  if(!isReady) {
+    return (
+      <AppLoading 
+        startAsync={loadApplication} 
+        onError={err => console.log(err)} 
+        onFinish={() => setIsReady(true)}
+      />
+    )
+  }
+------------------------------------------------  
+
+// В ПАПКЕ COMPONENTS/UI - компонент шрифтов
+// REGULAR
+import React from 'react'
+import {Text, StyleSheet} from "react-native"
+
+export const AppText = props => {
+  return <Text style={{...styles.default, ...props.style}}>{props.children}</Text>
+}
+
+const styles = StyleSheet.create({
+  default: {
+    fontFamily: "roboto-regular"
+  }
+})
+// BOLD
+import React from 'react'
+import {Text, StyleSheet} from "react-native"
+
+export const AppTextBold = props => {
+  return <Text style={{...styles.default, ...props.style}}>{props.children}</Text>
+}
+
+const styles = StyleSheet.create({
+  default: {
+    fontFamily: "roboto-bold"
+  }
+})
+// ----------------------------------------
+ИСПОЛЬЗОВАНИЕ
+------------------------------
+Какой-нибудь компонент
+---------
+import React from 'react';
+import {View, StyleSheet} from "react-native"
+import {THEME} from "../theme"
+import { AppTextBold } from './ui/AppTextBold';
+
+export const Navbar = ({title}) => {
+  return (
+    <View style={styles.navbar} >
+      <AppTextBold style={styles.text}>{title}</AppTextBold> // ВОТ ОН
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  navbar: {
+    height: 70,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    backgroundColor: THEME.MAIN_COLOR,
+    paddingBottom: 10,
+  },
+  text: {
+    color: "white",
+    fontSize: 20
+  }
+})
