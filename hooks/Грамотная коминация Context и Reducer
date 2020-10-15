@@ -1,0 +1,58 @@
+3 файла
+1) Контекст (создание контекста)
+2) Редьюсер ( action type и кейсы что делать)
+3) State (Всё взаимодействие и функционал)
+// базовая структура
+
+TodoState.js
+TodoReducer.js
+TodoContext.js
+
+************************************************************************
+TodoContext.js
+************************************************************************
+import React from 'react'
+
+export const TodoContext = React.createContext()
+************************************************************************
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+************************************************************************
+TodoReducer.js
+************************************************************************
+export const TodoReducer = (state,action = {type : null}) => {
+  switch(action.type) {
+    default:
+      return state
+  }
+}
+************************************************************************
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+************************************************************************
+TodoState.js
+************************************************************************
+import React, {useReducer} from 'react'
+import {TodoContext} from "./todoContext"
+import {TodoReducer} from "./todoReducer"
+
+export const TodoState = ({children}) => {
+  const initialState = {
+    todos: [{id: "1", title: "Выучить React Native"}]
+  }
+  const [state, dispatch] = useReducer(TodoReducer, initialState)
+
+
+  return (
+    <TodoContext.Provider value={{
+      todos: state.todos,
+    }}>
+      {children}
+    </TodoContext.Provider>
+  )
+}
+************************************************************************
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
