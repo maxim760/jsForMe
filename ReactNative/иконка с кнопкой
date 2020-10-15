@@ -5,6 +5,9 @@ import {AntDesign} from "@expo/vector-icons"
         Добавить 
 </AntDesign.Button>
 
+или так
+ <AppButton onPress={saveHandler} >Сохранить <FontAwesome name={"save"}  /> </AppButton>
+
 // без текста
 import {FontAwesome,AntDesign} from "@expo/vector-icons"
 <AppButton 
