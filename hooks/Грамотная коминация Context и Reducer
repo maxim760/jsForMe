@@ -64,3 +64,13 @@ return (
     <MainLayout />
   </TodoState>
 )
+
+// Заюзали стэйт
+import {TodoContext} from "./context/todo/todoContext"
+
+const {todos} = useContext(TodoContext)
+
+Возвращаю его или можно сразу где надо получать и на страницу!
+<MainScreen todos={todos}>
+
+// Заюзали Диспатч
