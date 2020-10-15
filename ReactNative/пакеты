@@ -3,3 +3,8 @@ expo init AwesomeProject
 
 cd AwesomeProject
 npm start # you can also use: expo start
+
+// для иконок
+npm install @expo/vector-icons
+//для шрифтов
+npm install expo-font
