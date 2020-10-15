@@ -105,6 +105,8 @@ export const TodoState = ({children}) => {
 
 // ИСПОЛЬЗОВАНИЕ
 Обернули все приложение воркуг TodoState
+import { TodoState } from './src/context/todo/todoState';
+
 return (
   <TodoState>
     <MainLayout />
