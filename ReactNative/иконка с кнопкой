@@ -1,3 +1,4 @@
+// для кнопок с текстом 
 import {AntDesign} from "@expo/vector-icons"
 
 <AntDesign.Button onPress={pressHandler} name="pluscircleo">
