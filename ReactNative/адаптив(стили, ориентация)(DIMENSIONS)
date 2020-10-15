@@ -1,0 +1,16 @@
+// СТИЛИ
+
+import {View, StyleSheet, Button, Dimensions} from "react-native"
+
+const styles = StyleSheet.create({
+  button: {
+      // width: Dimensions.get("window").width / 3 ,
+      width: Dimensions.get("window").width > 400 ? 150 : Dimensions.get("screen").width > 350 ? 125 : 100 ,
+  }
+})
+
+// ОРИЕНТАЦИЯ
+в app.json:
+"orientation": "default" - и вертикальная и горизонтальная ориентация
+"orientation": "portrait" - только вертикальная
+// как только внесены изменения => пересобрат приложение
