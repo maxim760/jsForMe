@@ -10,3 +10,7 @@ const pressHandler = () => {
       setValue("")
     }
   }
+
+--------------------|
+Keyboard.dismiss()--|
+--------------------|
