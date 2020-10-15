@@ -1,6 +1,8 @@
+...Context.js
 import React, {useContext, useReducer} from "react"
 const AlertContext  = React.createContext()
 // const AlertToggleContext  = React.createContext()
+
 export const useAlert = () => {
     return useContext(AlertContext)
 }
