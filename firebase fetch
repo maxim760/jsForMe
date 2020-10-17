@@ -38,3 +38,27 @@ const addTodo = async (title) => {
     dispatch({type: ADD_TODO,payload: {id:idName,title}})
   }
   
+//PATCH\\
+const editTodo = async (id,title) => {
+    showLoader()
+    clearError()
+    try {
+      await fetch(`https://react-native-todoapp-89196.firebaseio.com/todos/${id}.json`,{
+        method: "PATCH", // ЧАСТЬ ОБЬЕКТА // ЕСЛИ ВЕСЬ ОБЬЕКТ ТО НАДО PUT
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({title}) // изменили только тайтл
+      })
+      dispatch({type: EDIT_TODO,payload: {title,id}})
+    } catch(e) {
+      showError("Что-то пошло не так...\nПопробуйте снова.")
+    } finally {
+      hideLoader()
+    }
+    
+  }
+---
+функция которая вызывает это, теперь асин авэйт, чтобы было корректно
+ const editTodoHandler = async (title) => {
+    await editTodo(todo.id,title)
+    setIsModal(false)
+  }
