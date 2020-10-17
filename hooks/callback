@@ -33,4 +33,4 @@ const loadTodos = useCallback( async () => {
 
   useEffect(() => {
     loadTodos()
-  })
+  }, [])
