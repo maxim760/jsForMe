@@ -41,3 +41,5 @@ const App = () => (
     <ActivityIndicator size="large" color="#00ff00" />
   </View>
 );
+ ИЛИ (РЕШЕНИЕ С КУРСА ВЛАДИЛЕНА)
+ 
