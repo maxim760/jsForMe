@@ -1,5 +1,9 @@
 //get\\
-try {
+  const fetchTodos = async () => {
+    showLoader()
+    clearError()
+    try {
+      let todos = [] // обязателньо надо чтобы это был массив содержащий обьекты
       const res = await fetch("https://react-native-todoapp-89196.firebaseio.com/todos.json", {
         method: "GET",
         headers: {"Content-Type": "application/json"}
@@ -7,16 +11,18 @@ try {
       if(!res.ok) {
         throw new Error("could not fetch data. Error:" + res.status)
       }
-      const data = await res.json()
-      const todos = Object.keys(data).map(key => {
-        return {id:key,...data[key]} // data[key] - объект
-      })
+      const data = await res.json() // ответ может быть нулл если пользователь удали все свои туду, поэтомму следущий блок в тра кэтч, если реально пусто,то 
+      // то todos отсанется [], что устраивет нас
+      try {
+        todos = Object.keys(data).map(key => {
+          return {id:key,...data[key]}
+        })
+      } catch(e) {}
       dispatch({type: FETCH_TODOS,payload: todos})
     } catch(e) {
-      showError("Что-то пошло не так...\nПопробуйте снова.") // диспатч который добавляет ошибку
-      console.log(e, "erre")
+      showError("Что-то пошло не так...\nПопробуйте снова.")
     } finally {
-      hideLoader()
+      hideLoader()      
     }
   }
 
