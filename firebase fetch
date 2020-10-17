@@ -1,16 +1,23 @@
 //get\\
-const fetchTodos = async () => {
-    const res = await fetch("https://react-native-todoapp-89196.firebaseio.com/todos.json", {
-      method: "GET",
-      headers: {"Content-Type": "application/json"}
-    })
-    if(!res.ok) {
-      throw new Error("could not fetch data. Error:" + res.status)
+try {
+      const res = await fetch("https://react-native-todoapp-89196.firebaseio.com/todos.json", {
+        method: "GET",
+        headers: {"Content-Type": "application/json"}
+      })
+      if(!res.ok) {
+        throw new Error("could not fetch data. Error:" + res.status)
+      }
+      const data = await res.json()
+      const todos = Object.keys(data).map(key => {
+        return {id:key,...data[key]} // data[key] - объект
+      })
+      dispatch({type: FETCH_TODOS,payload: todos})
+    } catch(e) {
+      showError("Что-то пошло не так...\nПопробуйте снова.") // диспатч который добавляет ошибку
+      console.log(e, "erre")
+    } finally {
+      hideLoader()
     }
-    const data = await res.json()
-    const todos = Object.keys(data).map(key => {
-      return {id:key,...data[key]}
-    })
   }
 
 
@@ -30,3 +37,4 @@ const addTodo = async (title) => {
     // то что ай ди нэйм - мы заносим в ай ди и это являестя в котором хранится иинофрмация
     dispatch({type: ADD_TODO,payload: {id:idName,title}})
   }
+  
