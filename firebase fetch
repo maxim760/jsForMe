@@ -62,3 +62,25 @@ const editTodo = async (id,title) => {
     await editTodo(todo.id,title)
     setIsModal(false)
   }
+  
+  
+ // delete
+ // можно без try catch
+ const removeTodo = (id) => {
+      ...
+        onPress: async () => {
+          try {
+            await fetch(`https://react-native-todoapp-89196.firebaseio.com/todos/${id}.json`, { // body не передаем т к просто удаляем из текущего урл элемент
+              method: "DELETE",
+              headers: {"Content-Type": "application/json"}
+            })
+            changeScreen(null)
+            dispatch({
+              type: REMOVE_TODO,
+              payload: id
+            })
+          } catch(e) {
+            showError("Что-то пошло не так...\nПопробуйте снова.")
+          }
+  }
+
