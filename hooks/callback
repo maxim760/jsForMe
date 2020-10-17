@@ -25,3 +25,12 @@ function App() {
 }
 
 export default App
+
+//////////22///////////2
+const loadTodos = useCallback( async () => {
+    await fetchTodos()
+  }, [fetchTodos])
+
+  useEffect(() => {
+    loadTodos()
+  })
