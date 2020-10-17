@@ -88,3 +88,17 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 })
+
+
+-------
+
+loadApplication можно вынестив отдельную папку
+
+import * as Font from "expo-font"
+
+export async function loadApplication() {
+  await Font.loadAsync({
+    "openSans-regular": require("../assets/fonts/OpenSans-Regular.ttf"), // ссылки на шрифты который скачал с гугл фонт и добавил по этому пути
+    "openSans-bold": require("../assets/fonts/OpenSans-Bold.ttf")
+  })
+}
