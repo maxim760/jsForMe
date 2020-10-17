@@ -34,3 +34,6 @@ const loadTodos = useCallback( async () => {
   useEffect(() => {
     loadTodos()
   }, [])
+ 
+ 
+ // ОБЕРТКА В АСИНК АВЭЙТ ЧТОБЫ ПОСТОЯННО НЕ ПРОПИСЫВАТЬ АСИНК АВАИТ
