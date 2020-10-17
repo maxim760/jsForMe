@@ -1,0 +1,168 @@
+// КЛАСС http , содержазий методы для работы  с сервером
+
+// суть: присваем методы не прототипу класса , который создается : http = new Http() , а самому классу, прототип или экзэмпляр не обязателен
+export class Http {
+  static HEADERS= {"Content-Type": "application/json"}
+  
+  static async get(url) {
+    try {
+      return await request(url)
+    } catch(e) {
+      console.log(e) 
+      throw new Error() // вброс ошибки что бы ее обработать в туду стэйт
+
+    }
+  }
+  
+  static async post(url, data = {}) {
+    try {
+      return await request(url, "POST", data)
+    } catch(e) {
+      console.log(e)
+      throw new Error()
+    }
+  }
+  
+  static async delete(url) {
+    try {
+      return await request(url,"DELETE")
+    } catch(e) {
+      console.log(e)
+      throw new Error()
+
+    }
+  }
+  
+  static async patch(url, data = {}) {
+    try {
+      return await request(url,"PATCH", data)
+    } catch(e) {
+      console.log(e)
+      throw new Error()
+    }
+  }
+
+}
+
+async function request(url,method = "get", data) {
+  const config = {
+    method,
+    headers: Http.HEADERS,
+  }
+  if(["POST","PATCH"].includes(method)) {
+    config.body = JSON.stringify(data)
+  }
+  const res = await fetch(url, config)
+  return await res.json()
+}
+=============================================================================================
+=============================================================================================
+=============================================================================================
+=============================================================================================
+=============================================================================================
+// файл туду стэйт, который вызывает эти методы
+
+export const TodoState = ({children}) => {
+  const {changeScreen} = useContext(ScreenContext)
+  const initialState = {
+    todos: [],
+    loading: false,
+    error: null
+  }
+  const [state, dispatch] =  useReducer(TodoReducer, initialState)
+  
+  //POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST\\
+  const addTodo = async (title) => {
+    clearError()
+    try {
+      const data = await Http.post("https://react-native-todoapp-89196.firebaseio.com/todos.json", {title})
+      dispatch({type: ADD_TODO,payload: {id:data.name,title}})
+    } catch(e) {
+      showError("Что-то пошло не так...\nПопробуйте снова.")
+    } 
+  }
+  //DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE\\
+  const removeTodo = (id) => {
+    const todo = state.todos.find(t => t.id === id)
+    Alert.alert('Удаление элемента', // title
+    `Вы уверены, что хотите удалить "${todo.title}"?`, // text
+    [
+      {
+        text: 'Отмена',
+        // onPress: () => console.log('Cancel Pressed'), // если на нее нажимаем то ничего не просходит
+        style: 'cancel'
+      },
+      { 
+        text: 'Удалить',
+        onPress: async () => {
+          clearError()
+          try {
+            await Http.delete(`https://react-native-todoapp-89196.firebaseio.com/todos/${id}.json`)
+            changeScreen(null)
+            dispatch({
+              type: REMOVE_TODO,
+              payload: id
+            })
+          } catch(e) {
+            showError("Что-то пошло не так...\nПопробуйте снова.")
+          }
+        },
+        style: "destructive"
+      }
+    ], // buttons
+    { cancelable: false }) // options
+  }
+  
+  //PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH PATCH\\
+  const editTodo = async (id,title) => {
+    showLoader()
+    clearError()
+    try {
+      await Http.patch(`https://react-native-todoapp-89196.firebaseio.com/todos/${id}.json`,{title})
+
+      dispatch({type: EDIT_TODO,payload: {title,id}})
+    } catch(e) {
+      showError("Что-то пошло не так...\nПопробуйте снова.")
+    } finally {
+      hideLoader()
+    }  
+  }
+  
+  const showLoader = () => dispatch({type: SHOW_LOADER})
+  const hideLoader = () => dispatch({type: HIDE_LOADER})
+  const clearError = () => dispatch({type: CLEAR_ERROR})
+  const showError = (error) => dispatch({type: SHOW_ERROR,payload: error})
+  
+  //GET GET GET GET GET GET GET GET GET GET GET GET GET\\
+  const fetchTodos = async () => {
+    showLoader()
+    clearError()
+    try {
+      let todos = []
+      const data = await Http.get("https://react-native-todoapp-89196.firebaseio.com/todos.json")
+      try {
+        todos = Object.keys(data).map(key => {
+          return {id:key,...data[key]}
+        })
+      } catch(e) {}
+      dispatch({type: FETCH_TODOS,payload: todos})
+    } catch(e) {
+      showError("Что-то пошло не так...\nПопробуйте снова.")
+    } finally {
+      hideLoader()
+    }
+  }
+  return (
+    <TodoContext.Provider value={{
+      todos: state.todos,
+      loading: state.loading,
+      error: state.error,
+      addTodo,removeTodo,editTodo,fetchTodos
+    }}>
+      {children}
+    </TodoContext.Provider>
+  )
+}
+
+
+
