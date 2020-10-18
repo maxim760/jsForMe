@@ -8,3 +8,18 @@ export const AppNavigation = () => {
     </NavigationContainer>
   )
 }
+
+// переход по страничкам навигации
+
+export const MainScreen = ({navigation}) => {
+  const goToPost = () => {
+    navigation.navigate("Post" ) // переход на страничку с name=Post
+  }
+  return (
+    <View style={styles.wrapper}>
+      <AppTextBold style={styles.text}>MainScreen</AppTextBold>
+      <AppText style={styles.text}>MainScreen regular</AppText>
+      <Button title="go to post" onPress={goToPost} />
+    </View>
+  )
+}
