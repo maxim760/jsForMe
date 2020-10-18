@@ -1,0 +1,8 @@
+post.date = содержит дату
+
+1) регулярка
+post.date.replace(/(.+)?T(.+)?\..+/, '$1 $2') // более гибко
+2)new Date(post.date).toLocaleDateString() // более быстро нативно удобно
+2)более гибко :
+const date = new Date(post.date)
+<AppText style={styles.text}>{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</
