@@ -1,13 +1,19 @@
 export const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
-        <Stack.Screen name="Main" component={MainScreen} options={{title: "Мой блог"}} />
+      <Stack.Navigator initialRouteName="Main" screenOptions={{
+        headerTintColor: 'white', // цвет заголовка через это свойство
+        headerStyle: styles.headerStyle, // bg color
+      }}>
+        <Stack.Screen  name="Main" component={MainScreen} options={{title: "Мой блог"}} />
         <Stack.Screen name="Post" component={PostScreen} options={{title: "Пост №42"}} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
+// headerStyle: {
+    backgroundColor: THEME.MAIN_COLOR,
+  }
 
 
 //NAVIGATION
@@ -15,7 +21,9 @@ export const AppNavigation = () => {
 // NAVIGATE
 export const MainScreen = ({navigation}) => {
   const goToPost = () => {
-    navigation.navigate("Post" ) // переход на страничку с name=Post
+    navigation.navigate("Post" ) // переход на страничку с name=Post // если место navigate будет push => то же самое, но при переходе на эту же страницу (с которой был клик)
+                                  // navigate ничего не сделает, а push перейедт на нее как новую с анимацией, и также будет кнопка назад которая будет вовразаться на нее же
+                                  // по сути одно и тоже, но такая деталь
   }
   return (
     <View style={styles.wrapper}>
