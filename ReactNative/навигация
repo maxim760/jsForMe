@@ -9,8 +9,10 @@ export const AppNavigation = () => {
   )
 }
 
-// переход по страничкам навигации
 
+//NAVIGATION
+// переход по страничкам навигации
+// NAVIGATE
 export const MainScreen = ({navigation}) => {
   const goToPost = () => {
     navigation.navigate("Post" ) // переход на страничку с name=Post
@@ -20,6 +22,19 @@ export const MainScreen = ({navigation}) => {
       <AppTextBold style={styles.text}>MainScreen</AppTextBold>
       <AppText style={styles.text}>MainScreen regular</AppText>
       <Button title="go to post" onPress={goToPost} />
+    </View>
+  )
+}
+
+//goBack
+export const PostScreen = ({navigation}) => {
+  const toBack = () => {
+    navigation.goBack() // переход на предыдущую страницу (обратно по стэку)
+  }
+  return (
+    <View style={styles.wrapper}>
+      <AppText>PostScreen</AppText>
+      <Button title="Обратно" onPress={toBack} />
     </View>
   )
 }
