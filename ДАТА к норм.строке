@@ -6,3 +6,7 @@ post.date.replace(/(.+)?T(.+)?\..+/, '$1 $2') // более гибко
 2)более гибко :
 const date = new Date(post.date)
 <AppText style={styles.text}>{`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}</
+
+3) еще более гибко
+const date = new Date(post.date)
+<AppText style={styles.text}>{`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}</AppText>
