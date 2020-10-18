@@ -12,6 +12,13 @@ export const AppNavigation = () => {
     </NavigationContainer>
   )
 }
+<Stack.Navigator /> - ДРУГИЕ ПАРАМЕТРЫ()
+SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
+  headerTintColor: 'white', // цвет заголовка через это свойство
+  headerStyle: styles.headerStyle, // bg color и др.стили нарример height
+  headerShown: false, // чтобы не показывать заголовок, я не использовал
+  headerTitleAlign: center/left
+
 // headerStyle: {
     backgroundColor: THEME.MAIN_COLOR,
   }
