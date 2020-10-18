@@ -1,0 +1,21 @@
+// IMAGE
+<Image
+  style={styles.tinyLogo}
+  source={require('@expo/snack-static/react-native-logo.png')} // внутри require - путь
+/> // ЛОКАЛЬНАЯ // предпочтительнее
+<Image
+  style={styles.tinyLogo}
+  source={{
+    uri: 'https://reactnative.dev/img/tiny_logo.png',
+  }}
+/>  // ИЗ ИНЕТА
+// для адаптации resizeMode
+
+// IMAGEBACKGROUND
+<View style={styles.post}>
+  <ImageBackground style={styles.image} source={{uri: post.img}}> // ссылка
+    <View style={styles.textWrap}>
+      <AppTextBold style={styles.text}>{post.date.replace(/(.+)?T(.+)?\..+/, '$1 $2')}</AppTextBold> // преобразование даты в норм формат
+    </View>
+  </ImageBackground>
+</View> 
