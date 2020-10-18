@@ -9,4 +9,4 @@ const date = new Date(post.date)
 
 3) еще более гибко
 const date = new Date(post.date)
-<AppText style={styles.text}>{`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`}</AppText>
+<AppText style={styles.text}>{`${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`}</AppText>
