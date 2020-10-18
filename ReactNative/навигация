@@ -1,27 +1,32 @@
+// желателньно соблюдать стилизацию под айос и андроид
 export const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main" screenOptions={{
-        headerTintColor: 'white', // цвет заголовка через это свойство
+        headerTintColor: Platform.OS === "android" ? "#fff" : THEME.MAIN_COLOR, // цвет заголовка через это свойство
         headerStyle: styles.headerStyle, // bg color
         headerShown: false, // чтобы не показывать заголовок, я не использовал
       }} headerMode="float"> // есть еще screen но float покрасивее
-        <Stack.Screen  name="Main" component={MainScreen} options={{title: "Мой блог"}} />
+        <Stack.Screen  name="Main" component={MainScreen} options={{title: "Мой блог" ,headerTintColor: "yellow"}} /> // св-ва здесь главнее тех что в стэк навигаторе, которые в 
+                                                                                                                      // стэк скрине перезаписывает те что стэк навигаторе
         <Stack.Screen name="Post" component={PostScreen} options={{title: "Пост №42"}} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
+
+// headerStyle: {
+    backgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "#fff",
+  }
+
 <Stack.Navigator /> - ДРУГИЕ ПАРАМЕТРЫ()
 SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
   headerTintColor: 'white', // цвет заголовка через это свойство
   headerStyle: styles.headerStyle, // bg color и др.стили нарример height
   headerShown: false, // чтобы не показывать заголовок, я не использовал
   headerTitleAlign: center/left
-
-// headerStyle: {
-    backgroundColor: THEME.MAIN_COLOR,
-  }
+                                    
+///////////////////////////////////////////////////////////////////////////////////////
 
 
 //NAVIGATION
