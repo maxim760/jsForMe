@@ -40,8 +40,8 @@ export const MainScreen = ({navigation}) => {
   } или
   navigation.navigate("Post", {postId: post.id} ) // передаем пост ай ди, и по нему на страничке пост определим что за пост и относительно этого сформируем данные на страницу
   // получаем этот ай ди 
-  //export const PostScreen = ({navigation}) => {
-  //  const postId = navigation.getParam("postId")
+  //export const PostScreen = ({navigation,route}) => {
+  //  const postId = route.params["postId"]
   
   return (
     <View style={styles.wrapper}>
