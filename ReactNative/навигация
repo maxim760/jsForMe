@@ -56,6 +56,9 @@ export const MainScreen = ({navigation}) => {
   // получаем этот ай ди 
   //export const PostScreen = ({navigation,route}) => {
   //  const postId = route.params["postId"]
+  // DATA - массив типа базы данных который содержит нужную инфу , и в замисти от него и от ай ди мы можем найти любой айтем
+ // const post = DATA.find(elem => elem.id === postId)
+
   
   return (
     <View style={styles.wrapper}>
