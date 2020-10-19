@@ -46,3 +46,12 @@ imrse
 imrn
 export nfn
 rnstyle
+------
+свои сниппеты 
+вызов командной строки - в ней >snippet
+пример:
+"Console log": {
+   	"prefix": "log",
+   	"body": "console.log('$1')",
+   	"description": "Log output to console"
+  }
