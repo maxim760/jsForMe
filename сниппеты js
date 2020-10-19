@@ -1,0 +1,48 @@
+imp→	import fs from 'fs'; 
+imd→	import {rename} from 'fs'; 
+
+enf→	export const log = (parameter) => { console.log(parameter);};
+
+nfn→	add = (params) => {} 
+
+dob→	const {rename} = fs 
+
+sti→	setInterval(() => {});
+sto→	setTimeout(() => {});
+
+thenc→	.then((res) => {}).catch((err) => {});
+
+REACT
+imrr→	import { BrowserRouter as Router, Route, NavLink} from 'react-router-dom'
+imr→  import React from "react"
+imrs→	import React, { useState } from 'react'
+imrse→	import React, { useState, useEffect } from 'react'
+
+redux→	import { connect } from 'react-redux'
+
+React native 
+imrn→	import { $1 } from 'react-native'
+rnstyle→	const styles = StyleSheet.create({})
+
+Консоль
+clg
+clo - это вызов консоль лог
+
+Тесты
+
+desc
+describe('$1', () => {
+  $2
+})
+
+test
+test('should $1', () => {
+  $2
+})
+
+
+КОМБИНАЦИЯ для реакт натив
+imrse
+imrn
+export nfn
+rnstyle
