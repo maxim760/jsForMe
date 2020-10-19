@@ -14,6 +14,20 @@ export const AppNavigation = () => {
     </NavigationContainer>
   )
 }
+// НАСТРОЙКА ПАРАМЕТРОВ СКРИНА ИЗ САМОГО СКРИНА (ДЛЯ ДИНМАИКИ МОЖНО НУ И ПРОСТО)
+================================================================
+import React, {useLayoutEffect} from 'react'
+import {View, StyleSheet,Button} from "react-native"
+import { AppText } from '../components/ui/AppText'
+import { AppBoldText } from '../components/ui/AppBoldText'
+
+export const PostScreen = ({navigation,route}) => {
+  useLayoutEffect(() => { // аналог useEffect, в документации он
+    navigation.setOptions({  //!!!!!! setOptions!!!!
+      title:"434",
+    })
+  }, [])
+================================================================
 
 // headerStyle: {
     backgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "#fff",
