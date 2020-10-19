@@ -1,3 +1,7 @@
+// установка
+// для хэдера: npm install react-navigation-header-buttons
+
+
 // для кнопок с текстом 
 import {AntDesign} from "@expo/vector-icons"
 
