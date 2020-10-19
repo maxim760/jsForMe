@@ -6,6 +6,7 @@ enf→	export const log = (parameter) => { console.log(parameter);};
 ret→ возвращает константу как функцию с ретурном
 mr→ возвращает функцию с ретурном (для map)
 fetchdata→ структрура для фетч
+fetchpost→ структура для фетч с методом пост
 findid→ по названию понятно
 
 dob→	const {rename} = fs 
