@@ -41,6 +41,8 @@ SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
   headerShown: false, // чтобы не показывать заголовок, я не использовал
   headerTitleAlign: center/left
   title: ...text... (или headerTitle)
+  headerRight: () => <AppText>fd</AppText> // справа в заголовке
+  headerLeft: () => <AppText>fd</AppText> // слева в заголовке
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
                                     
 ///////////////////////////////////////////////////////////////////////////////////////
