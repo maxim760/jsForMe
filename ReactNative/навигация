@@ -23,7 +23,7 @@ import { AppBoldText } from '../components/ui/AppBoldText'
 
 export const PostScreen = ({navigation,route}) => {
   useLayoutEffect(() => { // аналог useEffect, в документации он
-    navigation.setOptions({  //!!!!!! setOptions!!!!
+    navigation.setOptions({  //!!!!!! setOptions!!!! // ВСЁ ТО ЖЕ САМОЕ ЧТО ЕСТЬ В SCREEN_OPTIONS ЕСТЬ И ЗДЕСЬ
       title:"434",
     })
   }, [])
@@ -33,12 +33,15 @@ export const PostScreen = ({navigation,route}) => {
     backgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "#fff",
   }
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 <Stack.Navigator /> - ДРУГИЕ ПАРАМЕТРЫ()
 SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
   headerTintColor: 'white', // цвет заголовка через это свойство
   headerStyle: styles.headerStyle, // bg color и др.стили нарример height
   headerShown: false, // чтобы не показывать заголовок, я не использовал
   headerTitleAlign: center/left
+  title: ...text... (или headerTitle)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
                                     
 ///////////////////////////////////////////////////////////////////////////////////////
 
