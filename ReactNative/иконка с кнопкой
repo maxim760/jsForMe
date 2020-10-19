@@ -1,5 +1,6 @@
 // установка
 // для хэдера: npm install react-navigation-header-buttons
+// для обычных npm install @expo/vector-icons
 
 
 // для кнопок с текстом 
