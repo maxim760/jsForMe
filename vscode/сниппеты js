@@ -3,7 +3,10 @@ imd→	import {rename} from 'fs';
 
 enf→	export const log = (parameter) => { console.log(parameter);};
 
-nfn→	add = (params) => {} 
+ret→ возвращает константу как функцию с ретурном
+mr→ возвращает функцию с ретурном (для map)
+fetch→ структрура для фетч
+findid→ по названию понятно
 
 dob→	const {rename} = fs 
 
@@ -44,7 +47,7 @@ test('should $1', () => {
 КОМБИНАЦИЯ для реакт натив
 imrse
 imrn
-export nfn
+export ret
 rnstyle
 ------
 свои сниппеты 
