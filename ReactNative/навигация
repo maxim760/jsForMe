@@ -37,7 +37,8 @@ export const MainScreen = ({navigation}) => {
     navigation.navigate("Post" ) // переход на страничку с name=Post // если место navigate будет push => то же самое, но при переходе на эту же страницу (с которой был клик)
                                   // navigate ничего не сделает, а push перейедт на нее как новую с анимацией, и также будет кнопка назад которая будет вовразаться на нее же
                                   // по сути одно и тоже, но такая деталь
-  }
+  } или
+  navigation.navigate("Post", {postId: post.id} ) // передаем пост ай ди, и по нему на страничке пост определим что за пост и относительно этого сформируем данные на страницу
   return (
     <View style={styles.wrapper}>
       <AppTextBold style={styles.text}>MainScreen</AppTextBold>
