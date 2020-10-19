@@ -41,8 +41,36 @@ SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
   headerShown: false, // чтобы не показывать заголовок, я не использовал
   headerTitleAlign: center/left
   title: ...text... (или headerTitle)
-  headerRight: () => <AppText>fd</AppText> // справа в заголовке
+  headerRight: () => <AntDesign size={20} color={"red"} name="camera" onPress={somethingFunc} /> // справа в заголовке
   headerLeft: () => <AppText>fd</AppText> // слева в заголовке
+  // для хэдера ЛУЧШЕ ИСПОЛЬЗОВАТЬ БИБЛИОТЕКИ npm install react-navigation-header-buttons ||| npm install @expo/vector-icons
+  // 1 ДЛЯ ИКОНОК, ДРУГАЯ ДЛЯ КОРРЕКТОНГО ОТОБРАЖЕНИЯ НА ЛЮБОЙ ШИРИНЕ ЛЮБОГО ДЕВАЙСА (не надо самому все прописывать!!!)
+  использование: import {HeaderButtons, Item} from "react-navigation-header-buttons", import { AppHeaderIcon } from '../components/ui/AppHeaderIcon'
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return ( // можно возвращаться не 1 а 2 3 и тд айтема, сколько хочешь
+          <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+            <Item title="Take Photo" iconName="ios-camera" onPress={() => alert("pressed")} />
+          </HeaderButtons>
+        )}
+    })
+  }, [])
+  где AppHeaderIcon:
+  **********
+  import React from 'react'
+  import { HeaderButton } from "react-navigation-header-buttons"
+  import { Platform } from "react-native"
+  import { THEME } from '../../theme'
+  import {Ionicons} from "@expo/vector-icons"
+
+  export const AppHeaderIcon = props => <HeaderButton 
+    {...props} // если вдруг что передали
+    iconSize={24}
+    IconComponent={Ionicons}
+    color={Platform.OS === "android" ? "white" : THEME.MAIN_COLOR}
+  />
+  ************ // отступление // без react-navigation-header-buttons - будет смотется кривовато и надо будет прописывать стили и еще мб адаптацию под разные платформы
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
                                     
 ///////////////////////////////////////////////////////////////////////////////////////
