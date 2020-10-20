@@ -108,12 +108,14 @@ const BottomTabNavigator = () => {
       })} tabBarOptions={{
         activeTintColor: THEME.MAIN_COLOR,
         labelStyle: {
-          fontSize: 12
-        }
+          fontSize: 12,
+          marginBottom: 3
+        },
+        labelPosition:"beside-icon"
       }} > 
-      <Tab.Screen name="Post" component={PostNavigator}  /> // postNavigator - это стэк навигатор который выше(как AppNavigation) но без NavigationContainer, т к он должен
+      <Tab.Screen name="Post" component={PostNavigator} options={{tabBarLabel:"Все посты"}} /> // postNavigator - это стэк навигатор который выше(как AppNavigation) но без NavigationContainer, т к он должен
       // быть оберткой максимальной типа 
-      <Tab.Screen name="Booked" component={BookedNavigator} /> // это тоже стэк, но не обзяательно перадть стэк, можно обычный скрин (страницу)
+      <Tab.Screen name="Booked" component={BookedNavigator} options={{tabBarLabel:"Избранное"}} /> // это тоже стэк, но не обзяательно перадть стэк, можно обычный скрин (страницу)
     </Tab.Navigator>
   </NavigationContainer>
   )
@@ -122,6 +124,13 @@ const BottomTabNavigator = () => {
 export const AppNavigation = () => {
   return <BottomTabNavigator />
 }
+OPTIONS ДЛЯ TAB SCREEN'а
+options={{key:value}}
+tabBarBadge:3 // значок типа количесво уведомлекний
+tabBarIcon: ({ color, size }) => (
+  <MaterialCommunityIcons name="home" color={color} size={size} />
+),
+tabBarLabel:"Все посты"
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
