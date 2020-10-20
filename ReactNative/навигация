@@ -111,7 +111,8 @@ const BottomTabNavigator = () => {
           fontSize: 12,
           marginBottom: 3
         },
-        labelPosition:"beside-icon"
+        labelPosition:"beside-icon",
+        showLabel: true
       }} > 
       <Tab.Screen name="Post" component={PostNavigator} options={{tabBarLabel:"Все посты"}} /> // postNavigator - это стэк навигатор который выше(как AppNavigation) но без NavigationContainer, т к он должен
       // быть оберткой максимальной типа 
@@ -131,6 +132,8 @@ tabBarIcon: ({ color, size }) => (
   <MaterialCommunityIcons name="home" color={color} size={size} />
 ),
 tabBarLabel:"Все посты"
+tabBarVisible: true/false
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
