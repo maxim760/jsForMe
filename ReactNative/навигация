@@ -147,7 +147,14 @@ tabBarIcon: ({ color, size }) => (
 ),
 tabBarLabel:"Все посты"
 tabBarVisible: true/false // показывать скрывать панель с нижнец навигацией // ТОЛЬКО АЙОС
+tabBarButton // тоже только айос / дейсвует при клике на любой таб
 tabBarColor: "orange" и любой дркгой цвет // классно выглядит если везде разный задан цвет и shifting={true} стоит // ТОЛЬКО АНДРОИД
+
+//СОБЫТИЯ
+tabPress // передается в нижнии скрины или стэки (туда что вызывает компонент в таб скринах) и вызвается как navigation.addEventlistener("tabPress",() => {}) // ios android
+tabLongPress // аналогично // IOS -
+то что подразумеваю под айосом - @react-navigation/bottom-tabs
+то что подразумеваю под андроидом - @react-navigation/material-bottom-tabs
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
