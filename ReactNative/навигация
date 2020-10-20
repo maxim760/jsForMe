@@ -1,5 +1,9 @@
 //сверху все библиотеки // 1) по документации устанавливаем что на get started и 2 странице
-2)npm install react-navigation-header-buttons И npm install @expo/vector-icons И npm install @react-navigation/bottom-tabs
+2)npm install react-navigation-header-buttons И npm install @expo/vector-icons 
+И npm install @react-navigation/bottom-tabs И npm install @react-navigation/material-bottom-tabs react-native-paper // стиль под андроид
+
+// SCREEN OPTIONS - принимает все то что характерно для нижних options // для stack и tab отличается
+
 // желателньно соблюдать стилизацию под айос и андроид
 export const AppNavigation = () => {
   return (
@@ -79,9 +83,10 @@ SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
 НАСТРОЙКА НИЖНЕЙ НАВИГАЦИИ:
 npm install @react-navigation/bottom-tabs
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-const Tab = createBottomTabNavigator();
+const Tab = Platform.OS === "android" ? createMaterialBottomTabNavigator() : createBottomTabNavigator()
 
 
 
@@ -89,9 +94,15 @@ const BottomTabNavigator = () => {
   return (
   <NavigationContainer>
       <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, size, color }) => {
+        // Для андроида // айфону не противоречат
+        activeColor={"white"}
+        inActiveColor="#3e2465"
+        barStyle={{ backgroundColor: THEME.MAIN_COLOR }}
+        shifting={true}
+        //labeled={false} // без текста
+        tabBarIcon: ({ focused, size = 25, color }) => {
             // size = 25 по стандарту / focesed - динамически сам считается / color - цвет текста текущий/меняется через tabBarOptions
-
+            // принимаем как парметр по умолчванию чтобы андроид понимал
             let iconName;
 
             if (route.name === 'Post') {
@@ -105,15 +116,18 @@ const BottomTabNavigator = () => {
             // You can return any component that you like here!
             return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
           },
-      })} tabBarOptions={{
+      })} tabBarOptions={{ // tabBarOptions - настройки для айфона, для андройда выше
         activeTintColor: THEME.MAIN_COLOR,
         labelStyle: {
           fontSize: 12,
           marginBottom: 3
         },
         labelPosition:"beside-icon",
-        showLabel: true
-      }} > 
+        showLabel: true, // для скрытия текста на айфоне
+        style: {
+          backgroundColor: "green" // или другой цвет задать
+        }
+      }} >  
       <Tab.Screen name="Post" component={PostNavigator} options={{tabBarLabel:"Все посты"}} /> // postNavigator - это стэк навигатор который выше(как AppNavigation) но без NavigationContainer, т к он должен
       // быть оберткой максимальной типа 
       <Tab.Screen name="Booked" component={BookedNavigator} options={{tabBarLabel:"Избранное"}} /> // это тоже стэк, но не обзяательно перадть стэк, можно обычный скрин (страницу)
@@ -132,7 +146,8 @@ tabBarIcon: ({ color, size }) => (
   <MaterialCommunityIcons name="home" color={color} size={size} />
 ),
 tabBarLabel:"Все посты"
-tabBarVisible: true/false
+tabBarVisible: true/false // показывать скрывать панель с нижнец навигацией // ТОЛЬКО АЙОС
+tabBarColor: "orange" и любой дркгой цвет // классно выглядит если везде разный задан цвет и shifting={true} стоит // ТОЛЬКО АНДРОИД
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
