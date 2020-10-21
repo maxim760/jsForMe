@@ -68,6 +68,19 @@ SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
             <Item title="Take Photo" iconName="ios-camera" onPress={() => alert("pressed")} />
           </HeaderButtons>
         )}
+      headerLeft: () => { // из MainScreen
+        return (
+          <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+            <Item
+              title="Toggle Drawer"
+              iconName="ios-menu"
+              onPress={() => {
+                navigation.toggleDrawer()
+              }}
+            />
+          </HeaderButtons>
+        )
+      },  
     })
   }, [])
   где AppHeaderIcon:
