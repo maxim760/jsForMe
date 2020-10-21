@@ -62,6 +62,7 @@ SCREENOPTIONS - СНАЧАЛА ПРО НИХ:
   headerStyle: styles.headerStyle, // bg color и др.стили нарример height
   headerShown: false, // чтобы не показывать заголовок, я не использовал
   headerTitleAlign: center/left
+  headerTitleStyle: стили тайтла
   title: ...text... (или headerTitle)
   headerRight: () => <AntDesign size={20} color={"red"} name="camera" onPress={somethingFunc} /> // справа в заголовке
   headerLeft: () => <AppText>fd</AppText> // слева в заголовке
