@@ -207,7 +207,8 @@ const MainNavigator = () => {
       }}
     >
       <Drawer.Screen name="Main" component={BottomTabNavigator} options={{drawerLabel: "Основной"  }}/>
-      <Drawer.Screen name="About" component={AboutScreen} options={{ drawerLabel: "О нас"}} />
+      <Drawer.Screen name="About" component={AboutNavigator} options={{ drawerLabel: "О нас"}} /> // надо передавать не скрин а навигатор созданный через таб и стэк,чтобы была доступна навигация
+      // покажлу только на примере эбаут, крейт также (НИЖЕ под ЭКСПОРТОМ ABOUTNAVIGATOR)
       <Drawer.Screen name="Create" component={CreateScreen} options={{ drawerLabel: "Создать пост"}} />
     </Drawer.Navigator>
   )
@@ -220,6 +221,17 @@ export const AppNavigation = () => {
     </NavigationContainer>
   )
 }
+
+//ABOUT NAVIGATOR
+const AboutNavigator= () => {
+  return (
+    <Stack.Navigator screenOptions={navigatorOptions()}  headerMode={"float"} mode={"modal"}>
+      <Stack.Screen name="About" component={AboutScreen} options={{title: "О приложении" }} />
+    </Stack.Navigator> 
+    // setOptions в AboutScreen задает иконку меню слева(нужна для дровера)
+  )
+}
+// setOptions, касающийся левой иконки ,в том числе событий при клике, такой же как в MainScreen (который где-то здесь есть)
 
 #####################################################################
 
