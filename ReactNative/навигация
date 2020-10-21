@@ -11,8 +11,16 @@
 // в принципе стэк может содержать в себе страницу имеющую табы но в любом случае эти табы будут содерать стэки или скрины
 
 // SCREEN OPTIONS - принимает все то что характерно для нижних options // для stack и tab отличается
-
+ДЕФОЛТНЫЕ НАСТРОЙКИ SCREEN OPTIONS
+const navigatorOptions = () => {
+  return {
+    headerTintColor: Platform.OS === "android" ? "#fff" : THEME.MAIN_COLOR,
+    headerStyle: styles.headerStyle,  
+  }
+} 
+ИСПОЛЬЗОВАНИЕ .... screenOptions={navigatorOptions}
 // желателньно соблюдать стилизацию под айос и андроид
+// СТЭК НАВИГАТОР
 export const AppNavigation = () => {
   return (
     <NavigationContainer>
