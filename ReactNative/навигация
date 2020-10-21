@@ -270,7 +270,7 @@ inactiveTintColor // цвет текста неактивного
 activeBackgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "white" // цвет бэкграунда активного
 inactiveBackgroundColor // бг неактивный
 itemStyle стиль для айтема// itemStyle: { marginVertical: 30 }
-labelStyle
+labelStyle // fontSize // fontWeight // fontFamily
 style  стиля для  оболочки
 contentContainerStyle Объект стиля для раздела содержимого внутри ScrollView
 
