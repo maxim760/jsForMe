@@ -1,0 +1,28 @@
+const curry = (f) => {
+  return curried = (...args) => {
+    if (args.length >= f.length) {
+      return f.apply(this, args)
+    } else {
+      return (...args2) => {
+        return curried.apply(this, args.concat(args2))
+      }
+    }
+  }
+}
+//------------------------
+//Главная функция отвечающая за карирование , логика понятна из кода(карри принимает функцию
+// возврщает карриед с переданными аргументасм если аргументов >= чем в функцию то возвращет функцию с аргументами)
+// иначе возвращает аргументы из следующей скобки и вызывывает карриед уже с двумя скобками и так пока не достигнем числа аргументов нужного
+// если вдруг пригодится можно ctrl + c ctrl + v ))
+const sum = (a, b, c, d) => a + b + c + d
+const currySum = curry(sum)
+console.log(currySum(7,4,5,11))
+console.log(currySum(7)(4)(5,11))
+console.log(currySum(7,4)(5)(11))
+console.log(currySum(7)(4,5)(11))
+console.log(currySum(7)(4)(5)(11))
+// также для каррирования естт билотека лодаш и там метод curry или curried
+
+const firstNumSum = currySum(10)
+console.log(firstNumSum(2,3,6))
+console.log(firstNumSum(2)(3)(6))
