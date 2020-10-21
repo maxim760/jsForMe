@@ -1,6 +1,14 @@
 //сверху все библиотеки // 1) по документации устанавливаем что на get started и 2 странице
 2)npm install react-navigation-header-buttons И npm install @expo/vector-icons 
 И npm install @react-navigation/bottom-tabs И npm install @react-navigation/material-bottom-tabs react-native-paper // стиль под андроид
+3) npm install @react-navigation/drawer // дровер навигация
+
+ИЕРАРХИЯ
+скрин < стэк < таб < дровер
+типа в 1 компоненте дровера содежрится компонент имеющий два таба на кждом из двух табов стэк с двумя страницами(скринами)
+понятно что шаги могут пропускаться и дровер содержать просто страницу
+//это примерно
+// в принципе стэк может содержать в себе страницу имеющую табы но в любом случае эти табы будут содерать стэки или скрины
 
 // SCREEN OPTIONS - принимает все то что характерно для нижних options // для stack и tab отличается
 
@@ -155,6 +163,96 @@ tabPress // передается в нижнии скрины или стэки 
 tabLongPress // аналогично // IOS -
 то что подразумеваю под айосом - @react-navigation/bottom-tabs
 то что подразумеваю под андроидом - @react-navigation/material-bottom-tabs
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+
+НАСТРОЙКА ДРОВЕР НАВИГАЦИИ
+npm install @react-navigation/drawer
+const Drawer = createDrawerNavigator();
+//  КАК ВЫГЛЯДИТЬ У МЕНЯ (НИЖЕ СЕТТИНГСЫ)
+#####################################################################
+
+const MainNavigator = () => {
+  return (
+    <Drawer.Navigator
+      drawerType={"back"} // есть slide,front,permanent , permanent - самый худший
+      screenOptions={({ route }) => ({
+        
+        drawerIcon: ({ focused, size = 25, color }) => {
+          // size = 25 по стандарту / focesed - динамично / color - цвет текста текущий/меняется через tabBarOptions
+          let iconName;
+          switch (route.name) {
+            case "Main":
+              iconName = focused ? 'checkbox-multiple-marked-circle' : "checkbox-multiple-blank-circle-outline";
+              break;
+            case "Create":
+              iconName = focused ? 'plus-circle' : "plus-circle-outline";
+              break;
+            case "About":
+              iconName = focused ? 'information' : "information-outline";
+              break;
+            default:
+              iconName = focused ? "checkbox-multiple-blank-circle" : "checkbox-multiple-blank-circle-outline"
+          }
+          // You can return any component that you like here!
+          return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+        }
+      })}
+      drawerContentOptions={{
+        activeTintColor: Platform.OS === "android" ? "white" : THEME.MAIN_COLOR, // настройка под айос и андроид
+        activeBackgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "white"
+      }}
+    >
+      <Drawer.Screen name="Main" component={BottomTabNavigator} options={{drawerLabel: "Основной"  }}/>
+      <Drawer.Screen name="About" component={AboutScreen} options={{ drawerLabel: "О нас"}} />
+      <Drawer.Screen name="Create" component={CreateScreen} options={{ drawerLabel: "Создать пост"}} />
+    </Drawer.Navigator>
+  )
+}
+
+export const AppNavigation = () => {
+  return (
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
+  )
+}
+
+#####################################################################
+
+//  OPTIONS (для скрина) <=> SCREEN OPTIONS (ДЛЯ NAVIGATOR)
+drawerLabel - текст(функция принимающая цвет и фокусед (можно создать как обьект и выводить текст если не принимать аргументов))
+drawerIcon - иконка (функция принимающая color size focused) лучше из навигатора
+swipeEnabled - стандартно true // разрешить свайпы для открытия закрыттия дровера
+gestureEnabled - жесты чтобы открыть/закрыть дровер
+unmountOnBlur - изначально false // не рекомендуется делать тру, так как польщователи мошут потерчять историю
+
+// drawerContentOptions
+activeTintColor: Platform.OS === "android" ? "white" : THEME.MAIN_COLOR, // цвет текста активного
+inactiveTintColor // цвет текста неактивного
+activeBackgroundColor: Platform.OS === "android" ? THEME.MAIN_COLOR : "white" // цвет бэкграунда активного
+inactiveBackgroundColor // бг неактивный
+itemStyle стиль для айтема// itemStyle: { marginVertical: 30 }
+labelStyle
+style  стиля для  оболочки
+contentContainerStyle Объект стиля для раздела содержимого внутри ScrollView
+
+
+EVENTS //
+drawerOpen и drawerClose // они сами автоматически действуют соответсвенно про открытие и закрытие дровера
+React.useEffect(() => {
+  const unsubscribe = navigation.addListener('drawerOpen', (e) => {
+    // Do something
+  });
+
+  return unsubscribe;
+}, [navigation]);
+// ВЫЗВАТЬ ЭТИ СОБЫТИЯ
+что-то onPress={() => navigation.openDrawer()}
+Все такие методы navigation.openDrawer(), navigation.closeDrawer(),navigation.toggleDrawer()
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
