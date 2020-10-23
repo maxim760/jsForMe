@@ -1,0 +1,16 @@
+useDispatch - аналог mapDispatchToProps
+useSelector - для доступа к стэйту
+использование
+import {useDispatch} from "react-redux"
+
+const dispatch = useDispatch()
+
+useEffect(() => {
+  dispatch(loadPosts()) // action creator
+}, [dispatch])
+
+const allPosts = useSelector(state => state.post.allPosts)
+
+return (
+  <PostList data={allPosts} onOpen={openPost}/>
+)
