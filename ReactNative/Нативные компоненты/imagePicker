@@ -5,7 +5,7 @@ expo install expo-constans
 
 import React, { useState, useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker';
-import { View, StyleSheet , Image, Button, Alert} from 'react-native'
+import { View, StyleSheet , Image, Button, Alert,Platform} from 'react-native'
 import Constants from 'expo-constants';
 import * as  Permissions from 'expo-permissions';
 
@@ -33,7 +33,7 @@ export const PhotoPicker = props => {
     }
 
     const img = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: Platform.OS === "android" ? ImagePicker.MediaTypeOptions.Images :  ImagePicker.MediaTypeOptions.All,
       quality: 0.7,
       allowsEditing: true,
       aspect: [16,9]
