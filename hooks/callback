@@ -37,3 +37,16 @@ const loadTodos = useCallback( async () => {
  
  
  // ОБЕРТКА В АСИНК АВЭЙТ ЧТОБЫ ПОСТОЯННО НЕ ПРОПИСЫВАТЬ АСИНК АВАИТ
+
+/////
+
+// react-redux
+    const dispatch = useDispatch()
+
+  const toggleHandler = useCallback(() => {
+    dispatch(toggleBooked(postId))
+  },[dispatch, postId])
+  
+  useEffect(() => {
+    navigation.setParams({ toggleHandler })
+  }, [toggleHandler])
