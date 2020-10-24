@@ -1,2 +1,67 @@
 expo install expo-image-picker
 // для загрузки изображений // либо с камеры либо с галереи
+expo install expo-permissions
+expo install expo-constans
+
+import React, { useState, useEffect } from 'react'
+import * as ImagePicker from 'expo-image-picker';
+import { View, StyleSheet , Image, Button, Alert} from 'react-native'
+import Constants from 'expo-constants';
+import * as  Permissions from 'expo-permissions';
+
+export const PhotoPicker = props => {
+  const [image, setImage] = useState(null)
+
+  const askForPermissions = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await Permissions.askAsync(
+        Permissions.CAMERA,
+        Permissions.CAMERA_ROLL
+      );
+      if (status !== 'granted') {
+        Alert.alert('Ошибка', "Вы не дали прав на использование камеры");
+        return false
+      }
+      return true
+    }
+  };
+
+  const takePhoto = async () => {
+    const hasPermisssions = await askForPermissions()
+    if (!hasPermisssions) {
+      return
+    }
+
+    const img = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.7,
+      allowsEditing: true,
+      aspect: [16,9]
+    })
+
+    console.log(img);
+
+    // if (!img.cancelled) {
+    //   setImage(img.uri);
+    // }
+
+  }
+  return (
+    <View style={styles.wrapper}>
+      <Button title={"Сделать фото"} onPress={takePhoto} />
+      {image && <Image style={styles.image} source={{uri: image}} />}
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  wrapper: {
+    marginBottom: 10
+  },
+  image: {
+    width: "100%",
+    marginTop: 10,
+    height: 200
+  }
+})
+
