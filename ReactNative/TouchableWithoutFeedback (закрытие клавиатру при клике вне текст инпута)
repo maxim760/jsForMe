@@ -1,0 +1,19 @@
+<ScrollView>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} > // закрыватет клавиатру если кликнули по чему либо в пределах тачабл витзаут фидбэк
+      // если клик по текст инпуту , то переместит на строчку на которуюю кликнули
+
+        <View style={styles.wrapper}>
+          <AppText style={styles.title}>Создать новый пост</AppText>
+          <TextInput
+            value={value}
+            style={styles.input}
+            autoCorrect={false}
+            placeholder={"Введите текст поста..."}
+            onChangeText={changeHandler}
+            multiline
+            ></TextInput>
+          <Image style={{width:"100%", height:200, resizeMode:"contain", marginBottom:20}} source={{ uri: "https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg" }} />
+          < Button title={"Опубликовать"} color={THEME.MAIN_COLOR} onPress={submitHandler} />
+        </View>
+      </TouchableWithoutFeedback>
+    </ScrollView>
