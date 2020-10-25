@@ -41,9 +41,9 @@ export const PhotoPicker = props => {
 
     console.log(img);
 
-    // if (!img.cancelled) {
-    //   setImage(img.uri);
-    // }
+     if (!img.cancelled) {
+       setImage(img.uri);
+     }
 
   }
   return (
