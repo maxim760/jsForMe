@@ -36,3 +36,12 @@ function App() {
 }
 
 export default App;
+// аналог стэйта не делающий перерендер
+
+const imgRef = useRef()
+
+const photoPickHandler = (uri) => {
+  imgRef = uri 
+}
+// если бы было через юзстэйт то было бы перерендоривание всегда, а этого здесь не надо
+потом это имгреф передаем куда надо
