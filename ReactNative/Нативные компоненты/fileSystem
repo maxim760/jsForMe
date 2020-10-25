@@ -1,0 +1,28 @@
+пакеты
+expo install expo-file-system
+
+-----
+
+import * as FileSystem from 'expo-file-system';
+
+export const addPost = (post) => async (dispatch) => {
+  post.id = Date.now().toString()
+  // await DB.addPost(post)
+
+  const fileName = post.img.split("/").pop()
+  const newPath = FileSystem.documentDirectory + fileName
+  
+  try { 
+    FileSystem.moveAsync({
+      to: newPath, // в постоянное хранилище
+      from: post.img // их временного
+    })
+  } catch (error) {
+    console.log("error:",error)
+  }
+  
+  dispatch({
+    type: ADD_POST,
+    payload: post 
+  })
+}
