@@ -1,1 +1,168 @@
+пакеты
+expo install expo-sqlite
+
+----- (функционал реализован через Класс с помощью статических методов)
+// ВАЖНО: ЧТОБЫ ВСЁ РАБОТАЛО В РЕДАКСЕ ИСПОЛЬЗУЮТСЯ АСИНХРОННЫЕ ФУНКЦИИ ПОЭТОМУ НУЖЕН МИДВЭЙР
+(((((((((
+import {createStore, combineReducers, applyMiddleware} from "redux"
+
+import thunk from "redux-thunk"
+
+import {postReducer} from "./reducers/post"
+
+
+const rootReducer = combineReducers({
+  post: postReducer,
+
+})
+
+export const store = createStore(rootReducer, applyMiddleware(thunk))
+)))))))))
+------------------------------
+
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase("post.db")
+
+export class DB {
+
+  static init() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY NOT NULL,text TEXT NOT NULL,img TEXT NOT NULL,date TEXT NOT NULL, booked INT)",
+          [],
+          resolve,
+          (_,err) => reject(err) 
+        )
+      })
+    })
+  }
+  // ИСПОЛЬЗОВАНИЕ (ПРИ ЗАГРУЗКЕ ШРИФТОВ , ПРОЦЕСС СОЗДАНИЯ СТРАНИЦЫ)
+  async function loadApplication() {
+    try {
+      await Font.loadAsync({
+        "roboto-regular": require("./assets/fonts/opensans-regular.ttf"), // ссылки на шрифты который скачал с гугл фонт и добавил по этому пути
+        "roboto-bold": require("./assets/fonts/opensans-bold.ttf")
+      })
+      await DB.init()
+      console.log("db started")
+    } catch (e) {
+      console.log("Error", e)
+    }
+  }
+  
+  ============================================================
+
+  static getPosts() {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM posts",
+          [],
+          (_,result) => resolve(result.rows._array), // получение  в виде массива // то что возврщаает в переменную posts
+          (_,err) => reject(err) 
+        )
+      })
+    })
+  }
+  // ИСПОЛЬЗОВАНИЕ
+  export const loadPosts = () => {
+    return async dispatch => {
+      const posts = await DB.getPosts()
+      dispatch({
+        type: LOAD_POSTS,
+        payload: posts
+      })
+    }
+  }
+  
+  ============================================================
+
+  static createPost(post) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO posts (text, date, booked, img) VALUES (?, ?, ?, ?)`,
+          [post.text,post.date,+post.booked, post.img],
+          (_,result) => resolve(result.insertId), 
+          (_,err) => reject(err) 
+        )
+      })
+    })
+  }
+  // ИСПОЛЬЗОВАНИЕ
+  export const addPost = (post) => async (dispatch) => {
+    const fileName = post.img.split("/").pop()
+    const newPath = FileSystem.documentDirectory + fileName
+
+    try { 
+      FileSystem.moveAsync({
+        to: newPath, // в постоянное хранилище
+        from: post.img // их временного
+      })
+    } catch (error) {
+      console.log("error:",error)
+    }
+
+
+    const payload = { ...post, img: newPath }
+    const id = await DB.createPost(payload)
+
+    payload.id = id
+
+    dispatch({
+      type: ADD_POST,
+      payload 
+    })
+  }
+  
+  ============================================================
+
+  static updatePost(post) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `UPDATE posts SET booked = ? WHERE  id = ? `,
+          [+!post.booked, post.id], // меняем пост букед на проивополжный и приводим в формат числа(такой задан в базе данных)
+          resolve, 
+          (_,err) => reject(err) 
+        )
+      })
+    })
+  }
+  // ИСПОЛЬЗОВАНИЕ
+  export const toggleBooked = (post) => async (dispatch) => {
+    await DB.updatePost(post)
+    dispatch({
+      type: TOGGLE_BOOKED,
+      payload: post.id
+    })
+  }
+  
+  ============================================================
+
+  static removePost(id) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `DELETE FROM posts WHERE id = ?`,
+          [id],
+          resolve, 
+          (_,err) => reject(err) 
+        )
+      })
+    })
+  }
+  // ИСПОЛЬЗОВАНИЕ
+  export const removePost = (id) => async (dispatch) => {
+  await DB.removePost(id)
+  dispatch({
+    type: REMOVE_POST,
+    payload: id
+  })
+}
+  
+}
+
 
