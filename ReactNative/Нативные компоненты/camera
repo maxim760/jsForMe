@@ -1,0 +1,243 @@
+expo install expo-camera
+// также установить для Permissions
+// КОД
+
+// CameraScreen
+
+import React, {useLayoutEffect, useState} from 'react'
+import {View, StyleSheet, TextInput, Alert, Image,ScrollView, Button,Keyboard, TouchableWithoutFeedback} from "react-native"
+import { AppText } from '../components/ui/AppText'
+import { AppHeaderIcon } from "../components/ui/AppHeaderIcon"
+import { HeaderButtons, Item } from "react-navigation-header-buttons"
+import { THEME } from '../theme'
+import { addPost} from "../store/actions/post"
+import { useDispatch, useSelector } from "react-redux"
+import { PhotoCamera } from "../components/PhotoCamera"
+
+export const CameraScreen = ({ navigation }) => {
+  const dispatch = useDispatch()
+  
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => {
+        return (
+          <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+            <Item
+              title="Toggle Drawer"
+              iconName="ios-menu"
+              onPress={() => {
+                navigation.toggleDrawer()
+              }}
+            />
+          </HeaderButtons>
+        )
+      },
+    })
+  }, [])
+
+  const [value, setValue] = useState("")
+  let [imgRef, setImgRef] = useState()
+  const [stateCam,setStateCam] = useState("no") // состояние камеры // их три (нет снимка("no"), идет сьемка("middle"), кадр сделан и ожидается отправка("yes"))
+
+
+  const changeHandler = (text) => {
+    setValue(text)
+  }
+  const outFromCreateScreen = () => {
+    setStateCam("no")
+    setValue("")
+    setImgRef("")
+    navigation.goBack() // можно navigate("Main")
+  }
+  const submitHandler = () => {
+    if (value.trim()  && imgRef) {
+      const post = {
+        date: new Date().toJSON(),
+        text: value,
+        img: imgRef,
+        booked: false
+      }
+      dispatch(addPost(post))
+      Alert.alert("Новый пост создан", "", [{ text: "Ок", style: "cancel", onPress: outFromCreateScreen }], {
+        cancelable: true,
+        onDismiss: outFromCreateScreen
+      })
+    } else if (!imgRef && !value.trim()) {
+      Alert.alert("Нельзя добавить", "Для публикации необходимы фото и текст", [{ text: "Ок", style: "cancel" }])
+    } else if (imgRef) {
+      console.log(value)
+        Alert.alert("Нельзя добавить", "Сообщение не должно быть пустым!", [{text:"Ок", style:"cancel"}])
+    } else {
+        Alert.alert("Нельзя добавить", "Вы не добавили фото", [{ text: "Ок", style: "cancel" }])
+
+    }
+  }
+  const photoCameraHandler = (uri) => {
+    setImgRef(uri) 
+  }
+  return (
+    <ScrollView style={{flex:1}}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
+        <View style={styles.wrapper}>
+          <AppText style={styles.title}>Создать новый пост</AppText>
+          <TextInput
+            value={value}
+            style={styles.input}
+            autoCorrect={false}
+            placeholder={"Введите текст поста..."}
+            onChangeText={changeHandler}
+            multiline
+          ></TextInput>
+          <PhotoCamera onPhoto={photoCameraHandler} img={imgRef} setStateCam={setStateCam} stateCam={stateCam} />
+          < Button title={"Опубликовать"} color={THEME.MAIN_COLOR} onPress={submitHandler} disabled={!imgRef || !value.trim()} />
+        </View>
+      </TouchableWithoutFeedback>
+    </ScrollView>
+  )
+}
+
+const styles = StyleSheet.create({
+  wrapper: {
+    padding: 10,
+    flex:1,
+  },
+})
+
+// PhotoCamera.js // своеобразный аналог PhotoPicker.js
+
+import React, { useState, useEffect, useLayoutEffect } from 'react'
+import { Camera } from 'expo-camera';
+import { View, StyleSheet , Image, Button, TouchableOpacity,Dimensions, Alert} from 'react-native'
+import * as  Permissions from 'expo-permissions';
+import { AppTextBold } from "./ui/AppTextBold"
+import { MaterialIcons } from '@expo/vector-icons';
+import { THEME } from '../theme';
+
+export const PhotoCamera = ({img,onPhoto,setStateCam,stateCam}) => { // принмиаю сверху стэйт состояния камеры и стэйт фото
+  const makePhoto = async () => {
+    if (cameraRef) {
+      let photo = await cameraRef.takePictureAsync();
+      if (photo.uri) {
+        onPhoto(photo.uri)
+        setStateCam("yes")
+      } else {
+        Alert.alert("Ошибка", "Не удалось загрузить изображение")
+        setStateCam("no")
+      }
+    }
+  }
+
+  const size = {
+    middle: {
+      width: 360,
+      height: 510
+    }
+  } // можно через Dimensions определять размер девайса и относительно него подбирать размеры камеры и кроме миддл еще надлетаь размеров 5
+  // для большей гибкости
+
+  const [hasPermission, setHasPermission] = useState(null) // обязатлеьно для expo-camera
+  const [type, setType] = useState(Camera.Constants.Type.back) // обязатлеьно для expo-camera
+  const [cameraRef, setCameraRef] = useState(null) // обязатлеьно для expo-camera
+  const [deviceWidth, setDeviceWidth] = useState({
+    width: size.middle.width,
+    height: size.middle.height,
+  })
+
+  useEffect(() => {
+    const update = () => {
+      const tempW = Dimensions.get("window").width
+      const tempH = Dimensions.get("window").height
+      const allSize = tempH > tempW ? {height:size.middle.height,width:size.middle.width} : { height: size.middle.width, width: size.middle.height }
+      console.log(allSize, "sizeall")
+      setDeviceWidth(allSize)
+    }
+    Dimensions.addEventListener("change", update)
+    return () =>  (
+      Dimensions.removeEventListener("change", update) // при выходе из элемента событие пропадает, так как нужно его появление 
+      // только при useEffect а не чтобы он заранее был
+    )
+  }, []) // нужен чтобы при повроте экрана все было топ
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Permissions.askAsync(
+        Permissions.CAMERA,
+        Permissions.AUDIO_RECORDING
+      )
+      setHasPermission(status === 'granted');
+    })();
+  }, []); // просим у пользователя необоходимы разрещения
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <AppTextBold>No access to camera</AppTextBold>;
+  } // если инф. о разрешениях еще нет или если их не дали
+
+  return ( // основа // внутри 3 состояние no, middle,yes
+    <View style={{ flex: 1,  alignItems: "center", marginVertical:20 }}>
+      {stateCam === "no" ? (
+        <Button title={"Сделать фото"} color={THEME.MAIN_COLOR} onPress={() => setStateCam("middle")} />
+      ) : stateCam === "middle" ? (    
+          // сама камера, под камерой больше вью это элемент флипа(смены фронталки на обычную камеру и элемент кружок для фотки)
+          <View style={{ borderRadius: 20, ...deviceWidth, overflow: "hidden" }}>
+        <Camera style={{ position: "relative", ...deviceWidth }} type={type} ref={ref => setCameraRef(ref)}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection:"row",
+            backgroundColor: 'transparent',
+            justifyContent: "space-between",
+            alignContent: "flex-end",
+            alignItems: "flex-end",
+            paddingBottom: 15
+          }}>
+          <TouchableOpacity
+            style={{marginLeft:15}}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+                  );
+                }}>
+            <MaterialIcons style={{borderRadius:50,elevation:6}} name="swap-vertical-circle" size={52} color={"white"} />
+          </TouchableOpacity>
+          <TouchableOpacity style={{position:"absolute", right:"50%",bottom:15, transform: [{ translateX: 25 }]}} onPress={makePhoto}>
+            <View style={{ 
+              borderWidth: 2,
+              borderRadius:50,
+              borderColor: 'white',
+              height: 50,
+              width:50,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <View style={{
+                borderWidth: 2,
+                borderRadius:50,
+                borderColor: 'white',
+                height: 40,
+                width:40,
+                backgroundColor: 'white'}} 
+                >
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        </Camera>
+        </View>
+        ) : ( // yes компонент
+          <View style={{alignItems:"center"}}>
+              <Image style={{ ...deviceWidth,borderRadius: 20 }} source={{ uri: img }} />
+              <View style={{width:200, alignItems:"center", marginVertical:10, textAlign:"center"}}>
+                <Button color={THEME.DANGER_COLOR} title="Другое фото" onPress={() => setStateCam("middle")}/>
+              </View>
+          </View>
+      )}
+    </View>
+  );
+}
+
+
