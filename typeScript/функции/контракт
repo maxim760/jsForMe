@@ -1,4 +1,4 @@
-type f = (baseValue: number, increment: number) => number; // описываем
+type f = (baseValue: number, increment: number) => number; // описываем //для защиты // можно также в отдельный файл вынести
  // используем (связь через <f>)
 let increase
   = <f>function increase(x: number, y: number): number {
