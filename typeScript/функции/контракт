@@ -8,3 +8,13 @@ let increase
 const updatedValue: number = increase(3,1);
 
 console.log(updatedValue);
+
+// другой синтаксис
+{
+  const f = (a: number, b: number): number => a + b;
+
+  type FType = (a: number, b: number) => number; // контракт
+
+  const sum: FType = f; // здесь юзаю контракт
+  let t: number = sum(4,6)
+}
