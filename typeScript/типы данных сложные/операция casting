@@ -4,3 +4,10 @@ let l: number = (<string>someString).length; // задаем что сущнос
 // огианичиваем переменнуюс с типом any, теперь тайпскрипт не проопустит любой метод а только тот что работает со строками
 
 console.log(l);
+
+// другой синтаксис
+
+let value: any = 'value';
+let size: number = (value as string).length;
+
+console.log(size)
