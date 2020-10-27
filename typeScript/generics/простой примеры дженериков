@@ -18,3 +18,14 @@
     console.log(n);
 }
 // если не указыавть <string> // тайпскрипт сам поппытается понят, и в этом случсе поойсмет т к "str" - явная строка
+
+// по другому запись фунции // не стрелкой
+{
+    const getArgument = function <T>(arg: T): T {
+        return arg;
+    };
+
+    const readArgument: {<T>(arg: T): T} = getArgument;
+
+    readArgument(1)
+}
