@@ -1,10 +1,12 @@
 // Enum
-enum ColorList {Red = 4, Green = 15, Blue = 12} // можно каждому конкретно задавать 
+enum ColorList {Red = 1, Green = 2, Blue = 3} // можно каждому конкретно задавать 
 // например для статус кода ошибок errorList = {errorNotFound = 404, errorServer = 500}
 // потом по свитч кейсу допустим что т-о делать если число404 или число 500
 let myColor: ColorList = ColorList.Green;
-
+let сolorName: ColorList = ColorList[2];
+// можно  и так и так обращаться +гибкость (удобно)
 console.log(myColor);
+console.log(сolorName);
 
 // выглядит более правильно что ли, когда мы  кконкретной ошибке обращаемся через что-то конкретное типа errorList.errorNotFound
 // например if (errorList.errorNotFound === currentError) {...} // возможно написано нерпавильно с точки зрения тайпскрипта именно строчка с ифом
