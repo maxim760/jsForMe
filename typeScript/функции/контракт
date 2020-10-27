@@ -21,11 +21,23 @@ console.log(updatedValue);
 // разделили контракт и имплиментацию
 
 // другой синтаксис
+//ИТОГО
+//1) // препочтительнее
 {
   type FType = (a: number, b: number) => number; // контракт
 
-  const sum: FType = function(a: number, b: number): number {
+  const sum: FType = function(a, b): number { // за счет ftype подразумевается number в а и b
     return a + b;
   }; // здесь юзаю контракт // просто создаю функцию тацп скрпитовую и определяю ей контракт FType
 }
 // разделили контракт и имплиментацию
+//2)
+type f = (baseValue: number, increment: number) => number;
+let increase = <f>function increase(x: number, y: number): number {
+  return x + y;
+};
+// ИЛИ
+let increase = <f>(x: number, y: number): number => {
+  return x + y;
+};
+// ПРЕИМУЩЕСТВА : имплиментауия и сигнатура в разных местах, есди в одном и сигнатруа сложно то трудно читабельно
