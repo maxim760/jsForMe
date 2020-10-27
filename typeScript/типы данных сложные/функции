@@ -1,0 +1,6 @@
+function f([first, second, ]: [number, number]) { // параметры функции типа намбер
+  console.log(first);
+  console.log(second);
+}
+
+f([1, 2]);
