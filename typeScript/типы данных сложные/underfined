@@ -1,3 +1,12 @@
 // void
 let unusable: void = void 0;
 console.log(unusable); // undefined
+
+// другой подход для underfined
+
+let n1: undefined = undefined;
+// нулл
+let n2: null = null;
+
+console.log(n1);
+console.log(n2);
