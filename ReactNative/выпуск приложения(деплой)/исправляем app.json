@@ -17,7 +17,7 @@
       "backgroundColor": "#ffffff" // цвет
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0 // ждет 0 секунд(то есть сразу запускает приложения и наличие обновлений на фоне проверяются)
     },
     "assetBundlePatterns": [
       "**/*"
