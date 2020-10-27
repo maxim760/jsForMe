@@ -18,3 +18,4 @@ console.log(updatedValue);
   const sum: FType = f; // здесь юзаю контракт
   let t: number = sum(4,6)
 }
+// разделили контракт и имплиментацию
