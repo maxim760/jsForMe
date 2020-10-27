@@ -1,0 +1,15 @@
+// это как в дженериках проверка типов, но отводится спец функция чтобы определить подходит тип или нет
+
+{
+    const isEntityNumber = (val) => typeof val === "number"
+    const readLength = function <T>(arg: T[]): T[] {
+        const n = arg[1];
+
+        if(isEntityNumber(n)) { // функция решает пропускать или нет // гуард!!!
+            console.log(n.toFixed());
+        }
+        return arg;
+    };
+
+    readLength<number>([1,2,3]);
+}
