@@ -1,11 +1,18 @@
 {
     const mix = function <T, U>(number1: T, number2: T, text: U): void {
         const str = `${text}: ${number1}, ${number2}`;
-
+        
         console.log(str);
     };
-
-    const anotherFunction: <T, U>(number1: T, number2: T, text: U) => void = mix;
+    const g = () : number => return 1
+    //const anotherFunction: <T, U>(number1: T, number2: T, text: U) => void = mix;
+    const anotherFunction: <T, U>(number1: T, number2: T, text: U) => void = g; // будет работать хотя вро не должно
+    // обьясненние  g - ничего не принимает , то есть андефайнед , но андефайнед с дженериками взаимо заменяем, так как дженерики не знают заранее что передано и значально они
+    // они андефайнед поэтому конфликта не возникает (то есть по факту T И U - underfinedб пока их не указали, их не указали => нет ошибки)
 
     anotherFunction<number, string>(1,2,'List');
+    anotherFunction<number, string>(void 0,2,'List'); // допустимо
+    // дженерик 1 аргументов принимает андфайнед,то он его скипает так как андефанйед и идет дальше и затем принимает число(его примет!!!)
+    // такого не будет,что 1 андфайнед и второе Т тоже подтянулось и стало андфайнед или вообще ошибка, так как дженерики просто скипают приходящии в качсетсве аргуметнов
+    // андефаенды и не счиатет их
 }
