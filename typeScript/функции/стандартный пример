@@ -2,6 +2,15 @@ function add(x: number, y: number): number {
   return x + y;
 }
 
-const sum: number = add(1, 2);
+const sum: number = add(1, 2); // обязателбно указываем тип, мы не знаем кто провайдер функции, поэтому типизирцуем
 
 console.log(sum);
+
+-----------
+let myAdd = function(x: number, y: number): number {
+  return x + y;
+};
+
+const total: number = myAdd(1, 2);
+
+console.log(total);
