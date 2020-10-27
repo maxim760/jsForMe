@@ -22,3 +22,13 @@ function showProperties({ a, b }: C): void {
 
 //showProperties({a: 'a', b: 9});
 showProperties({a: 'a'});
+
+// ПАРМЕТРЫ ПО УМОЛЧАНИю если вдркг вообще ничего не передали
+type Schema = { a: string, b?: number };
+
+function init({ a, b = 0 }:Schema = { a: "" }): void { // равно = относится не к схеме, а к ВХОДНЫМ ПАРАМАТЕРАМ , если их не передлаи то по умлочанию { a: "" }
+  console.log(a);
+  console.log(b);
+}
+
+init({ a: 'str'});
