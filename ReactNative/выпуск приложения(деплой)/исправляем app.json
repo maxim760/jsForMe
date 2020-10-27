@@ -27,8 +27,8 @@
     "ios": { // отдельная конфигурация , специфичная для ios // также есть и для андроди 
       // так можно боле гибкую настройку для отдельной платформы(например разные иконки айос андроил)
       "supportsTablet": true,
-      "bundleIdentifier": "com.maximprogdev.self_blog-rn-app", // уникальное для ios // дефисы
-      "build-number": "1.0.0" // текущая версия // меняем вручную
+      "bundleIdentifier": "com.maximprogdev.self-blog-rn-app", // уникальное для ios // дефисы
+      "buildNumber": "1.0.0" // текущая версия // меняем вручную
     }, 
     "android": {
       "package": "com.maximprogdev.self_blog_rn_app", // уникальное название для анрдоид // нижние полчеркивания
@@ -70,8 +70,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.maximprogdev.self_blog-rn-app", 
-      "build-number": "1.0.0"
+      "bundleIdentifier": "com.maximprogdev.self-blog-rn-app", 
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.maximprogdev.self_blog_rn_app", 
