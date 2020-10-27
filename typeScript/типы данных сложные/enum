@@ -1,0 +1,7 @@
+// Enum
+enum ColorList {Red = 4, Green = 15, Blue = 12} // можно каждому конкретно задавать 
+// например для статус кода ошибок errorList = {errorNotFound = 404, errorServer = 500}
+// потом по свитч кейсу допустим что т-о делать если число404 или число 500
+let myColor: ColorList = ColorList.Green;
+
+console.log(myColor);
