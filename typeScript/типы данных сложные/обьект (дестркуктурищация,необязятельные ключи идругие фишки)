@@ -1,0 +1,23 @@
+// деструктурищация
+{
+  const resource = {
+    a: 'a',
+    b: 1
+  };
+
+  let {a, b}: { a: string, b: number } = resource;
+
+  console.log(a);
+  console.log(b);
+}
+
+// необязателньые типы
+type C = { a: string, b?: number };
+
+function showProperties({ a, b }: C): void {
+  console.log(a);
+  console.log(b);
+}
+
+//showProperties({a: 'a', b: 9});
+showProperties({a: 'a'});
