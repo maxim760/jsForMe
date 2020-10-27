@@ -1,3 +1,4 @@
+// в самом json нет комментариев поэтом их удалить
 {
   "expo": {
     "name": "Self Blog", // название
@@ -43,3 +44,45 @@
   }
 }
 
+// ВЕРСИЯ БЕЗ КОММЕНТОВ
+{
+  "expo": {
+    "name": "Self Blog",
+    "slug": "rn-self-blog",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],  
+    "orientation": "default",
+    "icon": "./assets/rn-icon.png",
+    "splash": {
+      "image": "./assets/rn-splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#242832"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.maximprogdev.self_blog-rn-app", 
+      "build-number": "1.0.0"
+    },
+    "android": {
+      "package": "com.maximprogdev.self_blog_rn_app", 
+      "versionCode": 1,  
+      "permissions": [ 
+        "CAMERA_ROLL",
+        "CAMERA",
+        "AUDIO_RECORDING",
+        "WRITE_EXTERNAL_STORAGE", 
+        "READ_EXTERNAL_STORAGE"
+      ]
+    } 
+  }
+}
