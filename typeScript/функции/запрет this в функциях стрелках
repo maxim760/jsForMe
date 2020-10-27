@@ -1,5 +1,5 @@
 const run: (this: void, n: number) => void   = function (n) {
-  //this.n = n;
+  //this.n = n; // типа зис - андефайнед
   console.log(n);
 };
 
