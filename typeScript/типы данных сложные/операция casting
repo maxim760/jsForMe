@@ -1,0 +1,5 @@
+let someString: any = 'Some string';
+
+let l: number = (<string>someString).length; // задаем что сущность someString здесь string
+
+console.log(l);
