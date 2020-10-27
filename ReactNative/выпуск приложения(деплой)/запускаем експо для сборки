@@ -5,3 +5,16 @@ expo publish
 ⚙️   Project page: https://expo.io/@maxim760/rn-self-blog Learn more: https://expo.fyi/project-page
 
 если если какие-то изменения то опять expo publich и меняем версию
+
+// все сделали в app.json
+// для андроид
+expo build:android -t app-bundle
+// дальше выбираем чтобы сам експо собрал кейстор
+// когда все готово то
+//expo fetch:android:keystore
+// expo upload:android --use-submission-service // заилвка в гугл плэй
+
+// для билда на ios нужен мак или apple id
+// нужно за 100 доларов купить подписку для эпл
+//  и дальше expo build:ios
+/ и потом expo upload:ios // заливка в эпп стор
