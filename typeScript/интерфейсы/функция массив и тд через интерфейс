@@ -25,7 +25,7 @@
 ---------------
 
 {
-    type NumberDictionary = {
+    type NumberDictionary = { //теряются методы массива
         [index: number]: number;
         // length: number;
     }
@@ -34,10 +34,11 @@
     //     length: 1,
     //     1: 1
     // };
-    const t: Array<string> = ['sd'];
+    const t: Array<string> = ['sd']; // так хорошо
     t.map() // норм
     let obj: NumberDictionary = [1,2];
     obj.map() // будет ошибка, так как намбер дикшинари не предусматривает метода мэп
+    // лучше типизировать как t
 }
 
 ----------------------
