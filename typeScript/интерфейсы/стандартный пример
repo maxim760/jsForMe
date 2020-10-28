@@ -13,7 +13,7 @@
         label: string;
     }
 
-    const printLabel = function(labeledObj: LabeledValue) {
+    const printLabel = function(labeledObj: LabeledValue) { // интерфецсы можно передвать в качетсве типа, так удобнее
         console.log(labeledObj.label);
     };
 
