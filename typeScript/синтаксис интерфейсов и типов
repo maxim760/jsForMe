@@ -9,6 +9,10 @@ interface SetPoint {
   (x: number, y: number): void;
 }
 
+// или если это метод в обьекте 
+// reset(): void;
+// если просто функция (): void 
+
 type Point = {
   x: number;
   y: number;
