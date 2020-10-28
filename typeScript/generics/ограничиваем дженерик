@@ -1,0 +1,14 @@
+{
+    interface Core {
+        length: number;
+    }
+
+    const getArgument = function <T extends Core>(arg: T): T { // расширили дженерик и описали тип свойства
+        console.log(arg.length);  // это число будет так как мы указали extneds core (распространяется только на то где есть length, для чисел работать не будет так как у чисел нет length)
+        return arg;
+    };
+
+    // getArgument(3);  // Error, number doesn't have a .length property
+
+    getArgument({length: 10, value: 3});
+}
