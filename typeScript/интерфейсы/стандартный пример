@@ -11,6 +11,8 @@
 {
     interface LabeledValue {
         label: string;
+        ():void; // типизация функции
+        new ():void; // типизация функции конструктора
     }
 
     const printLabel = function(labeledObj: LabeledValue) { // интерфецсы можно передвать в качетсве типа, так удобнее
