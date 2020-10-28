@@ -67,7 +67,7 @@
         select() { }
     }
 
-// Error: Property 'state' is missing in type 'Image'.
+// Error: Property 'state' is missing in type 'Image'. //SelectableControl расширяет контрол, пожтому чтобы Image работал надо чтобы он тоже расширял контрол
 //     class Image implements SelectableControl {
 //         private state: any;
 //         select() { }
