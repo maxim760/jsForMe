@@ -1,0 +1,45 @@
+{
+    interface SearchFunc {
+        (source: string, subString: string): boolean;
+    }
+
+    let mySearch: SearchFunc;
+
+    mySearch = function(source: string, subString: string) {
+        let result = source.search(subString);
+        return result > -1;
+    }
+}
+
+{
+    interface StringArray {
+        [index: number]: string;
+    }
+
+    let myArray: StringArray;
+    myArray = ["Bob", "Fred"];
+
+    let myStr: string = myArray[0];
+}
+
+---------------
+
+{
+    type NumberDictionary = {
+        [index: number]: number;
+        // length: number;
+    }
+
+    // let obj: NumberDictionary = {
+    //     length: 1,
+    //     1: 1
+    // };
+    const t: Array<string> = ['sd'];
+    t.map()
+    let obj: NumberDictionary = [1,2];
+    obj.map()
+}
+
+----------------------
+
+
