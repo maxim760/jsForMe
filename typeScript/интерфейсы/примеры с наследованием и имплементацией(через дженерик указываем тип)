@@ -24,7 +24,7 @@
         sideLength: number;
     }
 
-    let square = <Square>{};
+    let square = <Square>{}; // затипизировали // такой синтаксис чтобы получать не только типы но и конкретные ключи // и только потом а не сразу присваивтать значения
     square.color = "blue";
     square.sideLength = 10;
 }
@@ -38,11 +38,11 @@
         penWidth: number;
     }
 
-    interface Square extends Shape, PenStroke {
+    interface Square extends Shape, PenStroke { // интерфейс может // от нескольких классво НЕЛЬЗЯ
         sideLength: number;
     }
 
-    let square = <Square>{};
+    let square = <Square>{}; // затипизировали
     square.color = "blue";
     square.sideLength = 10;
     square.penWidth = 5.0;
