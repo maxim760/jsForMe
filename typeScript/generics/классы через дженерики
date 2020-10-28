@@ -11,6 +11,19 @@
         return n1 + n2;
     };
 }
+----------------------------
+
+{
+    const create = function <T>(Entity: {new(): T; }): T { // запись дженерика через обьекта // лучше тсндартно писать new () => T
+        return new Entity();
+    }
+
+    class Person {}
+
+    create(Person);
+    //create(() => 1);
+}
+
 
 ------------------------------
 {
