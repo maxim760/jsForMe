@@ -5,7 +5,7 @@
         set: (a:number) => void;
     }
 
-    let p1: Point = { x: 10, y: 20, set(a) {this.x = a} };
+    let p1: Point = { x: 10, y: 20, set(a) {this.x = a} }; // тоже нельзя менять т к x - readonly
     // p1.x = 5; // error!
     p1.set(1);
 }
