@@ -1,9 +1,9 @@
 // Hybrid Types
 {
-    interface Counter {
+    interface Counter { // типа функция которая имеет статические свойства
         (start: number): string;
-        interval: number;
-        reset(): void;
+        interval: number; // статические свойства функции
+        reset(): void; // статические свойства функции
     }
 
     function getCounter(): Counter {
