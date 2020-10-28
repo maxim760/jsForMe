@@ -1,0 +1,49 @@
+{
+    interface ClockConstructor {
+        new (hour: number, minute: number): void
+    }
+
+    interface ClockInterface {
+        tick():void
+    }
+
+    const Clock: ClockConstructor = class Clock implements ClockInterface {
+        constructor(h: number, m: number) {}
+        tick() {
+            console.log("beep beep");
+        }
+    }
+}
+---------------------
+{
+    interface Shape {
+        color: string;
+    }
+
+    interface Square extends Shape {
+        sideLength: number;
+    }
+
+    let square = <Square>{};
+    square.color = "blue";
+    square.sideLength = 10;
+}
+--------------------
+{
+    interface Shape {
+        color: string;
+    }
+
+    interface PenStroke {
+        penWidth: number;
+    }
+
+    interface Square extends Shape, PenStroke {
+        sideLength: number;
+    }
+
+    let square = <Square>{};
+    square.color = "blue";
+    square.sideLength = 10;
+    square.penWidth = 5.0;
+}
