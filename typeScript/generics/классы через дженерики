@@ -34,7 +34,7 @@
         keeper: ZooKeeper;
     }
 
-    const createInstance = function <A extends Animal>(c: new () => A): A {
+    const createInstance = function <A extends Animal>(c: new () => A): A { // передаваемый тип только то что расширяет энимал
         return new c();
     };
 
