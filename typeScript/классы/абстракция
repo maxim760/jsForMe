@@ -1,3 +1,5 @@
+// у абстрактного класа нельзя создать инстанс // + они имеют абстрактные методы // все св-ва мпетоды исаользуются только у потомков
+
 abstract class Department {
   protected constructor(public name: string) {}
 
