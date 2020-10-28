@@ -14,7 +14,7 @@
 }
 -----------------
 {
-    function getSomeData<T, K extends keyof T>(obj: T, key: K) {
+    const getSomeData = function<T, K extends keyof T>(obj: T, key: K) : T[K] {
         return obj[key];
     }
 
@@ -23,3 +23,10 @@
     getSomeData(properties, "a"); // okay
     // getSomeData(properties, "m"); // error: Argument of type 'm' isn't assignable to 'a' | 'b' | 'c' | 'd'.
 }
+
+keyof, предоставляющее доступ ко всем именам свойств в структурном типе данных.
+
+ Конструкция keyof – это гарант того, что вы пытаетесь передать в функцию только разрешённый объект и существующее имя свойства
+ , при этом взамен вы получаете не только значение свойства, но и его тип.
+ 
+ Pick<T, K extends keyof T> – выделяет из некоторого типа T некоторый набор свойств K
