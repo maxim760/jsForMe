@@ -1,0 +1,76 @@
+class AnimalBase {
+  private name: string;
+  constructor(theName: string) { this.name = theName; }
+}
+
+// new AnimalBase('Cat').name;
+
+// ---------------------------------------
+
+class AnotherAnimal {
+  private name: string;
+  constructor(theName: string) { this.name = theName; }
+}
+
+class Rhino extends AnotherAnimal {
+  constructor() { super("Rhino"); }
+}
+
+class Employee {
+  private name: string;
+  constructor(theName: string) { this.name = theName; }
+}
+
+let animal = new AnotherAnimal("Goat");
+let rhino = new Rhino();
+let employee = new Employee("Bob");
+
+animal = rhino; // родителя сожно заменить на ребенка
+// animal = employee; // Error: 'Animal' and 'Employee' are not compatible
+
+//--------------------------------------
+class Person {
+  protected name: string;
+  constructor(name: string) { this.name = name; }
+}
+
+class Customer extends Person {
+  private department: string;
+
+  constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+  }
+
+  public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+  }
+}
+
+let howard = new Customer("Howard", 'Sales');
+console.log(howard.getElevatorPitch());
+// console.log(howard.name); // error
+
+
+// ----------------- абстранктный класс у которго не доступен конструктор а только у детей
+class Base {
+  protected name: string;
+  protected constructor(theName: string) { this.name = theName; }
+}
+
+// Employee can extend Person
+class Entity extends Base {
+  private department: string;
+
+  constructor(name: string, department: string) {
+    super(name);
+    this.department = department;
+  }
+
+  public getElevatorPitch() {
+    return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+  }
+}
+
+let item1 = new Entity("Howard", "Sales");
+// let item2 = new Base("John"); // Error: The 'Person' constructor is protected
