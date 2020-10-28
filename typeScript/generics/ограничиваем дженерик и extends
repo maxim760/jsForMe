@@ -22,7 +22,7 @@
 
     getSomeData(properties, "a"); // okay
     // getSomeData(properties, "m"); // error: Argument of type 'm' isn't assignable to 'a' | 'b' | 'c' | 'd'.
-}
+} // типизауия что K - ключ к обьекту T
 
 keyof, предоставляющее доступ ко всем именам свойств в структурном типе данных.
 
