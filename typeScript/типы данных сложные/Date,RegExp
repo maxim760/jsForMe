@@ -1,0 +1,3 @@
+можно цуказывать тип даты и регулярки:
+const groupRegex: RegExp = /(\d)(?=(\d{3})+\b)/g;
+const vedicRegex: RegExp = /(\d)(?=(\d\d)+\d\b)/g;
