@@ -15,6 +15,7 @@
 
 {
     const create = function <T>(Entity: {new(): T; }): T { // запись дженерика через обьекта // лучше тсндартно писать new () => T
+    // это не стрелочная функция а контракт
         return new Entity();
     }
 
@@ -51,7 +52,7 @@
         return new c();
     };
 
-    createInstance(Lion).keeper.tag;  // typechecks!
+    createInstance(Lion).keeper.tag;  // typechecks! // тип не указываем у дженерика // срабатывает интерференция
     createInstance(Bee).keeper.hasMask;   // typechecks!
     createInstance(BeeKeeper).keeper.hasMask // err
 }
