@@ -7,7 +7,7 @@
 
 {
     interface ClockInterface {
-        currentTime: Date; // это как String и string /// string - это тип тайпскрипт // String / это как бы прототип всех строк
+        currentTime: Date; 
     }
 
     class Clock implements ClockInterface {
