@@ -1,3 +1,20 @@
+1) ПЕРЕДАЧА ДЖЕНЕРИКА В ИНТЕРФЕЙС
+{
+    interface GenericInterface<T> {
+        (arg: T): T;
+    }
+
+    const getArgument = function <T>(arg: T): T {
+        return arg;
+    };
+
+    const readArgument: GenericInterface<number> = getArgument; // СДЕЛАЛ КОНТРАКТ НАМБЕРОМ
+
+    const argument = readArgument(1);
+
+    console.log(argument);
+}
+--------------
 {
     interface GenericInterface {
         <T>(arg: T): T;
@@ -34,6 +51,6 @@
     };
 
     const readArgument: <T>(arg: T) => T = getArgument;
-xx
+
     readArgument(1)
 } 
