@@ -1,0 +1,42 @@
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import "./index.css"
+
+function App() {
+  const [numbers, setNumbers] = useState([1, 2, 3, 4, 5])
+  
+  const ulRef = useRef() // юзреф при перерендере страницы сохраняется и не обновляется,в этом его плюс
+  const addNumber = () => {
+    const lastNumber = numbers[numbers.length - 1]
+    setNumbers([...numbers,lastNumber+1])
+  }
+
+  const handleScroll = useCallback(() => {
+    console.log("Был скролл!")
+  }, [])
+
+  useEffect(() => {
+    ulRef.current.addEventListener("scroll", handleScroll)
+  }, [])
+  
+  const removeScroll = () => {
+    console.log(ulRef)
+    ulRef.current.removeEventListener("scroll", handleScroll)
+  }
+  return (
+    <div className="wrapper">
+      <ul className="ul" ref={ulRef}>
+        {numbers.map((item,i) => {
+          return <li className="li" key={i}>{item}</li>
+        })}
+      </ul>
+      <button className="button" onClick={addNumber}>Добавить число</button>
+      <button className="button" onClick={removeScroll}>Не следить</button>
+    </div>
+  );
+}
+export default App;
+
+///////// ИТОГО
+useRef нужен для взаимодействия с дом элементами 1)
+2) для хранения в себе актуальных данных(которые не будут перередеритться после кадого рендера станицы и буду пожтому актуальны)
+3) при изменении чего-то в юз реф страница не перерендеривается!!!
