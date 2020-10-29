@@ -18,3 +18,24 @@ pet.age = 6;
 
 // State mutations
 readonlyPet.age = 6;
+
+=--------------------
+interface IPet {
+    name: string;
+    age: number;
+    favoritePark?: string;
+}
+
+type ReadonlyPet = {
+    readonly [K in keyof IPet]-?: IPet[K]; // делаем обязательным не обязательные св-ва(фаворит пак)
+}
+
+// Mutable State
+const pet:IPet = {name: 'Buttons', age: 5};
+
+// Immutable State
+const readonlyPet: ReadonlyPet = {name: 'Buttons', age: 5};
+
+
+// моменты
+// типы могут екстендить интерфейсы и наоборот, тип можеть быть что интрфейс & (и) тип // это всё полддерживается
