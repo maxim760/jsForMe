@@ -1,0 +1,87 @@
+{
+    interface teacher {
+        email: string
+    }
+
+    interface pupil {
+        group: number
+    }
+
+    const n: teacher & pupil = {
+        email: '',
+        group: 1
+    }
+}
+----------
+{
+    interface Bird {
+        fly():void;
+        name: string
+    }
+
+    interface Fish {
+        swim():void;
+        name: string
+    }
+
+    const getSmallPet = function(): Fish | Bird {
+        return {
+            name: 'oliver',
+            swim() {
+                console.log('swim');
+            }
+        }
+    };
+
+    const pet = <Fish>getSmallPet();
+    if ((<Fish>pet).swim) { // кастинг
+        (<Fish>pet).swim();
+    }
+}
+
+---------------------
+через гарды 
+{
+    interface Bird {
+        fly():void;
+        name: string
+    }
+
+    interface Fish {
+        swim():void;
+        name: string
+    }
+
+    const getSmallPet = function(): Fish | Bird {
+        return {
+            name: 'oliver',
+            swim() {
+                console.log('swim');
+            }
+        }
+    };
+
+    const isFish = function(pet: Fish | Bird): pet is Fish { // pet is Fish // синтаксис гарда
+        return (<Fish>pet).swim !== void 0; // кастинг внутри гарда
+    };
+
+    const pet = getSmallPet();
+
+    if (isFish(pet)) {
+        pet.swim();
+    }
+}
+// еще гард
+{
+    // type guards
+    const isNumber = function(x: any): x is number {
+        return typeof x === "number";
+    };
+
+    const f = function (a:string, b: number | string): number {
+        const length = a.length;
+        const value = isNumber(b) ? b : b.length;
+
+        return length + value;
+    }
+}
