@@ -1,0 +1,13 @@
+// обычная запись
+class Car {
+  model: string;
+  constructor(theModel: string) {
+    this.model= theModel
+  }
+}
+
+// продвинутая запись 
+
+class Car {
+  constructor(model: string) {}
+}
