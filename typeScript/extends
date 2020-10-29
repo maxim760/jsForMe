@@ -8,3 +8,6 @@ function withCount<T extends Ilength>(value: T) : {value: T, count: string} { //
     count: `есть ${value.length} символа`
   }
 }
+
+
+// также функция вызовется если дженерик это обьект со свойством length
