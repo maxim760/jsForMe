@@ -1,0 +1,50 @@
+{
+    type Container<T> = { value: T };
+
+    const data:Container<number> = {
+        value: 1
+    }
+}
+
+--------
+| в типах позволяет и то что слева юзать и то справа а не одну чатсть как или в алгебре логики // но надо чтобы тогда 1 часть была полной, другой может быть чатсично испольщована
+{
+    type LinkedList<T> = T | { meta: string };
+
+    interface Teacher {
+        name: string;
+    }
+
+    interface Pupil {
+        group: number
+    }
+
+    const people: LinkedList<Teacher & Pupil> = {
+        name: 'Oliver',
+        // group: 21,
+        meta: 'Some text'
+    };
+}
+-----------
+{
+    type Easing = 'ease-in' | 'ease-out' | 'ease-in-out';
+    type AnimationNumber = number;
+
+    interface Animation {
+        <T extends AnimationNumber>(dx: T, dy: T, easing: Easing): {
+            dx:T,
+            dy:T,
+            easing: Easing
+        }
+    }
+
+    const animate:Animation = function(dx, dy, easing) {
+        return {
+            dx,
+            dy,
+            easing
+        };
+    };
+
+    animate<number>(1,2,'ease-in');
+}
