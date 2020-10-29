@@ -1,0 +1,10 @@
+EXTENDS ДЛЯ ОГРАНИЧЕНИЙ
+interface Ilength {
+  length: number
+}
+function withCount<T extends Ilength>(value: T) : {value: T, count: string} { // дженерик вызовется без ошибки только для тех типов которые имеют length // благр=одаря екстендсу накладываем ограничения
+  return {
+    value,
+    count: `есть ${value.length} символа`
+  }
+}
