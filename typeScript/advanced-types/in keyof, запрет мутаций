@@ -4,7 +4,7 @@ interface IPet {
 }
 
 type ReadonlyPet = {
-    readonly [K in keyof IPet]: IPet[K];
+    readonly [K in keyof IPet]: IPet[K]; // запретили мутации
 }
 
 // Mutable State
