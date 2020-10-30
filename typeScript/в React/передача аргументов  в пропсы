@@ -1,0 +1,19 @@
+ <>
+  <Navbar />
+  <div className="container">
+    <TodoForm onSubmit={addHandler} />
+    <TodoList todos={todos} onToggle={toggleHandler} onRemove={removeHandler} />
+  </div>
+</>
+
+// TodoList
+import React from 'react';
+import { ITodo } from "../interfaces"
+
+type TodoListProps = {
+  todos: Array<ITodo>;
+  onToggle: (id: number) => void;
+  onRemove: (id: number) => void
+}
+export const TodoList: React.FC<TodoListProps> = ({todos, onToggle,onRemove}) => {
+  return (
