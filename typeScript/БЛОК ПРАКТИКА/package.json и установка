@@ -1,0 +1,152 @@
+npx create-react-app my-app --template typescript
+yarn add -D eslint-config-airbnb
+
+// в вебштормe settings => inspeections пишем javascript , все галочки снимаем, заходим в eslint, ставим галочку
+// еще в еслинте поставить галочку в "manual eslint configuration"
+// теперь проверка с помшщью еслинта
+// настройка актуальна только для текущего проекта
+// для другогор редактора: отключить встроенные проверки, включить проверки только по еслинту 
+
+yarn add -D prettier-eslint-cli
+--------------------
+package.json
+++++++++++++++++++++++++++++++
+{
+  "name": "lesson-my-react-ts",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.0",
+    "redux": "^4.0.5",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "yarn typescript && yarn lint:ts",
+    "lint:ts": "eslint \"./src/**/*.{ts,tsx}\"",
+    "prettier:ts": "prettier-eslint --list-different $PWD/\"src/**/*.{ts,tsx}\"; prettier-eslint --write $PWD/\"src/**/*.{ts,tsx}\"",
+    "typescript": "tsc"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.2.0",
+    "prettier-eslint-cli": "^5.0.0"
+  }
+}
+
+++++++++++++++++++++++++++++++
+tsconfig.json
+++++++++++++++++++++++++++++++
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react"
+  },
+  "include": [
+    "src"
+  ]
+}
+
+++++++++++++++++++++++++++++++
+.eslintrc
+++++++++++++++++++++++++++++++
+// выключены экспорты по дефолту
+{
+  "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
+  "parser":  "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion":  2018,
+    "sourceType":  "module",
+    "ecmaFeatures": {
+      "jsx":  true
+    }
+  },
+  "rules":  {
+    "react/jsx-filename-extension": [2, {
+      "extensions": [
+        ".tsx"
+      ]
+    }],
+    "import/prefer-default-export": 0,
+    "import/extensions": [1, "ignorePackages", {
+      "ts": "never",
+      "tsx": "never"
+    }],
+    "no-use-before-define": [0],
+    "@typescript-eslint/no-use-before-define": [1]
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx"],
+        "paths": ["src"]
+      }
+    },
+    "import/extensions": [".ts", ".tsx"],
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
+
+++++++++++++++++++++++++++++++
+.eslintignore
+++++++++++++++++++++++++++++++
+src/react-app-env.d.ts
+src/serviceWorker.ts
