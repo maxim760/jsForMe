@@ -8,6 +8,7 @@ yarn add -D eslint-config-airbnb
 // для другогор редактора: отключить встроенные проверки, включить проверки только по еслинту 
 
 yarn add -D prettier-eslint-cli
+npm install prettier
 --------------------
 package.json
 ++++++++++++++++++++++++++++++
@@ -151,3 +152,19 @@ tsconfig.json
 ++++++++++++++++++++++++++++++
 src/react-app-env.d.ts
 src/serviceWorker.ts
+
+
+]]]
+пример фацла без ошибко
+import React from "react";
+
+export const Header: React.FC = () => {
+  const t = "e";
+  return (
+    <div>
+      <h1>ff</h1>
+    </div>
+  );
+};
+
+// я скорее всего линт примнять не буду ибо все красное даже в нормальном коде
