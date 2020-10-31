@@ -111,6 +111,7 @@ tsconfig.json
     }
   },
   "rules":  {
+    "quotes": ["error", "double"],
     "react/jsx-filename-extension": [2, {
       "extensions": [
         ".tsx"
