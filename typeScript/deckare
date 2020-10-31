@@ -1,0 +1,5 @@
+declare var confirm: (question: string) => boolean; // описываем что-то что точно будет
+const removeHandler = (id: number) => {
+  const shouldRemove = confirm("Вы уверен, что хотите удалить задачу?")
+  shouldRemove && setTodos(prev => prev.filter(item => item.id !== id))
+} 
