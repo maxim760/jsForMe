@@ -63,3 +63,6 @@ const mapDispatchToProps = {
 //при клике на какую нибдуь кнопку выполнфем фунцию onClick={() => props.onAddNumber(num)} // допустим что-то такое, если функция принимает props
 // редакс сам понимает что нужен диспатч и все делает за нас в таком методе
 export default connect(mapStateToProps, mapDispatchToProps)(App) // оборачиваем в коннект и добавляем в пропсы state и dispatch чтобы взаимодействовать с store 
+
+если нужен только диспатч то :
+export default connect(null, mapDispatchToProps)(App)
