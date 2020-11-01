@@ -10,3 +10,25 @@ console.log(сolorName);
 
 // выглядит более правильно что ли, когда мы  кконкретной ошибке обращаемся через что-то конкретное типа errorList.errorNotFound
 // например if (errorList.errorNotFound === currentError) {...} // возможно написано нерпавильно с точки зрения тайпскрипта именно строчка с ифом
+
+/** Набор сгруппированных констант */
+enum SelectableButtonTypes {
+    Important = "important",
+    Optional = "optional",
+    Irrelevant = "irrelevant"
+}
+interface IButtonProps {
+    text: string,
+    /** Тип кнопки, извлеченный из перечисления SelectableButtonTypes */
+    type: SelectableButtonTypes,
+    action: (selected: boolean) => void
+}
+const ExtendedSelectableButton = ({text, type, action}: IButtonProps) => {
+    let [selected, setSelected]  = useState(false)
+    return (<button className={"extendedSelectableButton " + type + (selected? " selected" : "")} onClick={ _ => {
+        setSelected(!selected)
+        action(selected)
+    }}>{text}</button>)
+}
+/** Экспорт компонента и перечисления */
+export { ExtendedSelectableButton, SelectableButtonTypes}
