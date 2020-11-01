@@ -1,0 +1,73 @@
+// yarn add redux-saga
+import createSagaMiddleware from "redux-saga" // дефолтнвый экспорт можем называть как угодно
+import { sagaWatcher } from "./redux/sagas"
+
+const saga = createSagaMiddleware()
+
+const store = createStore(
+  rootReducer, compose(
+    applyMiddleware(
+      thunk, forbiddenWordsMiddleware, saga
+    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  )
+)
+
+saga.run(sagaWatcher) // привязываем сагу к вотчеру
+
+// sagaWathcer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// для добавления сайд эффектов
+// сага для внедрения лоигики
+import { takeEvery, put,call } from "redux-saga/effects"
+import { REQUEST_POSTS, ADD_FETCH } from "./types"
+import { showLoader, hideLoader, showAlert } from "./posts/actions"
+import axios from "axios"
+// пернхват каждого тэйк эври
+// используется генератор
+// put аощволяет диспатчить определнные события в стор
+export function* sagaWatcher() {
+  yield takeEvery(REQUEST_POSTS, sagaWorker) // REQUEST_POSTS // название перехватываемого типа
+}
+function* sagaWorker() {
+  // когда происходить реквест пост , то 1) включем лоадер
+  // через call подождем
+  try {
+    yield put(showLoader()) // простоы вызов
+    const payload = yield call(fetchPosts) // получили данные с сервера // для асинхронных
+    // типо промежуточная обработка миддл вэйра
+    yield put({
+      type: ADD_FETCH,
+      payload
+    })
+
+    yield put(hideLoader())
+  } catch (e) {
+    yield put(showAlert({
+      color: "danger",
+      text: "Что-то пошло не так. Повторите попытку."
+    }))
+    yield put(hideLoader())
+  }
+}
+
+async function fetchPosts() { 
+  const response = await axios.get("http://jsonplaceholder.typicode.com/posts?_limit=5")
+  return response.data
+
+}
+
+// action.js
+
+export const addFetch = () => {
+  // сага
+  return {
+    type: REQUEST_POSTS
+  }
+}
+
+// types
+export const REQUEST_POSTS  = "REQUEST_POSTS"
+
+// в редусере нет кейса REQUEST_POSTS , он и не нужен для саг
+
