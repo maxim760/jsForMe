@@ -73,3 +73,38 @@ export function quizAnswerClick(answerId) {
             ...
     }
 }    
+
+// свой миддлвэйр для фильтра текстовго ввода // композицировали логику
+import { ADD_POST, SHOW_ALERT } from "./types"
+const banWords = ["fuck", "php", "shit", "slut", "spam", "retard"]
+
+export const forbiddenWordsMiddleware = ({ dispatch }) => (next) => action => {
+  if (action.type === ADD_POST) {
+    const found = banWords.filter(word => action.payload.title.toLowerCase().includes(word))
+    if (found.length > 0) {
+      return dispatch({
+        type: SHOW_ALERT,
+        payload: {
+          color: "danger",
+          text: "Вы спамер. Мы вас не звали. Идите гуляйте"
+        }
+      })
+    }
+  } 
+  return next(action)
+}
+// вся функция это дейсвие по стандарту в редаксе, за счет ифа по середние мы корректируем стандартное поведение
+
+// подключаем 
+import { createStore, compose, applyMiddleware} from "redux"
+import { forbiddenWordsMiddleware } from "./redux/middleware"
+import thunk from "redux-thunk"
+
+const store = createStore(
+  rootReducer, compose(
+    applyMiddleware(
+      thunk, forbiddenWordsMiddleware
+    ),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  )
+)
