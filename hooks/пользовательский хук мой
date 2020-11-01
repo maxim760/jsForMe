@@ -1,0 +1,63 @@
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import "./index.css"
+
+// Пользовательский хук 
+const goodAnswer = {
+  color: "success",
+  text: "Успешно!"
+}
+const badAnswer = {
+  color: "danger",
+  text: "Вы ничего не ввели!"
+}
+
+const useInput = (initialValue) => {
+  const ref = useRef(null)  
+  const [alert,setAlert] = useState(badAnswer)
+  
+
+  const onChange = () => {
+    setAlert(ref.current.value.length > 0 ? goodAnswer : badAnswer)
+  }
+
+  return {
+    bind: { ref, onChange },
+    alert
+  }
+
+}
+
+function App() {
+  
+  const input1 = useInput("")
+  const input2 = useInput("")
+  const input3 = useInput("")
+
+
+  return (
+    <div className="wrapper">
+      <div className="wrapInput">
+        {input1.alert && <div className={`alert alert-${input1.alert.color}`} role="alert">{input1.alert.text}</div>}
+        <input 
+          placeholder="Введите.."
+          {...input1.bind}
+        />
+      </div>
+      <div className="wrapInput">
+        {input2.alert && <div className={`alert alert-${input2.alert.color}`} role="alert">{input2.alert.text}</div>}
+        <input 
+          placeholder="Введите.."
+          {...input2.bind}
+        />
+      </div>
+      <div className="wrapInput">
+        {input3.alert && <div className={`alert alert-${input3.alert.color}`} role="alert">{input3.alert.text}</div>}
+        <input 
+          placeholder="Введите.."
+          {...input3.bind}
+        />
+      </div>
+    </div>
+  );
+}
+export default App;
