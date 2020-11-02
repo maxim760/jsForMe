@@ -37,6 +37,20 @@ to= {
  // РЕШЕНИЕ: import {withRouter} from "react-router-dom"
  и в конце когда эксопртируем функцию то export default withRouter(MyComponent) // оборачиваем //
  // и теперь функции обернутые в визРоутер поучают хистори матч и локейшен
+ ИЛИ испольщование хуков например
+ import {useHistory} from 'react-router-dom'
+
+
+export const AboutPage: React.FC = () => {
+  const history = useHistory()
+  return(
+    <>
+      <h1>Страница информации</h1>
+      <p>На этой странице представлена информация о нас, можете её просмотреть</p>
+      <button className="btn" onClick={() => history.push("/")}>К списку дел</button>
+    </>
+  )
+}
  
  ---------------------------
  ДИНАМИЧЕСКИЙ РОУТ
