@@ -1,0 +1,17 @@
+// useState - если тип читается ,то интерефренция но можно и самому указать
+
+  const [todos, setTodos] = React.useState<ITodo[]>([])
+где ITodo 
+export interface ITodo {
+  id: number
+  title: string
+  completed: boolean
+}
+
+const [value,setValue] = useState<string>("") // необязтално указыватт
+
+// useEffect - не типизируется
+
+// useRef
+  const ref = useRef<HTMLInputElement>(null)
+// ref присвоится в input
