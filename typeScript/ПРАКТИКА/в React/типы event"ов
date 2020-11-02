@@ -13,3 +13,7 @@ const keyPressHandler = (event: React.KeyboardEvent) => {
     event.preventDefault()
     onRemove(id)
   }
+
+-----
+    // const changeHandler  = (event: React.ChangeEvent<HTMLInputElement>) => {
+// чтобы обрщаать к event.target.value и тд
