@@ -1,0 +1,15 @@
+const keyPressHandler = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      if (ref.current!.value.trim()) {
+        onSubmit(ref.current!.value)
+        ref.current!.value = "" // ! значит что реф точно есть и он не нулл, тк  приаязяан к инпуту
+      }
+    }
+  }
+  
+  --------------
+  onClick={event => removeHandler(event, todo.id)}
+  const removeHandler = (event: React.MouseEvent, id: number) => {
+    event.preventDefault()
+    onRemove(id)
+  }
