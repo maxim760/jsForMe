@@ -1,4 +1,5 @@
 yarn add html-classes
+import classes from "html-classes"
 classes('test1', 'test2')
 // 'test1 test2'
 classes({test1: true, test2: 1, test3: NaN})
