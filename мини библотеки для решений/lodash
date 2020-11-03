@@ -1,5 +1,7 @@
 npm i -g npm
 npm i --save lodash
+или yarn add lodash 
+import _ from "lodash"
 подключение import uniqueId from "lodash-es/uniqueId" // другие также
 
 // методы - уникальный id
