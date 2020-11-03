@@ -4,6 +4,8 @@ npm i --save lodash
 import _ from "lodash"
 или
 const _  = require("lodash")
+// const _ = require("lodash/fp") // импорт где все методы карированы
+
 подключение import uniqueId from "lodash-es/uniqueId" // другие также
 
 // методы - уникальный id
