@@ -1,0 +1,53 @@
+вывести страны с наибольших населением
+
+const output = _(cities) // через чейнигг перешли все методы лодаша
+  .filter(c => c.population > 2e6)
+  .countBy(c => c.country) // обьект где ключи - страна , вэлью - кол-во совпадений
+  .toPairs() // entries 1) страна 2) кол-во обьектов у которых совпала страна
+  .map(c => _.zipObject(["country", "cities"], c)) // получим обьект с ключами country - страна
+  // и cities - города , сейчас с ['spain',2] // в страну пойдет spain в cities - 2
+  .orderBy(c => [c.cities], ["desc"]) // отсортируем по cities
+  .take(5) // взяли первые 5 
+  .value()  // если используем такую форму записи _() то надо к норм значению 
+  
+  // 2 способ
+
+// =========================================================
+
+const greaterThen = _.curryRight(_.gte) // gte // (3,3) false , (2,4) // false , (2,1) true
+const populationGreaterThen = num => _.conforms({ population: greaterThen(num) }) // к ключу population применяем функцию ,
+// если вернеттт тру то обьект остается
+const zip = _.curry(_.zipObject)
+const out = _(cities)
+  .filter(populationGreaterThen(2e6)) // филтруем где популяция больше 2х миллионво
+  .countBy(c => c.country)
+  .toPairs()
+  .map(zip(["country", "cities"])) // здесь и в филтре нужно само подтягивается, c само подтянулось и сделало зип
+  .orderBy(c => c.cities, "desc")
+  .take(6)
+  .value()
+
+console.log(out)
+
+// ==========================
+ПОЛУЧАЕМ 5 набиолее встречающихся слов черех флоу
+
+const _ = require("lodash")
+
+const lukomorie = require("./lukomorie")
+
+const top5Words = _.flow([ // не вызываю методы
+  _.toLower,
+  _.words, // каждое слово - элемент массива -- что то типа сплит , но достает только слова без симовов
+  // 2 аргументом можно передать регулярку, чтобы определять паттерн по которому определяется слово
+  _.countBy,
+  _.toPairs,
+  _.partial(_.orderBy, _, 1, "desc"), // 1 индекс - кол-во слов
+  _.partial(_.take, _, 6,), // если (_.take,6) - придет пустой массив
+  _.fromPairs
+
+])
+// через паршэлс в флоу можно аргументы передавать
+console.log(top5Words(lukomorie))
+
+
