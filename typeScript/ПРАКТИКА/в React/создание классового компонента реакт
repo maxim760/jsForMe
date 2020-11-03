@@ -1,0 +1,41 @@
+особенгость 1 дженерик отвечает за пропсы, 2 за стэйт,Только так правильно типизироватт
+import React, { Component } from 'react';
+
+interface ITestProps {
+  name: string;
+}
+или даже так
+interface ITestProps {
+
+}
+interface ITestState {
+  toggle: boolean;
+}
+
+class Test extends Component<ITestProps, ITestState> {
+  constructor(props: ITestProps) {
+    super(props);
+
+    this.state = {
+      toggle: false,
+    };
+
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    this.setState((previousState, props) => ({
+      toggle: !previousState.toggle,
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        Hello, {this.props.name}!
+        <br />
+        Toggle state is: {String(this.state.toggle)}
+      </div>
+    )
+  }
+}
