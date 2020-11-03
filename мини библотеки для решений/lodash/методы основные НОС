@@ -1,0 +1,73 @@
+const _  = require("lodash")
+
+
+// console.log(multiple(2, 3));
+
+// function double(num) {
+  //   return multiple(num, 2)
+  // }
+  
+  // function partial(fn, ...fixed) { // вызываю multliple, 2
+  //   return function (...args) { // здесь double  с параметров 22
+  //     return fn.apply(this,[...fixed,...args])
+//   }
+// }
+
+// через лодаш
+
+// function partial(fn) {
+  //   const fixed = _.tail(_.toArray(arguments)) // все кроме 1 элемента массива возвращает tail
+  //   return function () {
+    //     return fn.apply(this, _.concat(_.toArray(arguments), fixed))
+    //   }
+    // }
+    
+    // const double = partial(multiple, 2)
+    
+    // const half = partial(divide,2)
+    
+function multiple(a, b) {
+  return a * b
+}
+function summa(a, b,c,d) {
+  return a + b + c + d
+}
+function divide(a, b) {
+  return (a / b)
+}
+    
+    // в лодаше есть готовые partial!!!!!!!!!!1
+    // const half = _.partial(divide,2) // аргументы по порядку, сначала 2, которая рядом а потом 22
+    // const half = _.partialRight(divide,2) // аргументы в обратном порчядке, 1 перадеется то что в half , а вторым что в partial // более корректно
+const half = _.partial(divide,_,2) // указываем что двойка - 2 параметр
+// console.log(half(22))
+
+// =========================
+//curried
+
+const curriedDivide = _.curry(divide)
+const curriedSum = _.curry(summa)
+// console.log(curriedDivide(12)(2))
+// console.log(curriedDivide(12,2))
+console.log(curriedSum(1)(2)(3)(4))
+console.log(curriedSum(1,2)(3,4))
+console.log(curriedSum(1,2,3)(4))
+console.log(curriedSum(1)(2,3)(4))
+console.log(curriedSum(1,2,3,4))
+console.log(curriedSum(1)(2)(3,4))
+// всегда корректно
+
+// ========================
+// flow
+const notFlatArray = [1, 2, 3,[4, 5, [6, 7, 8, [9, 10]], 11, 12, [13, [14, [15]], 16, 17], 18], 19, 20, 21, [[22], 23, 24], 25]
+// console.log(notFlatArray.flat()) // не полностью разложит
+// console.log(notFlatArray.flat(10)) // минус в том что не знаем насколько вложенный,а если передават большую цифру то не эффективно
+// то что выше полносьью но не эффективно были лишние проходжа так как явно не 10 глубина
+
+const sumFlat = _.flow([_.concat, _.flattenDeep, _.sum]) //флоу поочереднно выполняет функции и связывает с параметром array
+//_.flattenDeep делает плоским
+// передали нот флэт эррэй и к нему будут последовательно приментяся методы
+// sumFlst - функция
+console.log(sumFlat(notFlatArray)) // 325
+console.log(sumFlat(notFlatArray,notFlatArray)) // 650 // здесь уже реально нужен concat
+console.log(_.concat([2,3,4],[2,3,5]))
