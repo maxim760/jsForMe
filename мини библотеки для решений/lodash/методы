@@ -1,0 +1,21 @@
+  _.toLower,// в нижний кейс , также ту аппер
+  _.words // строку в массив по словам
+  _.countBy, // создает обьект где ключ то по чему считает , значения кол-во совпадений
+  _.toPairs, // entries
+  _.orderBy, "desc"), //сортировка "desc" "asc"
+  _.take(6) //- отбирает первые 6
+  _.fromPairs // fromEntries
+  _.concat([2,3,4],[2,3,5])
+  _.flattenDeep // массив плоским
+  _.sum // сумма
+  _.add // сумма 2х
+  
+  .map(c => _.zipObject(["country", "cities"], c)) // получим обьект с ключами country - страна
+//   // и cities - города , сейчас с ['spain',2] // в страну пойдет spain в cities - 2
+// из ["a","b"],[1,3] делает {"a":1},{"b":3}
+
+.value() - чтобы корректно получить данные если так начали _(cities) и чейнинг
+(_.gte) // gte // (3,3) false , (2,4) // false , (2,1) true
+populationGreaterThen = num => _.conforms({ population: greaterThen(num) }) // к ключу population применяем функцию ,
+// если вернеттт тру то обьект остается
+  
