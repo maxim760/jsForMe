@@ -1,0 +1,11 @@
+const dispatch = useDispatch();
+const { data, isFetching, error } = useSelector<AppState, StarshipsState>(
+  (state) => state.starships,
+);
+
+// app state - стэйт рут редусера
+// старшипс стэйт  - стэйт локального текущкго редусера
+
+  useEffect(() => {
+    dispatch(fetchAsync());
+  }, [dispatch]);
