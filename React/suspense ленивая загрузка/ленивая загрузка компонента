@@ -1,5 +1,5 @@
 const AddTodo = React.lazy(() => import("./todo/addTodo")) // лениво создали,чтобы загружаласчь отдельно
-
+React.lazy currently only supports default exports.
 
 <React.Suspense fallback={<p>Loading...</p>}>
           <AddTodo onCreate={createTodo} />
