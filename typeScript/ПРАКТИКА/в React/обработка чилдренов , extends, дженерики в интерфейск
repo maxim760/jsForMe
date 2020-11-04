@@ -1,0 +1,96 @@
+import React, { FC, ReactElement, ReactNode } from 'react';
+
+export type PropTypes = {
+  title?: string;
+  children: ReactNode;
+};
+
+export const Component2: FC<PropTypes> = ({ children, title }: PropTypes): ReactElement => (
+  <div>
+    {title}
+
+    {children}
+  </div>
+);
+
+// =======================================
+
+import React, {
+  FC, ReactElement, ReactNode, HTMLAttributes,
+} from 'react';
+
+export type PropTypes = {
+  title?: string;
+  children: ReactNode;
+  extends: HTMLAttributes<HTMLDivElement>;
+};
+
+export const Component3: FC<PropTypes> = ({
+  children,
+  title,
+  ...other
+}: PropTypes): ReactElement => (
+  <div {...other}>
+    {title}
+:
+    {children}
+  </div>
+);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const p = <Component3 extends={{ className: 'sad' }}>1</Component3>;
+
+// ================================
+
+import React, { ReactNode } from 'react';
+
+interface PropTypes<T> {
+  children: (item: T) => ReactNode;
+  items: Array<T>;
+}
+
+export function Component5<T>({ items, children }: PropTypes<T>) {
+  return <div>{items.map((item) => children(item))}</div>;
+}
+
+  <Component5 items={[5,3,2]}>{(item) => <p>{item.toFixed}</p>}</Component5>;
+
+// ===========================
+import React from 'react';
+
+const styles = {
+  primary: {
+    color: 'blue',
+  },
+  danger: {
+    color: 'red',
+  },
+};
+
+type StylesType = typeof styles;
+
+type ButtonType = keyof StylesType;
+
+interface PropTypes {
+  type: ButtonType;
+}
+
+export function Button({ type }: PropTypes) {
+  return (
+    <button style={styles[type]} type="button">
+      Click me
+    </button>
+  );
+}
+
+const b = <Button type="primary" />;
+
+
+
+
+
+
+
+
+
+
