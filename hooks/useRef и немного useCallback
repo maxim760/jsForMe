@@ -1,3 +1,9 @@
+
+!!!!!!
+<div className="sort" ref={ref => sortRef.current = ref}> // именно так создаем реф // сорт реф через юзреф сделан
+!!!!!!
+
+//=======================
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import "./index.css"
 
