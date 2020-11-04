@@ -1,0 +1,3 @@
+import { Middleware } from 'redux';
+const middleware: Middleware[] = [sagaMiddleware /*, thunk, myMiddle и тд*/ ];
+
