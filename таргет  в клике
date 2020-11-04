@@ -1,0 +1,4 @@
+либо проверяем элменты через closest
+либо
+let path = e.path || (e.composedPath && e.composedPath())
+через event.path.includes ...
