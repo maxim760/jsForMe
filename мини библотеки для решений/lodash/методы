@@ -18,4 +18,228 @@
 (_.gte) // gte // (3,3) false , (2,4) // false , (2,1) true
 populationGreaterThen = num => _.conforms({ population: greaterThen(num) }) // к ключу population применяем функцию ,
 // если вернеттт тру то обьект остается
+
+// =====================================================================================================================
+
+const _ = require("lodash")
+
+// console.log(_.chunk(['a', 'b', 'c', 'd'], 2), " chunk")
+// console.log(_.chunk(['a', 'b', 'c', 'd'], 4), " chunk")
+
+// Creates an array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
+// console.log(_.compact([0, 1, false, 2, '', 3, undefined]), " compact")
+
+// из 1 массива вычитаем 2
+// console.log(_.difference([1,2,3,4,5,6], [2, 3,7,9]), " differnce")
+// console.log(_.difference([2, 3, 7, 9], [1, 2, 3, 4, 5, 6]), " differnce")
+
+// _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+// => [1.2]
+// var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
+// _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
+// => [{ 'x': 2, 'y': 1 }]
+
+// console.log(_.drop([1, 2, 3,4,5],2)) // удяляет из массива первые n элементов / n указывется полсе запчтй, если не указ. то 1
+// console.log(_.drop([1, 2, 3,4,5]),0)
+// console.log(_.dropRight([1, 2, 3, 4, 5], 2))
+
+// const arr = _.fill(Array(3), 2);
+// console.log(arr);
+
+//var users = [
+//   { 'user': 'barney',  'active': true },
+//   { 'user': 'fred',    'active': false },
+//   { 'user': 'pebbles', 'active': false }
+// ];
+
+// _.findLastIndex(users, function(o) { return o.user == 'pebbles'; });
+// // => 2
+
+// flatten на 1 уровень массив
+// flattenDeep длеает плоским массив
+
+// _.indexOf([1, 2, 1, 2], 2);
+// // => 1
+
+// // Search from the `fromIndex`.
+// _.indexOf([1, 2, 1, 2], 2, 2);
+// // => 3
+
+// console.log(_.intersection([1,2,3,4], [1,2, 3,11,12,13],[2,3,4,5,7,8,11,9])) // и , соединяет масивы счерез логическое и
+// _.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+// => [2.1]
+
+// _.join(['a', 'b', 'c'], '~');
+// => 'a~b~c'
+
+// var array = ['a', 'b', 'c', 'a', 'b', 'c'];
+// _.pull(array, 'a', 'c');
+// или
+// _.pullAll(array, ['a', 'c']);
+// console.log(array);
+// => ['b', 'b']
+
+// var array = ['a', 'b', 'c', 'd'];
+// var pulled = _.pullAt(array, [1, 3]);
+
+// console.log(array);
+// // => ['a', 'c']
+
+// console.log(pulled);
+// => ['b', 'd']
+
+// var array = [1, 2, 3];
+// _.reverse(array);
+// => [3, 2, 1]
+
+
+// _.union([2], [1, 2]);
+// => [2, 1]
+
+// _.uniq([2, 1, 2]);
+// => [2, 1]
+
+// _.sortedUniq([1, 1, 2]);
+// => [1, 2]
+
+var zipped = _.zip(['a', 'b'], [1, 2], [true, false]);
+// => [['a', 1, true], ['b', 2, false]]
+
+console.log(_.fromPairs(_.unzip(zipped)));
+// => [['a', 'b'], [1, 2], [true, false]]
+// { '1': 2, a: 'b', true: false } // fromPairs
+
+// _.without([2, 1, 2, 3], 1, 2);
+// => [3]
+
+console.log(_.fromPairs(_.unzip([['a', 'b'], [1, 2]]))) // для анзипа надо в доп массив все обрентуь
+console.log(_.zipObject(['a', 'b'], [1, 2])) // используется 1 метод а не 2 и не надо оборасивать дополнителньо
+// => { 'a': 1, 'b': 2 }
+
+// _.zipWith([1, 2], [10, 20], [100, 200], function(a, b, c) {
+  // return a + b + c;
+// });
+// => [111, 222]
+
+
+// _.countBy([6.1, 4.2, 6.3], Math.floor);
+// => { '4': 1, '6': 2 }
+ 
+// The `_.property` iteratee shorthand.
+// _.countBy(['one', 'two', 'three'], 'length');
+// => { '3': 2, '5': 1 }
+
+
+
+
+
+//------------
+// var users = [
+//   { 'user': 'barney', 'age': 36, 'active': false },
+//   { 'user': 'fred',   'age': 40, 'active': false }
+// ];
+ 
+// // The `_.matches` iteratee shorthand.
+// _.every(users, { 'user': 'barney', 'active': false }); // всречается юзер не соответсвующий хар-кам
+// // => false
+ 
+// // The `_.matchesProperty` iteratee shorthand.
+// _.every(users, ['active', false]); // все юзеры соответсвуют
+// => true
+
+// -----------
+// function duplicate(n) {
+  // return [[[n, n]]];
+// }
+ 
+// _.flatMapDeep([1, 2], duplicate);
+// => [1, 1, 2, 2]
+
+// reject
+// В противоположность filter — эта функция возвращает массив элементов коллекции, которые не удовлетворяют условию
+// shuffle
+// Возвращает массив из перемешанных в случайном порядке элементов коллекции
+
+//---------- 
+// _.size([1, 2, 3]);
+// => 3
+ 
+// _.size({ 'a': 1, 'b': 2 });
+// => 2
+ 
+// _.size('pebbles');
+// => 7
+
+// ============
+// _.ceil(4.006);
+// => 5
+ 
+// _.ceil(6.004, 2);
+// => 6.01
+ 
+// _.ceil(6040, -2);
+// => 6100
+// также и floor и round
+
+// _.max([4, 2, 8, 6]);
+// => 8
+
+// =============
+// var objects = [{ 'n': 1 }, { 'n': 2 }];
+ 
+// _.maxBy(objects, function(o) { return o.n; });
+// => { 'n': 2 }
+
+// _.mean([4, 2, 8, 6]);
+// => 5 // среднее
+
+// ==========
+// _.random(1.2, 5.2);
+// => a floating-point number between 1.2 and 5.2
+
+// ============
+// _.camelCase('Foo Bar');
+// => 'fooBar'
+ 
+// _.camelCase('--foo-bar--');
+// => 'fooBar'
+ 
+// _.camelCase('__FOO_BAR__');
+// => 'fooBar'
+
+// _.deburr('déjà vu');
+// => 'deja vu'
+
+// ===============
+// Converts the characters "&", "<", ">", '"', and "'" in string to their corresponding HTML entities.
+// _.escape('fred, barney, & pebbles');
+// => 'fred, barney, &amp; pebbles'
+console.log(_.escape(">, ₽"))
+// &gt;, ₽
+
+// _.toUpper('--foo-bar--');
+// => '--FOO-BAR--'
+
+_.unescape('fred, barney, &amp; pebbles');
+// => 'fred, barney, & pebbles'
+// console.log(_.unescape("&gt; &times; &amp; &#215; &pound;	&times;	"))
+// не все понимает
+
+// _.upperFirst('fred');
+// => 'Fred'
+ 
+// _.upperFirst('FRED');
+// => 'FRED'
+
+// _.times(3, String);
+// => ['0', '1', '2']
+ 
+//  _.times(4, _.constant(0));
+// => [0, 0, 0, 0]
+
+// _.uniqueId('contact_');
+// => 'contact_104'
+ 
+// _.uniqueId();
+// => '105'
   
