@@ -1,0 +1,153 @@
+// сами типы
+// Sync
+export const STARSHIPS_START_FETCHING = 'STARSHIPS_START_FETCHING';
+type StarshipsStartFetchingAction = {
+  type: typeof STARSHIPS_START_FETCHING;
+};
+
+export const STARSHIPS_STOP_FETCHING = 'STARSHIPS_STOP_FETCHING';
+type StarshipsStopFetchingAction = {
+  type: typeof STARSHIPS_STOP_FETCHING;
+};
+
+export const STARSHIPS_FILL = 'STARSHIPS_FILL';
+export type StarshipsFillAction = {
+  type: typeof STARSHIPS_FILL;
+  payload: Starships;
+};
+
+export const STARSHIPS_SET_FETCHING_ERROR = 'STARSHIPS_SET_FETCHING_ERROR';
+export type StarshipsSetFetchingErrorAction = {
+  type: typeof STARSHIPS_SET_FETCHING_ERROR;
+  error: true;
+  payload: ErrorHttpAction;
+};
+
+// Async
+export const STARSHIPS_FETCH_ASYNC = 'STARSHIPS_FETCH_ASYNC';
+type StarshipsFetchAsyncAction = {
+  type: typeof STARSHIPS_FETCH_ASYNC;
+};
+
+export type StarshipsActionTypes =
+  | StarshipsStartFetchingAction
+  | StarshipsStopFetchingAction
+  | StarshipsFillAction
+  | StarshipsSetFetchingErrorAction
+  | StarshipsFetchAsyncAction; // ЕСЛИ АКШН ИМПОЛЬЩУЕТ ТОЛЬКО ТИП БЕЗ ПЭЙЛОАЛА ТО МОЖНО ЭТУ КОНСТРУКЦИЮ ПЕРЕДВАТЬИ ЗА СЧЕТ ИНТЕРЕФЕРНЦИИ ВСЕ ПОДТЯНЕТСЯ
+
+// испольщование
+import {
+  ErrorHttpAction,
+  Starships,
+  STARSHIPS_FETCH_ASYNC,
+  STARSHIPS_FILL,
+  STARSHIPS_SET_FETCHING_ERROR,
+  STARSHIPS_START_FETCHING,
+  STARSHIPS_STOP_FETCHING,
+  StarshipsActionTypes,
+  StarshipsFillAction,
+  StarshipsSetFetchingErrorAction,
+} from './types';
+
+// Sync
+export function startFetching(): StarshipsActionTypes {
+  return {
+    type: STARSHIPS_START_FETCHING,
+  };
+}
+
+export function stopFetching(): StarshipsActionTypes {
+  return {
+    type: STARSHIPS_STOP_FETCHING,
+  };
+}
+
+export function fill(payload: Starships): StarshipsFillAction {
+  return {
+    type: STARSHIPS_FILL,
+    payload,
+  };
+}
+
+export function setfetchingError(payload: ErrorHttpAction): StarshipsSetFetchingErrorAction {
+  return {
+    type: STARSHIPS_SET_FETCHING_ERROR,
+    error: true,
+    payload,
+  };
+}
+
+
+// ========================================
+// ИСПОЛЬЩОВПНИЕ ACTION В РЕДУСЕРЕ
+// Types
+import {
+  ErrorHttpAction,
+  Starships,
+  STARSHIPS_FETCH_ASYNC,
+  STARSHIPS_FILL,
+  STARSHIPS_SET_FETCHING_ERROR,
+  STARSHIPS_START_FETCHING,
+  STARSHIPS_STOP_FETCHING,
+  StarshipsActionTypes,
+} from './types';
+
+export type StarshipsState = {
+  data: Starships;
+  isFetching: boolean;
+  error: false | ErrorHttpAction;
+};
+
+const initialState: StarshipsState = {
+  data: {
+    results: [],
+  },
+  isFetching: false,
+  error: false,
+};
+
+export const starshipsReducer = (
+  state = initialState,
+  action: StarshipsActionTypes, // 1 из экшнов должен быть который мы типизировали другого не может быть
+): StarshipsState => { // старшипс стэйт // типизация длят стэйта
+  switch (action.type) {
+    case STARSHIPS_START_FETCHING:
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case STARSHIPS_STOP_FETCHING:
+      return {
+        ...state,
+        isFetching: false,
+        error: false,
+      };
+    case STARSHIPS_SET_FETCHING_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case STARSHIPS_FILL:
+      return {
+        ...state,
+        data: {
+          ...action.payload,
+        },
+        error: false,
+      };
+    case STARSHIPS_FETCH_ASYNC:
+      return state;
+    default:
+      const x: never = action; // ни должно никогда достигнуться
+  }
+
+  return state;
+};
+// Async
+export function fetchAsync(): StarshipsActionTypes {
+  return {
+    type: STARSHIPS_FETCH_ASYNC,
+  };
+}
