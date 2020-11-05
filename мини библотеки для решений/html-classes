@@ -14,3 +14,23 @@ export const Button = ({ children, outline }) => {
     </button>
   )
 }
+
+
+пример
+ <li
+  className={classes({
+    "active": activeType === i, // название класса: условие по которому его добавляем
+    "disabled": !types.includes(i)
+  })}
+  key={type}
+  onClick={onSelectType.bind(null, i)}
+>{type}</li>
+
+<li
+key={size}
+className={classes({
+  "active": activeSize === size,
+  "disabled": !sizes.includes(size) // где sizes - сайзы пришедшие с сервера, а li перебирает вообще все доступные сайзы, по этомму где не юнклюдес то там дизаблед
+})}
+onClick={onSelectSize.bind(null,i)}
+>{size} см.</li>
