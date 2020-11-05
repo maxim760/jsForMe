@@ -1,0 +1,11 @@
+Как вариант, в папке custom_typings (если она у вас есть) вы можете добавить новый import-svg.d.ts файл
+
+
+declare module "*.svg" {
+  const value: any;
+  export default value;
+}
+
+So you can import an image using:
+
+import myImg from 'img/myImg.png';
