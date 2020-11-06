@@ -28,3 +28,44 @@ export const Home: React.FC = (): React.ReactElement => {
           onClickItem={index => dispatch(setCategory(index))}
         />
 // Диспатчи лучше всегда обрачивать в юз колбэк или юз эффект если при создании, чтобы не делать лишних ренедров элементо и запросов к хранилищу
+
+
+// обернули в реакт мемо весь компонет категорис, чтобы он не перерендоривался при отсутствии изменений
+Отсутсвие изменений когда изменений нет гарпнтируем за счет того, что добавили в хом юз калбэк, массив с категорисами вынесли вверх как константу
+export const Categories: React.FC<propTypes> = React.memo(({ items, onClickItem } : propTypes) => {
+  const [active, setActive] = React.useState<number | null>(null)
+
+  const onSelectItem: (id: number | null) => void = (id) => {
+    setActive(id)
+    onClickItem(id)
+  }
+  
+  return (
+    <div className="categories">
+      <ul>
+        <li className={active == null ? "active" : "null"} onClick={() => onSelectItem(null)}>Все</li>
+        {
+          items?.map((item,index) => {
+            return (
+              <li key={item} className={active === index ? "active" : ""} onClick={() => onSelectItem(index)}>
+                {item}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  )
+})
+
+
+
+
+
+
+
+
+
+
+
+
