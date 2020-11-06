@@ -58,7 +58,15 @@ export const Categories: React.FC<propTypes> = React.memo(({ items, onClickItem 
   )
 })
 
-
+// home,из неговыщываетюся категории
+<Categories
+          items={categories} // лишний раз рендера не будет оба пропса ограничили
+          onClickItem={index => onSelectCategory(index)}
+        /> 
+        // вынесли как констанут const categories = ["Мясные", "Вегетианская", "Гриль", "Острые", "Закрытые"]
+  // сделал юз калбэк с зависмостью диспатч   const onSelectCategory : (index: number | null) => void = React.useCallback( (index) => {
+    dispatch(setCategory(index))
+  }, [dispatch] )
 
 
 
