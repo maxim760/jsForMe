@@ -2,6 +2,8 @@ const dispatch = useDispatch();
 const { data, isFetching, error } = useSelector<AppState, StarshipsState>(
   (state) => state.starships,
 );
+  const pizzas = useSelector<RootState, dataArrayType>((state) => state.pizzas.items)
+// 1 джереки это главный стэйт , рут стэйт типа, а второй дженерик - это то что вернется
 
 // app state - стэйт рут редусера
 // старшипс стэйт  - стэйт локального текущкго редусера
