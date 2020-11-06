@@ -5,3 +5,5 @@
 
 МНЕ: больше пытаться не испольщовать on click ()=> clickHandler(index)
 юзать всегда так on click clickHandler.bind(null,index)
+
+// можно такжже весь компонетн оборачивать в реакт мемо
