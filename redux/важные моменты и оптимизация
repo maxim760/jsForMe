@@ -7,3 +7,23 @@
 юзать всегда так on click clickHandler.bind(null,index)
 
 // можно такжже весь компонетн оборачивать в реакт мемо
+
+// когда реакт каждый рах переренаривается то все ссылк и внутри компнентов ипрочее тоже обновляется меняется, и нужно с этимбороться, если
+это касается компонеов которые должны быть незименяемы, например вот это массив всегда посттянен, выносим его наверх, чтобы ссылка на него всегда была одинакова
+
+const categories = ["Мясные", "Вегетианская", "Гриль", "Острые", "Закрытые"]
+
+export const Home: React.FC = (): React.ReactElement => {
+  const dispatch = useDispatch()
+  const onSelectCategory : (index: number | null) => void = React.useCallback( (index) => {
+    dispatch(setCategory(index))
+  }, [dispatch] )
+
+  const pizzas = useSelector<RootState, dataArrayType>((state) => state.pizzas.items)
+  return (
+    <div className="container">
+      <div className="content__top">
+        <Categories
+          items={categories}
+          onClickItem={index => dispatch(setCategory(index))}
+        />
