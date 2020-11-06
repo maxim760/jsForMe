@@ -11,3 +11,4 @@ const { data, isFetching, error } = useSelector<AppState, StarshipsState>(
   useEffect(() => {
     dispatch(fetchAsync());
   }, [dispatch]);
+
