@@ -27,3 +27,4 @@ export const Home: React.FC = (): React.ReactElement => {
           items={categories}
           onClickItem={index => dispatch(setCategory(index))}
         />
+// Диспатчи лучше всегда обрачивать в юз колбэк или юз эффект если при создании, чтобы не делать лишних ренедров элементо и запросов к хранилищу
