@@ -3,3 +3,7 @@ npx json-server --watch public/db.json
 docs
 https://github.com/typicode/json-server
 сортиовка и тд
+
+пример
+http://localhost:3000/pizzas?_sort=rating,price&_order=desc,asc
+
