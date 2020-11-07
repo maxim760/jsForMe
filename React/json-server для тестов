@@ -1,1 +1,5 @@
 npx json-server --watch public/db.json
+
+docs
+https://github.com/typicode/json-server
+сортиовка и тд
