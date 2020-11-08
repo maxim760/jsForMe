@@ -1,0 +1,16 @@
+const unFlatAr = Object.values(newItems)
+const allPizzasInCart = ([] as pizzaType[]).concat.apply([], unFlatAr) 
+
+// или так
+const arr = ([] as number[]).concat(input);
+// или flat // он норм типизруется
+
+// Динамические ключи в массиве
+
+export type cartState = {
+  items: {
+    [key : number] : pizzaType[] 
+  }
+  totalPrice: number,
+  itemsCount: number
+}
