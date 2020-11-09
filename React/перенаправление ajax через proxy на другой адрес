@@ -5,6 +5,6 @@
     "eject": "react-scripts eject",
     "server": "npx json-server --watch public/db.json --port=3003"
   },
-  "proxy": "http://localhost/3003", // прокси сюда перенаправит
-  const res = await axios.get(`http://localhost:3000/pizzas?${typeof category === "number" && `category=${category}`}&_sort=${typeSort}&_order=${order}`) 
-  // proxy перенаправит на 3003
+  "proxy": "http://localhost:3003", // прокси сюда перенаправит
+const res = await axios.get(`/pizzas?${typeof category === "number" && `category=${category}`}&_sort=${typeSort}&_order=${order}`)
+// proxy перенаправит на 3003
