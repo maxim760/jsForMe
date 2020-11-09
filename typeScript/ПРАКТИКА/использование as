@@ -1,0 +1,10 @@
+as - для привязки типа к элементу
+
+const newItems = {
+        ...state.items,
+        [id] : !state.items[id]
+          ? [Object.assign(action.payload,{count: 1})]
+          : index >=0 && changedItem
+          ?  [...state.items[id].slice(0,index),changedItem as pizzaTypeToState,...state.items[id].slice(index+1)]
+          : [...state.items[id], Object.assign(action.payload,{count: 1})]
+      }
