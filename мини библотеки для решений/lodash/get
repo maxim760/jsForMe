@@ -1,0 +1,12 @@
+ > var user = { name: 'Tom', age: 20, address: { country: 'USA', city: 'New York' } }
+    
+    > _.get(user, 'address.city')
+    "New York"
+    
+    > _.get(user, 'address.street')
+    undefined
+Можно указать третьим параметром дефолтное значение
+
+
+    > _.get(user, 'address.street', 'unknown')
+    "unknown"
