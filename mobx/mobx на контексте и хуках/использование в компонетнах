@@ -1,0 +1,180 @@
+import React from "react"
+import TextField from "@material-ui/core/TextField"
+import Select from "@material-ui/core/Select"
+import FormControl from "@material-ui/core/FormControl"
+import InputLabel from "@material-ui/core/InputLabel"
+import Paper from "@material-ui/core/Paper"
+// import MenuItem from "@material-ui/core/MenuItem"
+// import { observer, inject } from "mobx-react"
+// import ConverterStore from "../stores/converterStore"
+// import CurrenciesStore from "../stores/currenciesStore"
+import { useObserver } from "mobx-react-lite"
+import { storeContext } from "../context"
+
+import { TClasses, TSelectedCoin, TCoin, TState, TAction } from "../types"
+
+interface IConverter {
+  classes: TClasses
+}
+
+const reducer: (state: TState, action: TAction) => TState = (state, action) => {
+  switch (action.type) {
+    case "SET_VALUE": {
+      const actualVal = action.payload.value
+        .replace(/[^0-9\.]*/g, "")
+        .replace(/\./, "?")
+        .replace(/\./g, "")
+        .replace(/[?]/, ".")
+      console.log(action.payload.value)
+      return {
+        ...state,
+        [action.payload.name]: actualVal,
+        value2: (
+          +actualVal *
+          (action.payload.selectedCoin / action.payload.second)
+        ).toString(),
+      }
+    }
+    default:
+      return state
+  }
+}
+const ConverterBlock: React.FC<IConverter> = ({ classes }: IConverter) => {
+  const store = React.useContext(storeContext)
+
+  if (!store) throw Error("Store shouldn't be null")
+  const { currenciesStore, converterStore } = store
+  // hooks
+  const onUpdateField = (
+    name: string = "value1",
+    value: string = state.value1,
+    second: number = secondSelected.price
+  ) => {
+    console.log(secondSelected)
+    dispatch({
+      type: "SET_VALUE",
+      payload: {
+        name,
+        value,
+        second,
+        selectedCoin:
+          Object.values(converterStore!.getSelectedCoin)[0]?.price ||
+          converterStore.getSelectedCoin[0]?.price ||
+          1,
+      },
+    })
+  }
+  const [secondSelected, setSecondSelected] = React.useState<{
+    name: string
+    price: number
+  }>({ name: "USD", price: 1 })
+
+  const initialValue = {
+    value1: "",
+    value2: "",
+    selectedCoin: 1,
+    second: 1,
+  }
+  const [state, dispatch] = React.useReducer(reducer, initialValue)
+
+  const mainCoin = converterStore.getSelectedCoin
+  React.useEffect(() => {
+    onUpdateField()
+  }, [mainCoin])
+  // сверъу хуки, снизу то что должно быть должно быть observable и за ними нужен observer
+  return useObserver(() => {
+    const currencyItems = currenciesStore.getItems
+    const coins: TSelectedCoin = currencyItems.reduce(
+      (acc: TSelectedCoin, coin: TCoin) => {
+        console.log(coin)
+        acc[coin.name] = {
+          name: coin.name,
+          price: coin.price,
+        }
+        return acc
+      },
+      {}
+    )
+
+    const changeHandlerOut = (
+      event: React.ChangeEvent<{ value: unknown }>
+    ): void => {
+      const name = event.target.value as string
+      const price: number = coins[name]?.price || 1
+      setSecondSelected({ name, price })
+      onUpdateField(undefined, undefined, price)
+    }
+    const changeHandler = (
+      event: React.ChangeEvent<{ value: unknown }>
+    ): void => {
+      console.log("changed")
+      const selectName = event.target.value as string
+      const selectPrice: number = coins[selectName].price
+      converterStore!.setSelectedCoin({
+        [selectName]: {
+          name: selectName,
+          price: selectPrice,
+        },
+      })
+    }
+
+    const currentCoin = converterStore!.getSelectedCoin
+    return (
+      <Paper className={classes.paper} elevation={2}>
+        <div className={classes.cryptoInputBox}>
+          <FormControl className={classes.currencyInput}>
+            <TextField
+              value={state.value1}
+              label="Сумма"
+              onChange={(e: any) => onUpdateField("value1", e.target.value)}
+            />
+          </FormControl>
+          <FormControl className={classes.currencyName}>
+            <InputLabel shrink>Валюта</InputLabel>
+            <Select
+              native
+              onChange={changeHandler}
+              value={Object.keys(currentCoin)[0] || currencyItems[0]?.name}
+            >
+              {Object.entries(coins).map((coin) => {
+                return (
+                  <option key={coin[0]} value={coin[0]}>
+                    {coin[0]}
+                  </option>
+                )
+              })}
+            </Select>
+          </FormControl>
+        </div>
+        <div className={classes.cryptoInputBox}>
+          <FormControl className={classes.currencyInput}>
+            <TextField
+              value={parseFloat((+state.value2).toFixed(8))}
+              label="Сумма"
+              disabled
+              type="number"
+            />
+          </FormControl>
+          <FormControl className={classes.currencyName}>
+            <InputLabel shrink>Валюта</InputLabel>
+            <Select
+              native
+              onChange={changeHandlerOut}
+              value={secondSelected.name}
+            >
+              <option value={"USD"}>USD</option>
+              {Object.entries(coins).map((coin) => {
+                return (
+                  <option key={coin[0]} value={coin[0]}>
+                    {coin[0]}
+                  </option>
+                )
+              })}
+            </Select>
+          </FormControl>
+        </div>
+      </Paper>
+    )
+  })
+}
+export default ConverterBlock
