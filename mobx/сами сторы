@@ -1,0 +1,27 @@
+// ===========================================================
+// ConverterStore
+import { observable, computed, action, makeAutoObservable } from "mobx"
+import { TCoin, TSelectedCoin } from "../types"
+
+class ConverterStore {
+
+  @observable private selectedCoin: TSelectedCoin = {}
+
+  @computed
+  get getSelectedCoin() {
+    return this.selectedCoin
+  }
+
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  @action 
+  setSelectedCoin = (coin: TSelectedCoin): void => {
+    console.log("click")
+    this.selectedCoin = coin
+  }
+  
+}
+export default ConverterStore
