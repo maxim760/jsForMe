@@ -1,0 +1,100 @@
+// ==========================================================================
+// ConverterStore
+import { observable, computed, action, makeAutoObservable } from "mobx"
+import { TCoin, TSelectedCoin } from "../types"
+
+class ConverterStore {
+
+  @observable private selectedCoin: TSelectedCoin = {}
+
+  @computed
+  get getSelectedCoin() {
+    return this.selectedCoin
+  }
+
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  @action 
+  setSelectedCoin = (coin: TSelectedCoin): void => {
+    this.selectedCoin = coin
+  }
+  
+}
+export default ConverterStore
+
+// ==========================================================================
+// CurrenciesStore
+
+import { observable, computed, action, makeAutoObservable } from "mobx"
+import { TCoin, TCoinDiff, TColor } from "../types"
+import axios from "axios"
+
+
+class CurrenciesStore {
+  @observable private items: TCoin[] = []
+  @observable private diffObj: TCoinDiff = {}
+
+  @computed
+  get getItems() {
+    return this.items
+  }
+  @computed
+  get getDiffObj() {
+    return this.diffObj
+  }
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  @action
+  setItems = (items: TCoin[]): void => {
+    this.diffObj = this.diffCurrencies(this.items, items).reduce((acc: TCoinDiff, curObj: TCoin) => {
+      const newObj: TCoin = items.find(itemObj => itemObj.name === curObj.name)!
+      const color: TColor = curObj.price < newObj.price ? "green" : "red"
+
+      acc[curObj.name] = color
+      
+      return acc
+    }, {})
+    this.items = items
+    if (Object.keys(this.diffObj).length) {
+      setTimeout(() => { 
+        this.diffObj = {}
+      },5000)
+    }
+  }
+
+  @action
+  fetchItems = (): void => {
+    axios
+      .get(
+        "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD"
+      )
+      .then(({ data }) => {
+        const coins: TCoin[] = data.Data.map((coin: any) => {
+          const obj: TCoin = {
+            name: coin.CoinInfo.Name,
+            fullName: coin.CoinInfo.FullName,
+            id: coin.CoinInfo.Id,
+            imageUrl: coin.CoinInfo.ImageUrl,
+            price: parseFloat(coin.RAW.USD.PRICE.toFixed(3)),
+            volume24hour: parseInt(coin.RAW.USD.VOLUME24HOUR),
+          }
+          return obj
+        })
+        this.setItems(coins)
+      })
+  }
+
+  diffCurrencies(arr1: TCoin[], arr2: TCoin[]) {
+    return arr1.filter((obj, index) => {
+      return arr2[index].price !== obj.price
+    })
+  }
+}
+
+export default CurrenciesStore
