@@ -1,0 +1,12 @@
+import Link from "next/link" 
+
+<li><Link href="/about"><a>About Us</a></Link></li>
+// href забираем из а и отдаем в линк, который просто оборачиваем, новый компонет не создает и при рендеринге на старнице мето него ничего нет
+
+// 2 способ // вытаскиваем роутер
+import { useRouter } from "next/router"
+// или
+import Router from "next/router"
+// метод push и replace осуществялют переход на нужную страницу без перезагрузки
+<button onClick={() => router.replace("/about")}>to about</button>
+<button onClick={() => router.push("/about")}>to about</button>
