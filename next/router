@@ -6,7 +6,8 @@
 import Head from 'next/head'
 
 import { useRouter } from "next/router"
-
+// import Router from "next/router" // оба варианта особо нием не отличаются,
+// Router более тяжелый но не держит в себе каких-то важный методов, есть например isSsr или что-то такое, в общем к нему применимо всё то , что применимо и к useRouter'у
 export default function Post() {
   const router = useRouter()
   return (
