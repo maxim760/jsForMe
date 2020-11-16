@@ -1,0 +1,20 @@
+// ====== HEAD ====== //
+import Head from "next/head"
+
+export default function Home() {
+  }
+  return (
+    <>
+      <Head>
+        <title>Next js beginning</title>
+        <meta name="keywords" content="next,react,js,nextjs,server ( и др. ключевые слова)" />
+        <meta name="description" content="Описание, Это приложение на основе next js, Работает быстро, оптимизировано, также кроссплатформенность и кроссбраузерность поддерживаются" />
+        <meta charset={"utf-8"} />
+      </Head>
+      <div>
+        ...
+      </div>
+    </>
+  )
+}
+// таким обзразом добавляются тэги в хэд
