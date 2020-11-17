@@ -9,7 +9,7 @@ export default function Home() {
         <title>Next js beginning</title>
         <meta name="keywords" content="next,react,js,nextjs,server ( и др. ключевые слова)" />
         <meta name="description" content="Описание, Это приложение на основе next js, Работает быстро, оптимизировано, также кроссплатформенность и кроссбраузерность поддерживаются" />
-        <meta charset={"utf-8"} />
+        <meta charSet={"utf-8"} />
       </Head>
       <div>
         ...
@@ -18,3 +18,59 @@ export default function Home() {
   )
 }
 // таким обзразом добавляются тэги в хэд
+
+// ========= Layout + Применение ==================================
+import Link from "next/link"
+import Head from "next/head"
+
+export const MainLayout = ({children, title="next app"}) => {
+  // хороший плюс, что хэд можно 1 раз написать и всё , он ко всему применится
+  return (
+    <>
+      
+      <Head>
+        <title>{title} | Next</title>
+        <meta name="keywords" content="next,react,js,nextjs,server ( и др. ключевые слова)" />
+        <meta name="description" content="Описание, Это приложение на основе next js, Работает быстро, оптимизировано, также кроссплатформенность и кроссбраузерность поддерживаются" />
+        <meta charset={"utf-8"} />
+      </Head>
+      <nav>
+        <Link href={"/about"}><a>About Us</a></Link>
+        <Link href={"/posts"}><a>Posts</a></Link>
+        <Link href={"/"}><a>To Main Page</a></Link>
+      </nav>
+      <main>
+        {children}
+      </main>
+      <style jsx>{` // <style jsx global> { // если хотит стили эти глобально, а не к только текущему компонетну 
+        nav {
+          position: fixed;
+          height: 60px;
+          left:0;
+          top:0;
+          right:0;
+          background-color: darkblue;
+          display:flex;
+          align-items:center;
+          padding-left:20px;
+        }
+        nav a {
+          color: white
+        }
+        nav a+a {
+          margin-left:15px;
+        }
+        main {
+          margin-top:60px;
+        }
+      `}</style>
+    </>
+  )
+}
+
+// Использование
+return (
+    <MainLayout title={"Home Page Next"}>
+      ... // чилдрены
+    </MainLayout>
+  )
