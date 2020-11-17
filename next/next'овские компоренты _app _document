@@ -1,0 +1,35 @@
+_app.js // нужен для применения стилей ко всему проекту
+// в этих стилях всякие мэржин 0 для бади , для ссылок убирает подчеркивае, стиль бордер бокс и тд, также здесь указываем шрифт
+import '../styles/globals.css'
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+
+export default MyApp
+
+// ==========================================
+_document.js // лучше здесь подключать шрифты
+import Document, { Html, Head, Main, NextScript } from "next/document"
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head> // сюда только теги общие для все компонентов, тайтл например сюда нельщя, он должен быть разный у каждой страницы
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet"
+          />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
+  }
+}
+
+export default MyDocument
+
