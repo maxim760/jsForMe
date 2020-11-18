@@ -10,3 +10,4 @@ import Router from "next/router"
 // метод push и replace осуществялют переход на нужную страницу без перезагрузки
 <button onClick={() => router.replace("/about")}>to about</button>
 <button onClick={() => router.push("/about")}>to about</button>
+также goBack()
