@@ -7,3 +7,7 @@
 |
 |
 |-node_modules / nprogress / nprogress.css => to scss (делаю в scss чтобы легче было)
+
+
+// пакеты
+npm i nprogress
