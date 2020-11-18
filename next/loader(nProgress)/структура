@@ -1,0 +1,9 @@
+|
+|-components / TopProgressBar.js
+|
+|-pages / _app.js
+|
+|
+|
+|
+|-node_modules / nprogress / nprogress.css => to scss (делаю в scss чтобы легче было)
