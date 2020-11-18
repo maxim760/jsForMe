@@ -1,0 +1,116 @@
+// getServerSideProps
+// лодаре можно организовать только в файле _app.js, в самом файле нельзя т к он по умолчанию открыается когда все отгурзится,
+// либо есть обходне пути, но тогда содержмиое не выведется в инфу о странице и теряется вся суть некста
+ // =======================================
+ 
+ import Head from "next/head"
+import { useRouter } from "next/router"
+
+import { MainLayout } from "../../components/MainLayout"
+
+import React from "react"
+export default function Post({ post}) {
+  const router = useRouter()
+  return (
+    <MainLayout>
+      <div>
+                 
+          <div>
+            <h1>
+              post #{post.id} | {post.title}
+            </h1>
+            <h4>You are in {router.query.id} page</h4>
+            <p style={{ maxWidth: 400, padding: "5px 15px" }}>{post.body}</p>
+          </div>
+        
+        <button onClick={() => router.back()}>go back</button>
+        <button onClick={() => router.push("/posts")}>to posts</button>
+        <button onClick={() => router.push("/about")}>to about</button>
+      </div>
+    </MainLayout>
+  )
+}
+
+export async function getServerSideProps({req,res,params}) {
+  // лоадер описан в апп джс через события роутера!!!
+  const response = await fetch(`http://localhost:3004/posts/${params.id}`)
+  const data = await response.json()
+  // возвращаем обязательно обьект!!!
+  if (!Object.keys(data).length) {
+    return {
+      notFound: true, // типа если будет пост/55 , соответствует паттерну пост/[id] но  такой страницы нет
+    }
+  }
+  return {
+    props: {
+      post: data,
+    }
+  }
+}
+
+ 
+ \\ =======================================
+ 
+ 
+ getInitialProps
+ // можно загрузка как изнутри _апп джс, так и из самого компонента
+ p.s. если в апп джс уже описан лоадер, то то что в компоненте уже не появится, так как то ч то в аппе важнее ауф!
+ 
+ // =====================================
+ 
+ import { MainLayout } from "../components/MainLayout"
+import Link from "next/link"
+import React, { useState, useEffect } from 'react'
+
+
+export default function Posts({ posts: allPosts }) {
+  console.log(allPosts)
+  // ЭТО НИЖЕ ЕСЛИ ИСПОЛЬЩУЕМ if(!req) и делаем лоадер для этого конркетно компонента
+  const [posts, setPosts] = useState(allPosts)
+  useEffect(() => {
+    async function load() {
+      const response = await fetch("http://localhost:3004/posts")
+      const postRes = await response.json()
+      setPosts(postRes)
+    }
+    if (!posts) {
+      load()
+    }
+  }, [])
+
+  return (
+    <MainLayout>
+      <h1>Posts next</h1>
+      <a href="/">На главную</a>
+      {!posts ? (
+        <p>Loading</p> // пока грузится будет это
+      ) : (
+        <ul>
+          {posts.map(({ body, id, title }) => {
+            return (
+              <li style={{ maxWidth: "300px", marginLeft: "20px" }} key={id}>
+                <Link href={`/post/${id}`}><a>{title}</a></Link>
+                <p>{body}</p>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </MainLayout>
+  )
+}
+
+Posts.getInitialProps = async ({req}) => {
+    // if (!req) { // способ чтобы внутри компоненты получать и ждать и выводить, и если еще не загрузилось, то лоадинг // ЭТО СПОСОБ ЛОАДИНГА ИЗ КОМПОНЕНТА,, НО ТОГДА
+    // ПРИДЕТСЯ ВНУТРИ ПРОПИСЫВАТЬ ЮЗ ЭФФЕКТ И НА ФРОНТЕ ВСЕ ПОЛУЧАТЬ И ОБРАБАТЫВАТЬ, НО В КОД СТРАНИЦЫ ЭТО ПОПАДАЕТ
+    //   return {posts: null}
+    // } // если не писать это(кста это рабоатет только в гет инишл пропс), то будет тот лоадилнг что в апп.джс, там обяз должен быть !!!, в целом я думаю что лучш лоадинг из апп джс показывать и всё, а не городить огороды
+  const res = await fetch("http://localhost:3004/posts")
+  const postRes = await res.json()
+  // возвращаем обязательно обьект!!!
+  return {
+    posts: postRes,
+  }
+}
+ 
+ \\ =====================================
