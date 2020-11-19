@@ -1,3 +1,5 @@
 пакет:  yarn add --dev typescript @types/react @types/node
 
 // вроде нет готового шаблона, надо все переименовывать под tsx
+
+затем yarn dev , тогда создастся файл тс конфиг
