@@ -3,6 +3,6 @@
 // скачали библоткку
 и в корке создаем файл .env
 nтам ппишем все что хотим 
-API_URL="http://localhost:3450"
+API_URL=http://localhost:3450
 
 и потом к нему можно будет обрщаться как process.env.API_URL и например экспортировать через module.exports в next.config.js
