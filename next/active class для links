@@ -1,0 +1,9 @@
+docs https://github.com/vercel/next.js/tree/canary/examples/active-class-name
+
+можна сразу установить с готовым решением
+Execute create-next-app with npm or Yarn to bootstrap the example:
+
+npx create-next-app --example active-class-name active-class-name-app
+# or
+
+yarn create next-app --example active-class-name active-class-name-app
