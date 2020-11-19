@@ -7,9 +7,16 @@
 /// Get initial props
 import { NextPageContext } from "next"
 Posts.getInitialProps = async ({req} : NextPageContext) => {
+
 // Get server side props
 import {  GetServerSideProps } from "next"
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
+// доп типизация
+export const getServerSideProps: GetServerSideProps<any,{id:string}> = async ({params,res}) => {
+
+  console.log(params.id); // 2 параметр  вдженериках отвечал за params // так подскзаывал вс код
+
+
 
 // req и res
 import { NextApiRequest,NextApiResponse } from "next"
