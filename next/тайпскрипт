@@ -21,3 +21,21 @@ export const getServerSideProps: GetServerSideProps<any,{id:string}> = async ({p
 // req и res
 import { NextApiRequest,NextApiResponse } from "next"
 export default function echo(req: NextApiRequest, res: NextApiResponse) {
+
+или вот
+
+interface IMessageNexpApiReq extends NextApiRequest {
+  query: {
+    message?: string
+  }
+}
+
+export default function echo(req: IMessageNexpApiReq, res: NextApiResponse) {
+  res.statusCode = 200
+  res.setHeader("Content-type", "application/json")
+  res.end(
+    JSON.stringify({
+      message: req.query.message ?? "Base query"
+    })
+  )
+}
