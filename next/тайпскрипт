@@ -3,3 +3,14 @@
 // вроде нет готового шаблона, надо все переименовывать под tsx
 
 затем yarn dev , тогда создастся файл тс конфиг
+
+/// Get initial props
+import { NextPageContext } from "next"
+Posts.getInitialProps = async ({req} : NextPageContext) => {
+// Get server side props
+import {  GetServerSideProps } from "next"
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
+
+// req и res
+import { NextApiRequest,NextApiResponse } from "next"
+export default function echo(req: NextApiRequest, res: NextApiResponse) {
