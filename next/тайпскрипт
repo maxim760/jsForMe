@@ -1,8 +1,3 @@
 пакет:  yarn add --dev typescript @types/react @types/node
 
-можна сразу установить с готовым решением
-Execute create-next-app with npm or Yarn to bootstrap the example:
-
-npx create-next-app --example active-class-name active-class-name-app
-# or
-yarn create next-app --example active-class-name active-class-name-app
+// вроде нет готового шаблона, надо все переименовывать под tsx
