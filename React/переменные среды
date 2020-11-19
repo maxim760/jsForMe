@@ -1,0 +1,119 @@
+next js
+-------
+old versions
+module.exports = {
+  env: {
+    customKey: 'my-value',
+  },
+}
+
+new versions
+.env // в корне
+
+# DO NOT ADD SECRETS TO THIS FILE. This is a good place for defaults.
+# If you want to add secrets use `.env.local` instead.
+
+ENV_VARIABLE="server_only_variable"
+NEXT_PUBLIC_ENV_VARIABLE="public_variable"
+//
+.env.local
+ENV_LOCAL_VARIABLE="server_only_variable_from_env_local"
+NEXT_PUBLIC_ENV_LOCAL_VARIABLE="public_variable_from_env_local"
+//
+.env.development
+# DO NOT ADD SECRETS TO THIS FILE. This is a good place for defaults.
+# If you want to add secrets use `.env.development.local` instead.
+
+DEVELOPMENT_ENV_VARIABLE="server_only_development_variable"
+NEXT_PUBLIC_DEVELOPMENT_ENV_VARIABLE="public_development_variable"
+
+.env.production
+# DO NOT ADD SECRETS TO THIS FILE. This is a good place for defaults.
+# If you want to add secrets use `.env.production.local` instead.
+
+PRODUCTION_ENV_VARIABLE="server_only_production_variable"
+NEXT_PUBLIC_PRODUCTION_ENV_VARIABLE="public_production_variable"
+
+// ВАЖНО
+Пример .env.local:
+
+DB_HOST=localhost
+DB_USER=myuser
+DB_PASS=mypassword
+
+По умолчанию все загруженные переменные среды .env.localдоступны только в среде Node.js, то есть они не будут доступны браузеру.
+
+Чтобы открыть переменную в браузере, вы должны поставить перед переменной префикс NEXT_PUBLIC_. Например:
+
+NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
+
+// ПРИМЕЧАНИЕ
+Примечание . Next.js автоматически расширит переменные ( $VAR) внутри ваших .env*файлов. Это позволяет вам ссылаться на другие секреты, например:
+
+# .env
+HOSTNAME=localhost
+PORT=8080
+HOST=http://$HOSTNAME:$PORT
+Если вы пытаетесь использовать переменную с $в реальной стоимости, он должен быть экранирован так: \$.
+
+Например:
+
+# .env
+A=abc
+WRONG=pre$A # becomes "preabc"
+CORRECT=pre\$A # becomes "pre$A"
+
+// МОМЕНТЫ
+Обычно .env.localнужен только один файл. Однако иногда вам может потребоваться добавить некоторые значения по умолчанию для
+среды development( next dev) или production( next start).
+
+Next.js позволяет вам устанавливать значения по умолчанию в .env(всех средах), .env.development(среде разработки) и .env.production(производственной среде).
+
+.env.local всегда отменяет установленные по умолчанию.
+
+Примечание : .env, .env.developmentи .env.productionфайлы должны быть включены в хранилище , поскольку они определяют по умолчанию.
+.env*.localдолжны быть добавлены.gitignore , поскольку эти файлы предназначены для игнорирования. .env.localздесь можно хранить секреты.
+
+//// ======== ПЕРЕМЕННЫЕ СРЕДЫ В ОБЫЧНОМ РЕАКТЕ
+способ 1
+check out this package dotenv,
+
+create a new file .env in your working directory
+
+install dotenv by npm install dotenv
+
+add this to your app require('dotenv').config()
+
+in that file write process.env.CI = false
+
+add .env to your .gitignore [if using git]
+
+restart your app.
+
+OR run this CI=false npm run build
+
+// 2 СПОСОБ
+начинаются с REACT_APP_
+
+Чтобы определить постоянные переменные среды, создайте файл с именем .env в корне вашего проекта:
+
+REACT_APP_NOT_SECRET_CODE = abcdef
+Примечание. Пользовательские переменные среды необходимо создавать, начиная с REACT_APP_. Любые другие переменные, за исключением, NODE_ENVбудут проигнорированы, чтобы избежать случайного раскрытия секретного ключа на машине, который может иметь то же имя . Изменение любых переменных среды потребует перезапуска сервера разработки, если он работает.
+
+Примечание. После изменения .envфайлов необходимо перезапустить сервер разработки .
+
+.envфайлы должны быть проверены в системе контроля версий (за исключением .env*.local).
+
+Какие еще .envфайлы можно использовать? #
+Примечание: эта функция доступна в версиях react-scripts@1.0.0и выше .
+
+.env: По умолчанию.
+.env.local: Локальные переопределения. Этот файл загружается для всех сред, кроме test.
+.env.development, .env.test, .env.production: Параметры окружающей среды, специфические.
+.env.development.local, .env.test.local, .env.production.local: Локальные переопределения параметров среды специфических.
+Файлы слева имеют больший приоритет, чем файлы справа:
+
+npm start: .env.development.local, .env.local, .env.development, .env
+npm run build: .env.production.local, .env.local, .env.production, .env
+npm test: .env.test.local, .env.test, .env(Примечание .env.localотсутствует)
+Эти переменные будут действовать как значения по умолчанию, если машина не установила их явно.
