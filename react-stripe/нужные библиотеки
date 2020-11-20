@@ -4,7 +4,7 @@ axios
 next 
 react
 react-dom
-stripe
+stripe // нужен для бэка
 ngrok
 
 yarn add @stripe/react-stripe-js @stripe/stripe-js axios stripe
