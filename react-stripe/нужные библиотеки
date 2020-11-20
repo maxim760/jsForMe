@@ -1,0 +1,10 @@
+@stripe/stripe-js
+@stripe/react-stripe-js
+axios
+next 
+react
+react-dom
+stripe
+ngrok
+
+yarn add @stripe/react-stripe-js @stripe/stripe-js axios stripe
