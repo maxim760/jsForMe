@@ -1,0 +1,31 @@
+import Stripe from "stripe"
+
+const stripe = new Stripe(process.env.SECRET_KEY)
+
+export default async function Payment(req, res) {
+  const { id, amount, email, phone } = req.body // параметры которые через пост
+  
+  try { 
+    const description = email && phone ?  `Order from ${email} - ${phone}` : "Stripe React Test"
+    // создали заппрос на оплату, но еще не провели
+    const payment = await stripe.paymentIntents.create({
+      payment_method: id,
+      amount,
+      currency: "USD",
+      description,
+      confirm: true, // подтвреждение
+      // customer: // поле для привящки paymnetIntent к определенному интенту
+    })
+    // устанавливаем статут 200
+    res.status(200).json({ status: payment.status})
+  } catch(e) {
+    res.status(400).send(e.message)
+  }
+}
+
+/**
+ * 
+ * confirm чтобы сразу отправить средства на stripe, сразу же немедлно применить транзакцию
+*/
+
+// https://localhost:3000/api/payment
