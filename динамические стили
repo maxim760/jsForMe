@@ -9,3 +9,10 @@
 >
 
 style={text.length === maxLen ? { color: "red" } : {}}
+style={text.length === maxLen ? { color: "red" } : undefined} // лучше так, тк ссылка на обьект меняется
+
+
+className={text.length >= 0.9 * maxLen ? classes.countWarning : ""}
+
+
+
