@@ -1,0 +1,30 @@
+function getCaretPos(obj: HTMLTextAreaElement): number {
+  obj.focus();
+
+  if (obj.selectionStart) {
+    return obj.selectionStart;
+  }
+  return 0;
+} // возвращает положение курсора после вставки текста
+
+maxLen = 280
+--
+const refArea = React.useRef<HTMLTextAreaElement>(null);
+const [text, setText] = React.useState("");
+const textLimitPercent = (text.length / maxLen) * 100;
+const handleChangeTextarea = () => {
+  if (refArea.current && refArea.current.value.length <= maxLen) { // стандартная ситуация
+    setText(refArea.current.value);
+  } else if (refArea.current && text.length <= maxLen) { // не стандартная ситцация, которую нужно обрабоатьь // refArea.length будет больше maxLen
+    const position = getCaretPos(refArea.current);
+    const dif = refArea.current.value.length - text.length; // длина вставленного слова // елси просто ввод, то 1 символ
+    const lenForAdd = maxLen - text.length; // допустимая длина вставляемого слова
+    setText(
+      refArea.current.value.slice(0, position - dif + lenForAdd) +
+        refArea.current.value.slice(position)
+    );
+  }
+};
+
+// в принципе в некоторых случаях второе условие можно опуститть и делать проверуу на то, чтобы текущее value в рефе не было больше заданного
+// 2 случай добавляет гибкости типа того
