@@ -1,0 +1,52 @@
+interface AddTweetProps {
+  classes: ReturnType<typeof useHomeStyles>;
+}
+type RefProps = HTMLTextAreaElement;
+const maxLen = 280;
+
+interface CommonProps {
+  classes: ReturnType<typeof useHomeStyles>;
+}
+// НЕ ПИШЕМ React.FC<...>
+export const AddTweetForm = React.forwardRef<RefProps, AddTweetProps>(
+  (props, ref): React.ReactElement => {
+    const { classes } = props;
+    const [text, setText] = React.useState("");
+    const textLimitPercent = (text.length / maxLen) * 100;
+    const handleChangeTextarea = (): void => {
+      if (ref !== null && "current" in ref) {
+        console.log(Object.keys(ref))
+        setText(ref.current!.value);
+      }
+    };
+
+    const handlClickAddTweet = (): void => {
+      setText("");
+    };
+
+    return (
+      <div className={classes.addForm}>
+        <div className={classes.addFormBody}>
+    
+          ...
+    
+          <TextareaAutosize
+            value={text}
+            onChange={handleChangeTextarea}
+            ref={ref}
+            rowsMax={10}
+            className={classNames(
+              classes.addFormTextArea,
+              text.length > maxLen && classes.areaWarning
+            )}
+            placeholder="Что происходит"
+          />
+        
+        ...
+      
+          </div>
+        </div>
+      </div>
+    );
+  }
+);
