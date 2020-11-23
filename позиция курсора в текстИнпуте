@@ -21,3 +21,27 @@ function cleanForm() {
 }
 
 cleanForm();
+
+// Примеение
+function getCaretPos(obj: HTMLTextAreaElement): number {
+  obj.focus();
+
+  if (obj.selectionStart) {
+    return obj.selectionStart;
+  }
+  return 0;
+}
+
+  const handleChangeTextarea = () => {
+    if (refArea.current && refArea.current.value.length <= maxLen) {
+      setText(refArea.current.value);
+    } else if (refArea.current && text.length <= maxLen) {
+      const position = getCaretPos(refArea.current);
+      const dif = refArea.current.value.length - text.length;
+      const lenForAdd = maxLen - text.length;
+      setText(refArea.current.value.slice(0, position-dif+lenForAdd) + refArea.current.value.slice(position));
+    }
+  };
+
+
+
