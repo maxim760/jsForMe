@@ -1,0 +1,4 @@
+export const fetchTweets = async (): Promise<Tweet[]> => { // в дженерике тип возвращаемого обьекта
+  const {data} = await axios.get("https://trycode.pw/c/C1K4E.json")
+  return data
+}
