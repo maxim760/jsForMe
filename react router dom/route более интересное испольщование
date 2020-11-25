@@ -1,0 +1,18 @@
+ <Paper className={classes.tweetsWrapperHeader} variant="outlined">
+  <Route path={'/home/:any'}> // нет exact => подходит любой путь /home/что угодно, /home - не подходит
+    <IconButton
+      color={"primary"}
+      className={classes.tweetsHeaderIcon}
+    >
+      <ArrowIcon onClick={handleClickToHome} />
+    </IconButton>
+  </Route>
+  <Route exact path="/(home)(/search)?"> // тут понятно
+    <Typography variant="h6">Твиты</Typography>
+  </Route>
+  <Route exact path="/home/tweet/:id"> // тут тем боле
+    <Typography variant="h6">Твитнуть</Typography>
+  </Route>
+</Paper>
+
+// в зависимости от ссылки формируется заголовок либо с текстом твиты либо с тектом твитнуть и так же либо со иконкой стрелки либо без нее
