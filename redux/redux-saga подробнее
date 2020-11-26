@@ -1,0 +1,101 @@
+
+
+// рут сага, общая
+import { all } from "redux-saga/effects"
+import { watchFetchTweets } from "./ducks/tweets/sagas"
+import { watchFetchTags } from "./ducks/tags/sagas"
+import { watchFetchTweet } from "./ducks/tweet/sagas"
+
+
+export function* rootSaga() {
+  yield all([
+    watchFetchTweets(),
+    watchFetchTags(),
+    watchFetchTweet()
+  ])
+}
+
+// просто все по очереди вызываю
+
+
+
+// подключение саги к стору
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+
+import { rootReducer } from "./rootReducer";
+import { rootSaga } from "./saga";
+
+const sagaMiddleware = createSagaMiddleware();
+
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware)
+    // other store enhancers if any
+  )
+);
+
+sagaMiddleware.run(rootSaga);
+
+
+
+
+// пример отдельной саги 
+// включает вотчер, который просто следит за ввсе изменения в редусере, за всем экшнами, и когда сработает нудный, то взывоет функцию отвечающую за логику этого мидлвара
+import { put, takeLatest, call } from 'redux-saga/effects'
+import { TweetActionsType, setTweetLoadingState, setTweetData, FetchTweetActionInterface} from './actionCreators'
+import { LoadingState } from './contracts/state'
+import { TweetsApi } from '../../../services/api/tweetsApi'
+import { Tweet } from '../tweets/contracts/state'
+
+function* fetchTweetRequest({ payload: tweetId }: FetchTweetActionInterface) { // ага, следим за этим экшном, у него есть
+  // пэйлоад, получаем его и тд // здесь типизруется интерфейс, так как мы в миддлваере знаем интрфейс, т.е. 
+  // пэйлоад и тип экшна (здесь уже так сказаьть полная информация) ( кроме пэйлоада можно еще и тип получить)
+  try {
+    const data: {[key:number]: Tweet} = yield call(TweetsApi.fetchTweetData, tweetId) // через запятую передаем аргументы, нельзя же call называется
+    const tweetData = Object.values(data)[0]
+    yield put(setTweetData(tweetData))
+  } catch (error) {
+    yield put(setTweetLoadingState(LoadingState.ERROR))
+  }
+}
+
+
+export function* watchFetchTweet() {
+  yield takeLatest(TweetActionsType.FETCH_TWEET_DATA, fetchTweetRequest) // вотчер ничего не делает, просто слежка, вызов
+  // не приниммет параметров никаких // подключение слежки за компонентом
+}
+
+
+
+
+
+// отступление - так выглядит reducer
+// сначала дата делает нуллом и тип загрузки - лоадинг, потом когда мидддлаер подействует то уже изменит это всё
+case TweetActionsType.FETCH_TWEET_DATA: {
+  draft.data = null
+  draft.loadingState = LoadingState.LOADING
+  break
+}
+
+
+
+// tweetsApi
+import axios from "axios"
+import {  TweetsState } from "../../store/ducks/tweets/contracts/state"
+import { TweetState } from "../../store/ducks/tweet/contracts/state"
+
+
+export const TweetsApi = {
+  async fetchTweets(): Promise<TweetsState["items"]> {
+    const {data} = await axios.get("/tweets")
+    return data
+  },
+  async fetchTweetData(id: string): Promise<TweetState["data"]> {
+    const {data} = await axios.get(`/tweets?_id=${id}`)
+    return data
+  }
+  
+}
