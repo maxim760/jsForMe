@@ -1,0 +1,49 @@
+import { TweetsState, LoadingState, Tweet } from "./contracts/state";
+import { RootState } from "../../rootReducer";
+import { createSelector } from "reselect";
+// createSelector создает мемоизированную версию селектора // основаня функция
+// ВАЖНЫЕ СОВЕТЫ И ЗАМЕТКИ
+Совет 1 Старайтесь избегать вложенных массивов и объектов в качестве результата useSelector. // лушче создать готовые селекторы и их вызывать
+
+Совет 2 Используйте reselect там, где происходят многократные вычисления.
+
+Совет 3 Не используйте reselect там, где не происходит вычислений.
+
+// Грамотный пример связки селектора и юз селетора
+
+import { createSelector } from 'reselect';
+
+// Обычная функция извлекающая нужный срез данных из состояния
+const getTasks = (state) => state.tasks;
+
+// селектор на основе функции
+const publishedTasksSelector = createSelector(
+  getTasks,
+  (tasks) => {
+    console.log('selector');
+    return tasks.filter((t) => t.state === 'published');
+  },
+);
+/////////////////////////////
+
+
+
+
+export const selectTweets = (state: RootState): TweetsState => state.tweets;
+
+export const selectTweetsLoadingState = (state: RootState) => selectTweets(state).loadingState
+
+export const selectTweetsLoadingStateIsLoaded = createSelector(
+  selectTweets,
+  (tweets: TweetsState): boolean => tweets.loadingState === LoadingState.LOADED
+);
+
+export const selectTweetsLoadingStateIsLoading = createSelector(
+  selectTweets,
+  (tweets: TweetsState): boolean => tweets.loadingState === LoadingState.LOADING
+);
+
+export const selectTweetsItems = createSelector(
+  selectTweets,
+  (tweets: TweetsState): TweetsState["items"] => tweets.items
+);
