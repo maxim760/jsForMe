@@ -1,0 +1,34 @@
+import produce, { Draft } from "immer"
+import { TweetsState, LoadingState } from "./contracts/state"
+import { TweetsAction, TweetsActionsType } from "./actionCreators"
+
+const initialTweetsState: TweetsState = {
+  items: [],
+  loadingState: LoadingState.NEVER
+}
+
+
+// + иммера в том, что не надо прописывать return
+// и прописывают только то что изменяю, нет кучи спрэдов
+export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsAction): void => {
+  switch (action.type) {
+    case TweetsActionsType.SET_TWEETS: {
+      draft.items = action.payload
+      draft.loadingState = LoadingState.LOADED
+      break
+    }
+    case TweetsActionsType.SET_LOADING_STATE: {
+      draft.loadingState = action.payload
+      break
+    }
+    case TweetsActionsType.FETCH_TWEETS: {
+      draft.items = []
+      draft.loadingState = LoadingState.LOADING
+      break
+    }
+    default:
+      const x: never = action
+      break
+  }
+
+}, initialTweetsState)
