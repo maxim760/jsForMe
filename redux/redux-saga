@@ -1,3 +1,8 @@
+// функции прикольные
+// yield delay(3000) // делает задержку в 3с и не надо всчяуких таймаутов
+// методы хэлперы - takeEvery - берет все, takeLatest - берет последний , takeLeading - берет первый
+
+
 // yarn add redux-saga
 import createSagaMiddleware from "redux-saga" // дефолтнвый экспорт можем называть как угодно
 import { sagaWatcher } from "./redux/sagas"
