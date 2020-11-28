@@ -2,4 +2,4 @@
 yarn add mongoose express typescript ts-node express-validator
 yarn add @types/express
 npm install body-parser --save
-
+yarn add nodemailer
