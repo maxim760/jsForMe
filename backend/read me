@@ -7,3 +7,4 @@ yarn add passport-local
 yarn add passport-jwt
 yarn add passport
 yarn add @types/passport
+yarn add jsonwebtoken
