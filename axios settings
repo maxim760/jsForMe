@@ -1,0 +1,17 @@
+import axios from "axios"
+
+export default axios.create({
+    baseURL: "https://react-quiz-ef32b.firebaseio.com/"
+})
+
+// добалвение токена
+
+import axios from "axios"
+
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token")
+  config.headers.Authorization =  token;
+  return config
+})
+
+export {axios}
