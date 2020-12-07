@@ -1,0 +1,53 @@
+// кастом паспорт ошибки(авторизация)
+
+// обраболтка в саге
+function* fetchSignInWorker({
+  payload,
+}: FetchSignInActionInterface): SagaIterator {
+  try {
+    const data: UserState = yield call(AuthApi.signIn, payload);
+    yield put(setUserData(data.data)); // если все норм, добавляю токен
+    data?.data?.token &&
+      window.localStorage.setItem("token", `Bearer ${data?.data?.token}`);
+  } catch (error) {
+    yield put(
+      setUserLoadingStatus(LoadingStatus.ERROR, error.response.data.message)
+    );
+  }
+}
+
+// ошибка при регистраици // либо из монго , где нужно что-то уникальное либо кастомная из експресс валидатора
+function* fetchSignUpWorker({
+  payload,
+}: FetchSignUpActionInterface): SagaIterator {
+  console.log("in worker");
+  try {
+
+    const data = yield call(AuthApi.signUp, payload);
+   
+    yield put(SetUserLoadinRegistergStatus(LoadingStatus.SUCCESS)); // эти даннные о зарегистрировашихся хранятся только в монго, в редаксе не нужны
+    console.log(data, "from saga signup");
+  } catch (error) {
+
+    const response = error.response.data.message;
+    let message: null | string = null;
+    console.log(response)
+    if (response.name === "MongoError") {
+      const errorReason = Object.entries(response.keyValue)[0];
+      switch (errorReason[0]) {
+        case "email":
+          message = `Почта ${errorReason[1]} уже используется`;
+          break;
+        case "username":
+          message = `Никнейм ${errorReason[1]} занят`;
+          break;
+        default:
+          message = "Ошибка";
+      }
+    } else {
+      message = response.map(({ msg }: { msg: string }) => `${msg}`).join('; ')
+    }
+      console.log(message)
+      yield put(SetUserLoadinRegistergStatus(LoadingStatus.ERROR, message));
+  }
+}
