@@ -1,0 +1,48 @@
+import React from "react";
+import { SignIn } from "./pages/Signin";
+import { Home } from "./pages/Home";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { AuthApi } from "./services/api/authApi";
+import { setUserData } from "./store/ducks/user/actionCreators";
+import { selectIsAuth, selectUserData } from "./store/ducks/user/selectors";
+
+// export const selectUserData = (state: RootState) => selectUser(state).data
+// export const selectIsAuth = (state: RootState) => (!!selectUser(state).data )
+
+const App = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const isAuth = useSelector(selectUserData)
+  
+  const checkAuth = React.useCallback(async () => {
+    try {
+      const { data } = await AuthApi.getMe() // запрос на сервер, который работает только если пользователь авторзиовано и при успехе возвращкестя все данные
+      dispatch(setUserData(data))
+    } catch (error) {
+      console.log(error)   
+    }
+  }, [dispatch, setUserData])
+
+  React.useEffect(() => {
+    if (isAuth) {
+      history.push("/home")
+    }
+  }, [isAuth])
+
+  React.useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+  return (
+    <div className="App">
+      <Switch>
+        <Route path="/signin" component={SignIn} />
+        <Route path="/home" component={Home} />
+        <Redirect exact from="/" to="/signin" />
+        <Redirect to="/home" />
+      </Switch>
+    </div>
+  );
+};
+
+export default App;
