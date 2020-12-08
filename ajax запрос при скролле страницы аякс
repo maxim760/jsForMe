@@ -1,0 +1,160 @@
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
+import ArrowIcon from "@material-ui/icons/ArrowBackRounded";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { useHomeStyles } from "./theme";
+import { SearchTextField } from "../../components";
+import { Tweet, SideMenu, AddTweetForm, Tags } from "../../components";
+
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTweets } from "../../store/ducks/tweets/actionCreators";
+import { History } from "history";
+
+// selectors
+import {
+  selectTweetsItems,
+  selectTweetsLoadingStatusIsLoading,
+  selectTweetsPage,
+  selectTweetsLength,
+} from "../../store/ducks/tweets/selectors";
+
+import { fetchTags } from "../../store/ducks/tags/actionCreators";
+import { Route } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import { FullTweet } from "./components/FullTweet";
+import { RootState } from "../../store/rootReducer";
+
+interface HomeProps {
+  history: History;
+}
+
+//
+//reducer при добавлении твитов
+case TweetsActionsType.SET_TWEETS: {
+      draft.items.push(...action.payload)
+      draft.page++
+      draft.loadingState = LoadingStatus.LOADED
+      break
+    }
+//
+
+export const Home: React.FC<HomeProps> = ({ history }): React.ReactElement => {
+  const ref: React.RefObject<HTMLTextAreaElement> = React.createRef<HTMLTextAreaElement>();
+  
+  const tweets = useSelector(selectTweetsItems);
+  const tweetsLength = useSelector(selectTweetsLength);
+  const isTweetsLoading = useSelector(selectTweetsLoadingStatusIsLoading); 
+  const page = useSelector(selectTweetsPage)
+  
+  const classes = useHomeStyles();
+  const dispatch = useDispatch();
+  const fetchLimitTweets = React.useCallback(() => dispatch(fetchTweets()), [])
+  React.useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+    return () => document.removeEventListener("scroll", scrollHandler)
+  }, [page,tweetsLength,isTweetsLoading]);
+
+  React.useEffect(() => {
+    if (page === 1) {
+      fetchLimitTweets()
+    }
+  }, [dispatch, page]);
+  React.useEffect(() => {
+    dispatch(fetchTags());
+  }, [dispatch]);
+
+  const scrollHandler = ((e: any) => {
+    console.log(page, "in scroll")
+    const allHeight = e?.currentTarget?.documentElement.scrollHeight
+    const allHeightScroll = e?.currentTarget?.documentElement.scrollTop + window.innerHeight
+    if (( allHeightScroll >= allHeight - 100) && !isTweetsLoading && page > 1 && tweetsLength >= (page - 1) * 15) {
+      fetchLimitTweets()
+    }
+  })
+  
+
+  const handleClickToBack = React.useCallback(() => {
+    history.goBack();
+  }, [history]);
+  return (
+    <Container className={classes.wrapper} maxWidth="lg">
+      <Grid container spacing={3}>
+        <Grid item md={3} sm={1}>
+          <SideMenu classes={classes} />
+        </Grid>
+        <Grid item md={6} sm={8}>
+          <Paper className={classes.tweetsWrapperHeader} variant="outlined">
+            <Route path={"/home/:any"}>
+              <IconButton
+                onClick={handleClickToBack}
+                color={"primary"}
+                className={classes.tweetsHeaderIcon}
+              >
+                <ArrowIcon />
+              </IconButton>
+            </Route>
+            <Route exact path="/(home)(/search)?">
+              <Typography variant="h6">Твиты</Typography>
+            </Route>
+            <Route exact path="/home/tweet/:id">
+              <Typography variant="h6">Твитнуть</Typography>
+            </Route>
+          </Paper>
+          <Paper className={classes.tweetsWrapper} variant="outlined">
+            <Route exact path="/(home)(/search)?">
+              <Paper>
+                <div className={classes.addForm}>
+                  <AddTweetForm rowsMax={15} classes={classes} ref={ref} />
+                </div>
+                <div className={classes.addFormBottomLine} />
+              </Paper>
+            </Route>
+            <Route path="/home" exact>
+              {isTweetsLoading && !tweets.length ? (
+                <div className={classes.centeredBig}>
+                  <CircularProgress />
+                </div>
+              ) : tweets.length ? (
+                  tweets.map((tweetProps) => {
+                  return (
+                      <Tweet key={tweetProps._id} classes={classes} {...tweetProps} />
+                  );
+                })
+              ) : (
+                <h1>Твитов нет</h1>
+              )}
+            </Route>
+
+            <Route path="/home/tweet/:id">
+              <FullTweet classes={classes} />
+            </Route>
+          </Paper>
+        </Grid>
+        <Grid item sm={3} md={3}>
+          <div className={classes.rightSide}>
+            <SearchTextField
+              fullWidth
+              placeholder="Поиск по Твиттеру"
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Tags classes={classes} />
+          </div>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
