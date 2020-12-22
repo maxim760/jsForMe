@@ -1,0 +1,51 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
+import classNames from "classnames";
+
+import styles from "../styles/Home.module.css";
+import { Close } from "../components/svg/close";
+
+export const Modal = ({ title, children, handleCloseModal }) => {
+  const parentElem = document.querySelector("#__next");
+  const rootContainer = document.createElement("div");
+
+  React.useLayoutEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, []);
+  React.useLayoutEffect(() => {
+    if (typeof window !== "undefined") {
+      parentElem.appendChild(rootContainer);
+    }
+    return () => {
+      parentElem.removeChild(rootContainer);
+    };
+  }, []);
+
+  if (!rootContainer) {
+    return null;
+  }
+
+  return ReactDOM.createPortal(
+    <>
+      <Close />
+
+      <div className={styles.overlay}>
+        <div className={styles.modal}>
+          <svg
+            className={classNames(styles.icon, styles.close)}
+            onClick={handleCloseModal}
+          >
+            <use xlinkHref="#close" />
+          </svg>
+          <div className={styles.modalHead}>{title}</div>
+          <div className={styles.modalMain}>{children}</div>
+        </div>
+      </div>
+    </>,
+    rootContainer
+  );
+};
