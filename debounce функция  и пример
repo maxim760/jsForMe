@@ -1,0 +1,37 @@
+https://qna.habr.com/q/821371
+function debounce(fn, ms, ...args) {
+  let timer;
+  return (value) => {
+    timer = setTimeout(() => {
+      // ваш вариант вообще забывал о том что в fn вы пытаетесь передать value
+      fn.apply(this, [value,...args]);
+
+      // удалять обработчик таймаута вообще не надо, но если это всетаки делать, то наверное уже после того как 
+      clearTimeout(timer);
+      timer = null;
+    }, ms);
+  };
+}
+
+export default function App() {
+  const [value, setValue] = useState('');
+
+  const handleChange = e => {
+    const {value} = e.target;
+    delayHandler(value);
+  };
+
+  const delayHandler = debounce(value=>{
+    setValue(value);
+    alert(value);
+  }, 2000);
+
+  return (
+    <div className="App">
+      <p>Current value: {value}</p>
+      <form>
+        <input onChange={handleChange} />
+      </form>
+    </div>
+  );
+}
