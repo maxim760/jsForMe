@@ -1,17 +1,14 @@
-https://qna.habr.com/q/821371
-function debounce(fn, ms, ...args) {
-  let timer;
-  return (value) => {
+export const debounceEvent = (fn: (e: any) => void, ms: number) => {
+  let timer: any;
+  return (...args: any) => {
+    clearTimeout(timer);
     timer = setTimeout(() => {
-      // ваш вариант вообще забывал о том что в fn вы пытаетесь передать value
-      fn.apply(this, [value,...args]);
-
-      // удалять обработчик таймаута вообще не надо, но если это всетаки делать, то наверное уже после того как 
-      clearTimeout(timer);
       timer = null;
+      //@ts-ignore
+      fn(...args);
     }, ms);
   };
-}
+};
 
 export default function App() {
   const [value, setValue] = useState('');
@@ -21,7 +18,7 @@ export default function App() {
     delayHandler(value);
   };
 
-  const delayHandler = debounce(value=>{
+  const delayHandler = debounceEvent(value=>{
     setValue(value);
     alert(value);
   }, 2000);
