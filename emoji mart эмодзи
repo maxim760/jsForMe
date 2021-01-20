@@ -1,0 +1,24 @@
+// функция добавить смалйик в текст
+  const addEmoji = (selectedEmoji: EmojiData & { unified: any }) => {
+    const sym = selectedEmoji.unified.split('-')
+    const codesArray = sym.map((item: any) => `0x${item}`)
+    const emoji = String.fromCodePoint(...codesArray)
+    const position = getCursorPosition(textRef.current)
+    handleChangeText(prev => {
+      return prev.slice(0, position) + emoji + prev.slice(position)
+    })
+    setCursorPosition(textRef.current, position+2) // эмодзи занимает 2 символа, поэтому + 2
+  }
+  
+  // работает на он клик
+<Picker
+  onClick={addEmoji}
+  style={style}
+  exclude={["flags"]}
+  native={true}
+  set={"twitter"}
+  i18n={localeEmojies[activeLng]}
+  color={"rgb(29,161,242)"}
+  title={"Выберите эмодзи"} // нужно локализировать
+  emoji={"globe_with_meridians"}
+/>
