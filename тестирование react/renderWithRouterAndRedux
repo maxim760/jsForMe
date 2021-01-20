@@ -1,0 +1,58 @@
+import React from "react";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { withRouter, useLocation, useHistory } from "react-router";
+import { Link, Route, Router, Switch, useParams, BrowserRouter } from "react-router-dom";
+import { rootReducer } from "../store/rootReducer";
+import { createMemoryHistory } from "history";
+import {
+  render,
+  fireEvent,
+  screen,
+  findByTestId,
+  queryByTestId,
+} from "@testing-library/react";
+
+export const renderWithRouterAndRedux = (
+  component,
+  state = {},
+  {
+    route = "/",
+      } = {}
+) => {
+  const store = createStore(rootReducer, state)
+  window.history.pushState({}, "title", route)
+  console.log(history)
+  const Wrapper = ({ children }) => (
+    <BrowserRouter history={history}>{children}</BrowserRouter>
+  );
+  return {
+    ...render(<Provider store={store}>{component}</Provider>, {wrapper: Wrapper}),
+    store,
+    history,
+  };
+};
+
+//ПРИМЕР
+describe("test routing", () => {
+//     test("to home if isAuth", () => {
+//       const { queryByTestId, getByTestId } = renderWithRouterAndRedux(
+//         <App />,
+//         {
+//           user: {
+//             data: {
+//               _id: "string",
+//               email: "mail@gmail.ru",
+//               fullname: "max",
+//               username: "max",
+//               createdAt: "2020-12-19T11:57:24.915Z",
+//             },
+//           },
+//         },
+//         { route: "/" }
+//       );
+//       const homePage = getByTestId(/homePage/i);
+//       const signInPage = queryByTestId(/signInPage/i);
+//       expect(homePage).toBeInTheDocument();
+//       expect(signInPage).not.toBeInTheDocument();
+//     });
