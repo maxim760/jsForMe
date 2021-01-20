@@ -43,5 +43,31 @@ function getCaretPos(obj: HTMLTextAreaElement): number {
     }
   };
 
+-----------------------
+Функции чтобы получить позицию курсора и установить в нужную позицию!!!!
+// в обоих случаях принимвется элемент event.currentTarget или ref.current !!!
+// полукчить позицию
+export const getCursorPosition = (element: any) => {
+  element.focus();
 
+  if (element.selectionStart) {
+    return element.selectionStart;
+  }
+  return 0;
+}
+// установить позицию
+export const setCursorPosition = (ctrl: any, pos: number) => {
+  if (ctrl.setSelectionRange) {
+    ctrl.focus();
+    setTimeout(() => {
+      ctrl.setSelectionRange(pos, pos);
+    },0) // без таймаута не работает :(
+  } else if (ctrl.createTextRange) {
+    const range = ctrl.createTextRange();
+    range.collapse(true);
+    range.moveEnd("character", pos);
+    range.moveStart("character", pos);
+    range.select();
+  }
+}
 
