@@ -1,0 +1,7 @@
+type TCallback = (callback: (prev: ImageObj[]) => ImageObj[]) => void;
+type TCallbackText = (callback: (prev: string) => string) => void;
+interface UploadImagesProps {
+  images: Array<ImageObj>;
+  onChangeImages: TCallback;
+  onChangeText: TCallbackText;
+}
