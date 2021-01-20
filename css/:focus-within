@@ -1,0 +1,37 @@
+действует если у элемента или его детей фокус , оч удобно
+.user__input:focus-within .user__input-helper {
+  opacity: 1;
+}
+
+// пример
+return (
+  <FormControl fullWidth className={"user__input"}>
+    <TextField
+      onChange={handleChange}
+      fullWidth
+      value={value || ""}
+      defaultValue={currentValue}
+      variant="outlined"
+      name={name}
+      inputRef={inputRef}
+      multiline={!!rows}
+      rows={rows || 1}
+      rowsMax={rows || 1}
+      type={type || "text"}
+      label={labelName}
+      inputProps={{ maxLength: maxLen }}
+      InputLabelProps={
+        shrink
+          ? {
+              shrink: true,
+            }
+          : {}
+      }
+    />
+
+    {maxLen ? ( //maxLen здесь - пропс, передающийся сверху
+      <span className={"user__input-helper"}>
+        {len}/{maxLen}
+      </span>
+    ) : null}
+  </FormControl>
