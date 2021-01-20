@@ -71,3 +71,9 @@ export const setCursorPosition = (ctrl: any, pos: number) => {
   }
 }
 
+// использование
+const position = getCursorPosition(textRef.current)
+handleChangeText(prev => {
+    return prev.slice(0, position) + emoji + prev.slice(position)
+})
+setCursorPosition(textRef.current, position+2) // эмодзи занимает 2 символа, поэтому + 2
