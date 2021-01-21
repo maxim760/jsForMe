@@ -1,0 +1,3 @@
+mock service worker
+https://mswjs.io/docs/
+ yarn add msw --dev
