@@ -1,3 +1,74 @@
 mock service worker
 https://mswjs.io/docs/
  yarn add msw --dev
+
+import { rest } from "msw"
+import { setupServer } from "msw/node"
+export const handlers = [
+  rest.get('/user или "https://адрес запроса"', (req, res, ctx) => {
+    return res(
+      ctx.status(200)
+      ctx.json({ // здесь ожидаемый ответ который тестим
+        results: [
+         {id:1,name:"max"},
+         {id:2,name:"dennis"}
+        ],
+        status:"success"
+      }) // это типо результат
+    )
+  }),
+]
+
+const server = setupServer(...handlers)
+
+beforeAll(() => server.listen())
+
+afterEach(() => server.resetHandlers())
+
+afterAll(() => server.close())
+
+test("success", async () => {
+ render(<Contacts />)
+ const loader = screen.getByTestId(contacts-loader)
+ 
+ await waitForElementToBeRemoved(loader)
+ 
+ expect(loader).not.toBeInTheDocument() 
+ expect(screen.getByTestId("contacts-table-container")).toBeInTheDocument()
+})
+
+test("fail", async () => {
+// server.use, чтобы изменить хэндлен
+server.use(
+  rest.get('/user или "https://адрес запроса"', (req, res, ctx) => {
+    return res(
+      ctx.status(500)
+      ctx.json({ // здесь ожидаемый ответ который тестим
+        error: "Internal server error"
+        status:"error"
+      }) // это типо результат
+    )
+  }),
+)
+ render(<Contacts />)
+ const loader = screen.getByTestId(contacts-loader)
+ 
+ await waitForElementToBeRemoved(loader)
+ 
+ expect(loader).not.toBeInTheDocument() 
+ expect(screen.getByTestId("contacts-error")).toBeInTheDocument()
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
