@@ -17,7 +17,7 @@ export default function App() {
     const {value} = e.target;
     delayHandler(value);
   };
-
+// если не работает то в юзКалбэк !!!
   const delayHandler = debounceEvent(value=>{
     setValue(value);
     alert(value);
