@@ -1,0 +1,29 @@
+// загружаю один файл 
+
+const [image, setImage] = React.useState<null | string>(null);
+
+const handleSelectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e?.target?.files?.[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const src = (e?.target?.result || null) as (string | null)
+      setImage(src)
+      console.log(e.total); // размер в байтах // тоже можно где-то отражать, но в принципе это же свойсвто и файла есть size
+      console.log(e.target?.result); // src картинки === reader.result // e.target.resutl эквивалентно reader.result
+    };
+    if (file) { // если файл есть то функцию делаем
+      reader.readAsDataURL(file);
+    }
+    // получаю файл
+    // если файл есть делаю функцию
+    // во время функции срабатывает обработчик он лоад и реализует свой функционал
+  };
+  
+  // вывод в return
+<Form.Control
+  className="mt-3"
+  type="file"
+  accept="image/*"
+  onChange={handleSelectImage}
+/>
+{image && <Image src={image} width="100%" height="auto" style={{maxWidth: "100%", maxHeight:"100px", objectFit:"contain"}} />}
