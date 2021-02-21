@@ -1,0 +1,8 @@
+model.find({name: { $regex: name, $options: "i"}})
+// or
+await this.trackModel.find({
+  $or: [
+    { name: { $regex: query, $options: 'i' } },
+    { artist: { $regex: query, $options: 'i' } },
+  ],
+});
