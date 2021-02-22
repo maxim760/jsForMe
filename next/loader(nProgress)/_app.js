@@ -1,6 +1,6 @@
 import "../styles/globals.scss"
-import "nprogress/nprogress.scss";
 import React from "react"
+import "nprogress/nprogress.scss";
 import dynamic from 'next/dynamic'
 import Router from "next/router"
 const TopProgressBar = dynamic(
