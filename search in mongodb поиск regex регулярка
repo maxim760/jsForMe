@@ -6,3 +6,17 @@ await this.trackModel.find({
     { artist: { $regex: query, $options: 'i' } },
   ],
 });
+
+
+// поиск имени и фамилии если они в разных полях
+async getAll(query: string) {
+  try {
+    const users =  await this.userModel.aggregate([
+      {$project: { "fullname" : { $concat : [ "$name", " ", "$surname" ] } },},
+      {$match: { "fullname": { $regex: query, $options: "i" } }}
+    ]).exec()
+    return users
+  } catch (error) {
+    throw new HttpException(error.message, 500);
+  }
+}
