@@ -11,12 +11,17 @@ await this.trackModel.find({
 // поиск имени и фамилии если они в разных полях
 async getAll(query: string) {
   try {
-    const users =  await this.userModel.aggregate([
-      {$project: { "fullname" : { $concat : [ "$name", " ", "$surname" ] } },},
-      {$match: { "fullname": { $regex: query, $options: "i" } }}
-    ]).exec()
-    return users
-  } catch (error) {
-    throw new HttpException(error.message, 500);
-  }
+      const users =  await this.userModel.find({
+        "$expr": {
+          "$regexMatch": {
+            "input": { "$concat": ["$name", " ", "$surname"] },
+            "regex": query,  //Your text search here
+            "options": "i"
+          }
+        }
+      })
+      return users
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
 }
