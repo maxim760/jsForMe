@@ -1,6 +1,4 @@
-// Чтобы токен брался в getServerSideProps, такой документ
-// 
-// ======================
+
 
 import { IncomingMessage } from "http";
 import { NextApiRequestCookies } from "next/dist/next-server/server/api-utils";
@@ -16,13 +14,6 @@ import { $host } from "../core/axios";
 class AppDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    const { token } = (ctx.req as IncomingMessage & {
-      cookies: NextApiRequestCookies;
-    }).cookies;
-    $host.interceptors.request.use((config) => {
-      config.headers.Authorization = token
-      return config
-    })
 
     return { ...initialProps };
   }
@@ -47,3 +38,4 @@ class AppDocument extends Document {
 }
 
 export default AppDocument;
+
